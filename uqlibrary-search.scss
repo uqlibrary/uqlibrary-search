@@ -1,0 +1,26 @@
+@import "../uqlibrary-elements/resources/theme/element";
+
+:host {
+}
+
+paper-dropdown-menu {
+  box-sizing: border-box;
+  width: 150px;
+  padding: 0.41em 0 0;
+}
+
+paper-dropdown {
+  min-width: 150px;
+}
+
+#autosuggest {
+  top: 25px;
+  left: 0px;
+}
+
+#mask {
+  position: absolute;
+  color: $secondary-text;
+  z-index: -1;
+  padding-top: 1px;
+}

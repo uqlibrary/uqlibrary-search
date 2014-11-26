@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 200;
+  src: url("Roboto-Light.woff") format("woff"); }
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url("Roboto-Regular.woff") format("woff"); }
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: url("Roboto-Medium.woff") format("woff"); }
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: url("Roboto-Bold.woff") format("woff"); }
+:host,
+:host *,
+::content * {
+  box-sizing: border-box;
+  outline: none; }
+
+paper-dropdown-menu {
+  box-sizing: border-box;
+  width: 150px;
+  padding: 0.41em 0 0; }
+
+paper-dropdown {
+  min-width: 150px; }
+
+#autosuggest {
+  top: 25px;
+  left: 0px; }
+
+#mask {
+  position: absolute;
+  color: rgba(0, 0, 0, 0.54);
+  z-index: -1;
+  padding-top: 1px; }
+
+/*# sourceMappingURL=uqlibrary-search.css.map */
