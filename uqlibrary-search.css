@@ -24,22 +24,53 @@
   box-sizing: border-box;
   outline: none; }
 
-paper-dropdown-menu {
-  box-sizing: border-box;
-  width: 150px;
-  padding: 0.41em 0 0; }
+:host {
+  color: rgba(0, 0, 0, 0.54); }
 
 paper-dropdown {
   min-width: 150px; }
 
-#autosuggest {
-  top: 25px;
-  left: 0px; }
+paper-dropdown::shadow #scroller {
+  width: 100% !important; }
 
-#mask {
-  position: absolute;
-  color: rgba(0, 0, 0, 0.54);
-  z-index: -1;
-  padding-top: 1px; }
+paper-item {
+  /*padding-left: 60px;*/ }
+
+.card {
+  background: white;
+  box-sizing: border-box;
+  padding: 6px; }
+
+#searchIcon core-icon {
+  margin-left: -10px; }
+
+#search {
+  margin-left: 10px; }
+
+#searchInput {
+  width: 100%; }
+
+#autosuggest,
+#filters {
+  top: 55px;
+  left: 0px;
+  right: 0px;
+  width: 100%; }
+
+#filters {
+  top: 71px; }
+  #filters paper-item {
+    padding-left: 0px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+    #filters paper-item.last {
+      border-bottom: none; }
+    #filters paper-item.core-selected {
+      color: rgba(0, 0, 0, 0.87); }
+
+.truncate {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
 
 /*# sourceMappingURL=uqlibrary-search.css.map */

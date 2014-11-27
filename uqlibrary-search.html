@@ -1,9 +1,13 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
+
 <link rel="import" href="../paper-dropdown/paper-dropdown.html">
 <link rel="import" href="../paper-item/paper-item.html">
-<link rel="import" href="../paper-input/paper-input-decorator.html">
+<link rel="import" href="../paper-shadow/paper-shadow.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="../core-dropdown/core-dropdown.html">
+<link rel="import" href="../core-icon/core-icon.html">
+<link rel="import" href="../core-icon-button/core-icon-button.html">
 <link rel="import" href="../core-selector/core-selector.html">
 <link rel="import" href="../core-input/core-input.html">
 <link rel="import" href="../core-a11y-keys/core-a11y-keys.html">
@@ -21,12 +25,14 @@ Element providing library search.
 @status alpha
 @homepage https://github.com/uqlibrary/uqlibrary-search
 -->
-<polymer-element name="uqlibrary-search" horizontal layout>
+<polymer-element name="uqlibrary-search">
 
   <template>
     <link rel="stylesheet" href="uqlibrary-search.css">
 
-    <core-a11y-keys target="{{$.search}}" keys="up down right enter esc tab" on-keys-pressed="{{onSearchKeys}}"></core-a11y-keys>
+    <core-a11y-keys target="{{$.search}}"
+                    keys="up down enter esc"
+                    on-keys-pressed="{{onSearchKeys}}"></core-a11y-keys>
 
     <core-ajax id="ajax"
                url="{{ajaxQuery}}"
@@ -34,42 +40,61 @@ Element providing library search.
                handleAs="json">
     </core-ajax>
 
-    <div>
-      <paper-dropdown-menu label="Search">
-        <paper-dropdown class="dropdown">
-          <core-selector selected="{{selectedFilter}}" id="filterSelector">
-            <template repeat="{{filters}}">
-              <paper-item>{{name}}</paper-item>
-            </template>
-          </core-selector>
-        </paper-dropdown>
-      </paper-dropdown-menu>
-    </div>
+    <paper-shadow id="searchWrapper" class="card" z="1" horizontal layout center>
 
-    <div flex id="search">
-      <paper-input-decorator label="{{placeholder}}">
+      <div id="searchIcon" relative>
+        <core-icon-button icon="search" on-tap="{{onTapSearchIcon}}">
+          <core-icon icon="{{$.filters.opened ? 'arrow-drop-up' : 'arrow-drop-down'}}"></core-icon>
+        </core-icon-button>
+
+      </div>
+
+      <div id="search" flex>
         <label for="searchInput"></label>
-        <div id="mask">{{searchTextMask}}</div>
         <input id="searchInput"
                is="core-input"
-               aria-label="{{placeholder}}"
-               value="{{searchText}}">
+               aria-label="Search"
+               placeholder="{{'Search ' + selectedSuggestionName}}"
+               value="{{searchText}}"
+               on-tap="{{onTapShowFilters}}">
+
         <paper-dropdown id="autosuggest"
                         class="no-padding"
-                        relatedTarget="{{$.searchInput}}"
+                        relatedTarget="{{$.search}}"
                         autoFocusDisabled="true">
-          <core-selector selected="{{selectedSuggestion}}" selectedAttribute="" id="suggestionSelector">
+          <core-selector selected="{{selectedSuggestion}}"
+                         selectedAttribute=""
+                         id="suggestionSelector">
             <template repeat="{{suggestions}}">
-              <paper-item on-tap="{{onTapSuggestion}}">{{name}}</paper-item>
+              <paper-item on-tap="{{onTapSuggestion}}"><div class="truncate">{{name}}</div></paper-item>
             </template>
           </core-selector>
         </paper-dropdown>
-      </paper-input-decorator>
-    </div>
 
-    <div>
-      <paper-icon-button icon="search" title="search" on-tap="{{search}}"></paper-icon-button>
-    </div>
+        <paper-dropdown id="filters"
+                        class="no-padding"
+                        relatedTarget="{{$.searchIcon}}"
+                        autoFocusDisabled="true">
+          <core-selector selected="{{selectedFilter}}"
+                         selectedAttribute=""
+                         id="filterSelector">
+            <template repeat="{{filter, idx in filters}}">
+              <paper-item class="{{(idx+1) === filters.length ? 'last' : ''}}">
+                <div class="truncate">{{filter.name}}</div>
+              </paper-item>
+            </template>
+          </core-selector>
+        </paper-dropdown>
+
+      </div>
+
+      <template if="{{searchText.length}}">
+        <div id="searchClear">
+          <core-icon-button icon="close" on-tap="{{onTapClearSearch}}"></core-icon-button>
+        </div>
+      </template>
+
+    </paper-shadow>
 
   </template>
 
@@ -78,10 +103,10 @@ Element providing library search.
       Polymer('uqlibrary-search', {
         ajaxQuery: '',
         selectedFilter: 0,
-        placeholder: '',
-        searchText: '',
         selectedSuggestion: 0,
-        searchTextMask: '',
+        selectedSuggestionName: '',
+        searchText: '',
+        searchTextOrig: '',
         searching: false,
         previousKey: '',
 
@@ -89,6 +114,7 @@ Element providing library search.
         lrApi: 'https://app.library.uq.edu.au/api/search_suggestions?type=learning_resource',
         examsApi: 'https://app.library.uq.edu.au/api/search_suggestions?type=exam_paper',
         databaseApi: 'https://app.library.uq.edu.au/api/search_suggestions?type=database',
+
         summon: 'http://uq.summon.serialssolutions.com/search?q=',
         exams: 'https://www.library.uq.edu.au/exams/papers.php?stub=',
         lr: 'http://lr.library.uq.edu.au/search?q=',
@@ -98,112 +124,71 @@ Element providing library search.
 
         created: function () {
           this.filters = [
-            { name: 'Search',
+            { name: 'Library',
               type: 'all',
-              desc: 'Find books, articles, databases, conferences and more',
-              subtext: 'Books, articles, databases and more',
               url: this.summon,
               urlAppend: '&fvf=ContentType,Newspaper%20Article,t%7CContentType,Book%20Review,t',
               autoSuggest: true,
-              api: this.summonApi,
-              help: [
-                {name: 'Search help', url: 'https://www.library.uq.edu.au/search'},
-                {name: 'Advanced search', url: 'http://uq.summon.serialssolutions.com/#!/advanced'}
-              ] },
+              api: this.summonApi},
             { name: 'Books',
               type: 'books',
-              desc: 'Enter a keyword, title, author, etc',
-              subtext: 'Books and book chapters',
               url: this.summon,
               urlAppend: '&fvf=ContentType,Book%20%2F%20eBook,f%7CContentType,Newspaper%20Article,t%7CContentType,Book%20Review,t%7CContentType,Book%20Chapter,f',
               autoSuggest: true,
-              api: this.summonApi,
-              help: [
-                {name: 'Search help', url: 'https://www.library.uq.edu.au/search'},
-                {name: 'Advanced search', url: 'http://uq.summon.serialssolutions.com/#!/advanced'}
-              ] },
+              api: this.summonApi
+            },
             { name: 'Journal articles',
               type: 'journal_articles',
-              desc: 'Enter a keyword, article title, author, publication, etc',
-              subtext: 'Journal articles, conference papers, working papers',
               url: this.summon,
               urlAppend: '&fvf=ContentType,Newspaper%20Article,t%7CContentType,Book%20Review,t%7CContentType,Journal%20Article,f%7CContentType,Magazine%20Article,f',
               autoSuggest: true,
-              api: this.summonApi,
-              help: [
-                {name: 'Search help', url: 'https://www.library.uq.edu.au/search'},
-                {name: 'Advanced search', url: 'http://uq.summon.serialssolutions.com/#!/advanced'}
-              ] },
+              api: this.summonApi
+            },
             { name: 'Multimedia',
               type: 'multimedia',
-              desc: 'Enter keyword, title, cast, crew, composer, artist, etc',
-              subtext: 'Video, audio, images, art, etc',
               url: this.summon,
               urlAppend: '&fvf=ContentType,Newspaper%20Article,t%7CContentType,Book%20Review,t%7CContentType,Audio%20Recording,f%7CContentType,Spoken%20Word%20Recording,f%7CContentType,Video%20Recording,f%7CContentType,Streaming%20Video,f%7CContentType,Slide,f%7CContentType,Photograph,f%7CContentType,Music%20Recording,f%7CContentType,Music%20Score,f%7CContentType,Painting,f%7CContentType,Sheet%20Music,f%7CContentType,Poster,f%7CContentType,Art,f%7CContentType,Compact%20Disc,f%7CContentType,Drawing,f%7CContentType,Graphic%20Arts,f%7CContentType,Image,f%7CContentType,Kit,f',
               autoSuggest: true,
-              api: this.summonApi,
-              help: [
-                {name: 'Search help', url: 'https://www.library.uq.edu.au/search'},
-                {name: 'Advanced search', url: 'http://uq.summon.serialssolutions.com/#!/advanced'}
-              ]  },
+              api: this.summonApi
+            },
             { name: 'Journals',
               type: 'journals',
-              desc: 'Enter journal or newspaper title',
-              subtext: 'Find a specific journal or newspaper by title',
               url: this.journals,
               autoSuggest: true,
-              api: this.summonApi,
-              help: [
-                {name: 'Browse journals', url: 'https://app.library.uq.edu.au/#/journals'}
-              ]  },
+              api: this.summonApi
+            },
             { name: 'Databases',
               type: 'databases',
-              desc: 'Enter a keyword or database name',
-              subtext: 'Go to a specific research database',
               url: this.database,
               autoSuggest: true,
-              api: this.databaseApi,
-              help: [
-                {name: 'Database help', url: 'https://www.library.uq.edu.au/v/6559'},
-                {name: 'Browse databases', url: 'https://www.library.uq.edu.au/resources/database/#/'}
-              ]  },
+              api: this.databaseApi
+            },
             { name: 'Catalogue',
               type: 'catalogue',
-              desc: 'Enter a keyword, title, author, etc',
-              subtext: 'Detailed information about Library holdings',
               url: this.catalogue,
-              autoSuggest: false,
-              help: [
-                {name: 'Advanced catalogue search', url: 'https://library.uq.edu.au/search~S7/X'}
-              ]  },
-            { name: 'Exam papers',
+              autoSuggest: false
+            },
+            { name: 'Past exam papers',
               type: 'exam_papers',
-              desc: 'Enter a course code',
-              anchor : ['exams', 'exampapers'],
-              subtext: 'Past exams from previous semesters',
               url: this.exams,
               autoSuggest: true,
-              api: this.examsApi,
-              help: [
-                {name: 'Browse courses', url: 'https://www.library.uq.edu.au/exams/search.html'}
-              ]  },
+              api: this.examsApi
+            },
             { name: 'Course reading lists',
               type: 'learning_resources',
-              desc: 'Enter a course code',
-              anchor: ['learningresources'],
-              subtext: 'Reading lists and resources for your course',
               url: this.lr, autoSuggest: true,
-              api: this.lrApi,
-              help: [
-                {name: 'Browse courses', url: 'http://lr.library.uq.edu.au/index.html?browse'}
-              ]  }
+              api: this.lrApi
+            }
           ];
-          this.placeholder = this.filters[this.selectedFilter].desc;
           this.suggestions = [];
+          this.selectedSuggestionName = this.filters[0].name.toLowerCase();
         },
 
         ready: function () {
-          this.$.searchInput.focus();
+          if (this.attributes.getNamedItem('focused')) {
+            this.$.filters.opened = true;
+            this.$.searchInput.focus();
+          }
         },
 
         ajaxQueryChanged: function () {
@@ -215,77 +200,145 @@ Element providing library search.
 
         ajaxQuerySuggestionsLoaded: function () {
           try {
-            this.suggestions = this.$.ajax.response.result;
+            this.suggestions = this.processSuggestions(this.$.ajax.response);
             this.async(function () {
               if (this.suggestions.length > 1 && !this.searching) {
                 this.$.autosuggest.opened = true;
-                if (this.searchText.length > 3) {
-                  this.searchTextMask = this.suggestions[0].name;
-                } else {
-                  this.searchTextMask = '';
-                }
-              } else {
+              }
+              else if (this.$.autosuggest.opened) {
                 this.$.autosuggest.opened = false;
               }
             }, 100);
           } catch (e) {}
         },
 
+        processSuggestions: function (suggestions) {
+          var processed = [];
+          var api = this.filters[this.selectedFilter].api;
+
+          if (api === this.summonApi) {
+            suggestions.result.forEach(function (s) {
+              processed.push(s);
+            });
+          }
+          else if (api === this.lrApi) {
+            suggestions.forEach(function (s) {
+              s.origName = s.name;
+              s.name = s.name + ' (' + (s.course_title ? (s.course_title + '|') : '')  +
+                (s.campus ? s.campus + ', ' : '') +
+                (s.period ? s.period.toLowerCase() : '') +')';
+              processed.push(s);
+            });
+          }
+          else if (api === this.examsApi) {
+            suggestions.forEach(function (s) {
+              s.origName = s.name;
+              s.name = s.name +' ('+ (s.course_title ? (s.course_title) : '') + ')';
+              processed.push(s);
+            });
+          }
+          else if (api === this.databaseApi) {
+            suggestions.forEach(function (s) {
+              s.origName = s.name;
+              s.name = s.name + ' (' + (s.type == 'database' ? 'Database' : 'Subject Area')+')';
+              processed.push(s);
+            });
+          }
+
+          return processed;
+        },
+
         selectedFilterChanged: function () {
-          this.placeholder = this.filters[this.selectedFilter].desc;
-          this.$.searchInput.focus();
+          this.$.filters.opened = false;
+          this.selectedSuggestionName = this.filters[this.selectedFilter].name.toLowerCase();
+          this.async(function () {
+            this.$.searchInput.focus();
+          }, 100);
         },
 
         searchTextChanged: function () {
-          if (! this.searchText.length || this.searching) {
+          if (this.searching) {
             this.$.autosuggest.opened = false;
-            this.searchTextMask = '';
-            return;
+            //this.$.filters.opened = false;
           }
-          if (this.searchTextMask.indexOf(this.searchText) === -1) {
-            this.searchTextMask = '';
+          else if (! this.searchText.length) {
+            this.$.autosuggest.opened = false;
+            this.$.filters.opened = true;
+            this.$.searchInput.focus();
           }
-          var url = this.filters[this.selectedFilter].api;
-          url += (url.indexOf('?') === -1) ? '?' : '&';
-          this.ajaxQuery = url + 'prefix=' + encodeURIComponent(this.searchText);
+          else if (this.searchText.length < 3) {
+            this.$.autosuggest.opened = false;
+            this.$.filters.opened = false;
+          }
+          else {
+            this.$.filters.opened = false;
+            var filter = this.filters[this.selectedFilter];
+            if (filter.autoSuggest) {
+              this.ajaxQuery = filter.api +
+                ((filter.api.indexOf('?') === -1) ? '?' : '&') +
+                'prefix=' + encodeURIComponent(this.searchText);
+            }
+          }
         },
 
         onSearchKeys: function (ev) {
-          if (ev.detail.key === 'down') {
+          if (ev.detail.key === 'down' && this.selectedSuggestion < (this.suggestions.length-1)) {
             this.selectedSuggestion++;
-            this.searchTextMask = this.suggestions[this.selectedSuggestion].name;
           }
-          else if (ev.detail.key === 'up' && this.selectedSuggestion > 0) {
-            this.selectedSuggestion--;
-            this.searchTextMask = this.suggestions[this.selectedSuggestion].name;
+          else if (ev.detail.key === 'up') {
+            if (this.selectedSuggestion > 0) {
+              this.selectedSuggestion--;
+            } else {
+              this.selectedSuggestion = -1;
+            }
           }
           else if (ev.detail.key === 'enter') {
             if (this.selectedSuggestion >= 0 &&
               this.previousKey &&
               (this.previousKey === 'up' || this.previousKey === 'down')
             ) {
+              this.updateSearchTextFromSuggestion();
               this.selectedSuggestion = -1;
-              this.searchText = this.searchTextMask;
             }
             this.search();
           }
           else if (ev.detail.key === 'esc') {
             this.selectedSuggestion = -1;
             this.$.autosuggest.opened = false;
-            this.searchTextMask = '';
-          }
-          else if ((ev.detail.key === 'tab' || ev.detail.key === 'right') && this.searchTextMask.length) {
-            this.selectedSuggestion = 0;
-            this.searchText = this.searchTextMask;
+            this.$.filters.opened = false;
           }
           this.previousKey = ev.detail.key;
         },
 
+        updateSearchTextFromSuggestion: function () {
+          var suggestion = this.suggestions[this.selectedSuggestion];
+          this.searchText = suggestion.name;
+          if (suggestion.origName) {
+            this.searchTextOrig = suggestion.origName;
+          }
+        },
+
+        onTapShowFilters: function () {
+          if (! this.searchText) {
+            this.$.filters.opened = true;
+            this.$.searchInput.focus();
+          }
+        },
+
         onTapSuggestion: function () {
           this.async(function () {
-            this.searchText = this.suggestions[this.selectedSuggestion].name;
+            this.updateSearchTextFromSuggestion();
             this.search();
           }, 100);
+        },
+
+        onTapClearSearch: function () {
+          this.selectedSuggestion = -1;
+          this.searchText = '';
+        },
+
+        onTapSearchIcon: function () {
+          this.$.filters.opened = true;
         },
 
         search: function () {
@@ -293,15 +346,32 @@ Element providing library search.
             return;
           }
           this.searching = true;
-          this.$.autosuggest.opened = false;
-          this.searchTextMask = '';
-          console.log('Searching: ' + this.searchText);
+          if (this.$.autosuggest.opened) {
+            this.$.autosuggest.opened = false;
+          }
           var filter = this.filters[this.selectedFilter];
-          var url = filter.url + encodeURIComponent(this.searchText);
+          var search = this.searchTextOrig ? this.searchTextOrig : this.searchText;
+
+          if (filter.api === this.lrApi || filter.api === this.examsApi) {
+            var s = search.split(" ");
+            search = s[0];
+          }
+          if (filter.type === 'catalogue') {
+            search = this.cleanSearchQuery(search);
+          }
+
+          var url = filter.url + encodeURIComponent(search);
           if (filter.urlAppend) {
             url += filter.urlAppend;
           }
+          //console.log('Searching: ' + search);
+          //console.log('URL: ' + url);
           document.location.href = url;
+        },
+
+        cleanSearchQuery: function (query) {
+          // remove non-alphanumerical characters and multiple whitespaces
+          return  query.replace( new RegExp( '[^a-zA-Z0-9 @]' , 'gi' ), " ").replace(new RegExp( "\\s+" , 'gi' ), " ");
         }
 
       });
