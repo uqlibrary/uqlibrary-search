@@ -37,7 +37,14 @@ paper-item {
 }
 
 #searchWrapper {
-  margin: 16px;
+  margin: 8px;
+  transition: 300ms ease-in-out;
+}
+.slideUp {
+  transform: translate(0,-6em);
+}
+.slideDown {
+  transform: translate(0,0em);
 }
 
 #autosuggest,
