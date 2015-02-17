@@ -16,6 +16,7 @@
 
 <script>
     window.addEventListener('polymer-ready', function() {
+
         var parent = document.querySelector('uqlibrary-search');
         var searchWrapper = parent.shadowRoot.querySelector('#searchWrapper');
         var search = searchWrapper.querySelector('#search');
@@ -23,35 +24,41 @@
         var searchInput = search.querySelector('input');
         var searchPlaceholderText = searchInput.placeholder;
 
-
-        describe('uqlibrary-search', function () {
-            before(function () {
-
-
-            });
-        });
-
-        test('triggers search filter menu', function(done) {
+        test('there should be 9 filter types', function(done) {
             setTimeout(function() {
-
                 // There should be 9 filter options
                 expect(filterDropDown.querySelector('#filterSelector').querySelectorAll('paper-item').length == 9);
+                done();
+            }, 10);
+        });
 
+        test('default placeholder text should be "Search library"', function(done) {
+            setTimeout(function() {
+                // There should be 9 filter options
                 expect(searchPlaceholderText == "Search library");
+                done();
+            }, 10);
+        });
+
+        test('search filter menu should be trigger-able', function(done) {
+            setTimeout(function() {
+
                 // expects filter options to appear when user clicks magnifying glass dropdown
                 // if filterDropDown is not already open, then open it, otherwise just check that it appears correctly
-
                 if (filterDropDown.offsetParent == null) {
-                    filterDropDown.querySelector('#searchIcon').fire('tap');
-                    expect(filterDropDown.offsetParent == searchWrapper);
+                    searchWrapper.querySelector('#searchIcon').fire('tap');
+                    setTimeout(function() {
+                        expect(filterDropDown.offsetParent).to.be.equal(searchWrapper);
+                        done();
+                    }, 50);
                 } if (filterDropDown.offsetParent == searchWrapper) {
-                    filterDropDown.querySelector('#searchIcon').fire('tap');
-                    expect(filterDropDown.offsetParent == null);
+                    searchWrapper.querySelector('#searchIcon').fire('tap');
+                    setTimeout(function() {
+                        expect(filterDropDown.offsetParent).to.be.equal(null);
+                        done();
+                    }, 50);
                 }
-
-
-            }, 6000);
-            done();
+            }, 10);
 
         });
 
@@ -59,15 +66,25 @@
             setTimeout(function() {
                 if (filterDropDown.offsetParent == null) {
                     filterDropDown.querySelector('#searchIcon').fire('tap');
-                    filterDropDown.querySelector('#filterSelector').querySelectorAll('paper-item')[2].fire('tap');
-                    expect(searchPlaceholderText == "Search journal articles");
+                    setTimeout(function() {
+                        filterDropDown.querySelector('#filterSelector').querySelectorAll('paper-item')[2].fire('tap');
+                        expect(searchPlaceholderText).to.be.equal("Search journal articles");
+                    }, 50);
                 } if (filterDropDown.offsetParent == searchWrapper) {
-                    filterDropDown.querySelector('#filterSelector').querySelectorAll('paper-item')[2].fire('tap');
-                    expect(searchPlaceholderText == "Search journal articles");
+                    setTimeout(function() {
+                        filterDropDown.querySelector('#filterSelector').querySelectorAll('paper-item')[2].fire('tap');
+                        expect(searchPlaceholderText).to.be.equal("Search journal articles");
+                    }, 50);
                 }
-            }, 6000);
-            done();
+                done();
+            }, 10);
         });
+
+//        test('test outbound google analytics', function(done) {
+//            setTimeout(function() {
+//                expect(this.$.ga.addEvent("TEST ONLY", "This test tracker runs every time the search component is tested"));
+//            }, 10);
+//        });
 
 // TODO: get keyboard events to fire to simulate user typing into the search box
 //        test('get autosuggestions', function(done) {
