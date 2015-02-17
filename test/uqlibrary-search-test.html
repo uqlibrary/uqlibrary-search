@@ -1,29 +1,102 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
-  <title>uqlibrary-search</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <title>uqlibrary-search</title>
 
-  <script src="../../webcomponentsjs/webcomponents.min.js"></script>
-  <script src="../../web-component-tester/browser.js"></script>
+    <script src="../../webcomponentsjs/webcomponents.min.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
 
-  <link rel="import" href="../uqlibrary-search.html">
+    <link rel="import" href="../uqlibrary-search.html">
 </head>
 <body>
 
-  <uqlibrary-search></uqlibrary-search>
+<uqlibrary-search></uqlibrary-search>
 
-  <script>
+<script>
     window.addEventListener('polymer-ready', function() {
-      var myEl = document.querySelector('uqlibrary-search');
+        var parent = document.querySelector('uqlibrary-search');
+        var searchWrapper = parent.shadowRoot.querySelector('#searchWrapper');
+        var search = searchWrapper.querySelector('#search');
+        var filterDropDown = search.querySelector('#filters');
+        var searchInput = search.querySelector('input');
+        var searchPlaceholderText = searchInput.placeholder;
 
-      describe('uqlibrary-search', function () {
-        before(function () {
+
+        describe('uqlibrary-search', function () {
+            before(function () {
+
+
+            });
         });
-      });
+
+        test('triggers search filter menu', function(done) {
+            setTimeout(function() {
+
+                // There should be 9 filter options
+                expect(filterDropDown.querySelector('#filterSelector').querySelectorAll('paper-item').length == 9);
+
+                expect(searchPlaceholderText == "Search library");
+                // expects filter options to appear when user clicks magnifying glass dropdown
+                // if filterDropDown is not already open, then open it, otherwise just check that it appears correctly
+
+                if (filterDropDown.offsetParent == null) {
+                    filterDropDown.querySelector('#searchIcon').fire('tap');
+                    expect(filterDropDown.offsetParent == searchWrapper);
+                } if (filterDropDown.offsetParent == searchWrapper) {
+                    filterDropDown.querySelector('#searchIcon').fire('tap');
+                    expect(filterDropDown.offsetParent == null);
+                }
+
+
+            }, 6000);
+            done();
+
+        });
+
+        test('make a selection from the filter menu', function(done) {
+            setTimeout(function() {
+                if (filterDropDown.offsetParent == null) {
+                    filterDropDown.querySelector('#searchIcon').fire('tap');
+                    filterDropDown.querySelector('#filterSelector').querySelectorAll('paper-item')[2].fire('tap');
+                    expect(searchPlaceholderText == "Search journal articles");
+                } if (filterDropDown.offsetParent == searchWrapper) {
+                    filterDropDown.querySelector('#filterSelector').querySelectorAll('paper-item')[2].fire('tap');
+                    expect(searchPlaceholderText == "Search journal articles");
+                }
+            }, 6000);
+            done();
+        });
+
+// TODO: get keyboard events to fire to simulate user typing into the search box
+//        test('get autosuggestions', function(done) {
+//            setTimeout(function() {
+//
+//                searchInput.fire('tap');
+//                var keyboardEvent = document.createEvent("KeyboardEvent");
+//                var initMethod = typeof keyboardEvent.initKeyboardEvent !== 'undefined' ? "initKeyboardEvent" : "initKeyEvent";
+//                keyboardEvent[initMethod](
+//                        "keydown", // event type : keydown, keyup, keypress
+//                        true, // bubbles
+//                        true, // cancelable
+//                        window, // viewArg: should be window
+//                        false, // ctrlKeyArg
+//                        false, // altKeyArg
+//                        false, // shiftKeyArg
+//                        false, // metaKeyArg
+//                        84, // keyCodeArg : unsigned long the virtual key code, else 0
+//                        0 // charCodeArgs : unsigned long the Unicode character associated with the depressed key, else 0
+//                );
+//                document.dispatchEvent(keyboardEvent);
+//
+//
+//            }, 6000);
+//            done();
+//        });
+
     });
-  </script>
+</script>
 
 </body>
 </html>
