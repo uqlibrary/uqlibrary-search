@@ -1,15 +1,20 @@
-uqlibrary-search
-================
+# uqlibrary-search
 
-See the [component page](https://uqlibrary.github.io/uqlibrary-search) for more information.
+uqlibrary-search is a simple list view showing opening search for all libraries at the University of Queensland. 
 
-## Testing Your Element
-
-### web-component-tester
-
-The tests are compatible with [web-component-tester](https://github.com/Polymer/web-component-tester). You can run them on multiple local browsers via:
-
+### Getting Started
+Install Node.JS and run the following oneliner in the project directory:
 ```sh
-npm install -g web-component-tester
-wct
+npm install -g bower && bower install
+```
+
+### Developing
+- Please adhere to the Polymer code style guide provided at [Style Guide](http://polymerelements.github.io/style-guide/). 
+- Colors and common styles are imported (bower install) from [uqlibrary-styles](http://github.com/uqlibrary/uqlibrary-search).
+- GitHub pages should be updated after every commit to Master by running the "generate-gh-pages.sh" in the /bin/ directory
+
+### Testing
+Tests are run using the Web Component Tester. Either navigate to /tests/index.html in a browser or using the command line:
+```sh
+wct --local all
 ```
