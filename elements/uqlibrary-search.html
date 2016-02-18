@@ -67,7 +67,7 @@ Example:
 
     @media screen and (max-width: 650px) {
       :host {
-        @apply(--layout-vertical);
+        @apply(--layout-flex-none);
       }
 
       #buttonTitle {
@@ -78,6 +78,8 @@ Example:
       paper-dropdown-menu,
       paper-button {
         margin: 4px;
+        width: 100%;
+        display: block;
       }
 
       paper-button iron-icon {
