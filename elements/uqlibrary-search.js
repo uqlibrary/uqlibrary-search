@@ -45,6 +45,12 @@
       }
     },
 
+    _searchActivated: function(e) {
+      //this.$.ga.addEvent('Search performed');
+
+      console.log('looking ...');
+    },
+
     ready: function() {
         var self = this;
         var defaultHelpLinks = [
@@ -149,9 +155,5 @@
         this.selectedSource = this.sources[this.selectedSourceIndex];
     },
 
-    /** Adds GA event */
-    _viewHoursClicked: function() {
-        this.$.ga.addEvent('Search performed');
-    }
   });
 })();
