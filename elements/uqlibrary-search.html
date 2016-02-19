@@ -63,7 +63,12 @@ Example:
       display: none;
     }
 
-
+    iron-dropdown {
+      border-radius: 3px;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                  0 1px 5px 0 rgba(0, 0, 0, 0.12),
+                  0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    }
 
     @media screen and (max-width: 650px) {
       :host {
@@ -92,7 +97,14 @@ Example:
     <uqlibrary-ga id="ga" appName="Search"></uqlibrary-ga>
     <iron-a11y-keys target="[[inputKeyword]]" keys="enter" on-keys-pressed="_searchActivated"></iron-a11y-keys>
 
-      <paper-dropdown-menu id="menuSources" label="Search">
+    <byutv-jsonp
+            id="jsonpQuery"
+            callback-value="foo"
+            on-response="_suggestionsLoaded"
+            on-error="_suggestionsLoadingError"
+            debounce-duration="300"></byutv-jsonp>
+
+      <paper-dropdown-menu id="menuSources" label="Search" on-paper-dropdown-close="_sourceSelected">
         <paper-listbox class="dropdown-content" selected="{{selectedSourceIndex}}">
           <template is="dom-repeat" items="[[sources]]">
             <paper-item>
@@ -101,13 +113,22 @@ Example:
           </template>
         </paper-listbox>
       </paper-dropdown-menu>
-      <paper-input id="inputKeyword" label="[[selectedSource.inputPlaceholder]]">
+
+      <paper-input id="inputKeyword" label="[[selectedSource.inputPlaceholder]]" value="{{keyword}}">
       </paper-input>
 
     <paper-button id="buttonSearch" on-tap="_searchActivated" class="button-colored-accent">
       <iron-icon icon="icons:search" aria-label="Search [[selectedSource.title]]"></iron-icon>
       <span id="buttonTitle">Search</span>
     </paper-button>
+
+    <iron-dropdown id="menuSuggestions" no-auto-focus="true" allow-outside-scroll="true" horizontal-align="left" vertical-align="top" vertical-offset="60">
+      <paper-listbox class="dropdown-content">
+        <template is="dom-repeat" items="{{suggestions}}">
+          <paper-item> [[item.name]] </paper-item>
+        </template>
+      </paper-listbox>
+    </iron-dropdown>
 
   </template>
 
