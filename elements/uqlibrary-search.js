@@ -1,7 +1,12 @@
 (function () {
   Polymer({
     is: 'uqlibrary-search',
+
     properties: {
+      gaAppName: {
+        type: String,
+        value: 'Search'
+      },
       api : {
           type: Object,
           value: {
@@ -66,6 +71,9 @@
         type: String,
         observer: '_keywordChanged'
       },
+      selectedSuggestion: {
+        type: Object
+      },
       maxRecentSuggestions: {
         type: Number,
         value: 2
@@ -79,6 +87,9 @@
         value: function() {
           return this.$.inputKeyword;
         }
+      },
+      recent: {
+        type: Object
       }
     },
 
@@ -89,21 +100,89 @@
     },
 
     _searchActivated: function(e) {
-      //TODO: record GA event: search
-      //this.$.ga.addEvent('Search performed');
 
-      console.log('_searchActivated: looking ...');
+      if (this.searching) {
+        return;
+      }
+      this.searching = true;
+
+      var searchText = this.selectedSuggestion ? this.selectedSuggestion.name : this.keyword;
+      var searchUrl = '';
+      var recent = {name: this.keyword, origName: searchText, type: this.selectedSource.type, recent: true};
+
+      if (this.selectedSuggestion &&
+          (this.selectedSource.type === 'databases' || this.selectedSource.type === 'learning_resources')) {
+        searchUrl = this.selectedSuggestion.url;
+      }
+
+      if (! searchUrl) {
+        if (this.selectedSource.type === 'learning_resources' || this.selectedSource.type === 'exam_papers') {
+          var s = searchText.split(" ");
+          searchText = s[0];
+        }
+        else if (this.selectedSource.type === 'catalogue') {
+          searchText = this._cleanSearchQuery(searchText);
+        }
+        searchUrl = this.selectedSource.url + encodeURIComponent(searchText);
+        if (this.selectedSource.urlAppend) {
+          searchUrl += this.selectedSource.urlAppend;
+        }
+      } else {
+        recent.url = searchUrl;
+      }
+
+      if (this.selectedSuggestion) {
+        this._saveRecentSearch(recent);
+      }
+
+      this.async(function () {
+        document.location.href = searchUrl;
+      }, 100);
+
+      this.$.ga.addEvent(this.selectedSource.type, searchText);
+    },
+
+    _saveRecentSearch: function (recent) {
+      if (!this.recent || !this.recent.searches) {
+        this.recent = {searches: {}};
+      }
+      if (
+          this.recent.searches.hasOwnProperty(this.selectedSource.type)
+      ) {
+        var exists = this.recent.searches[this.selectedSource.type].filter(function (v) {
+          return (v.name === recent.name);
+        });
+        if (! exists.length) {
+          this.recent.searches[this.selectedSource.type].unshift(recent);
+          if (this.recent.searches[this.selectedSource.type].length >= this.maxRecentSearches) {
+            this.recent.searches[this.selectedSource.type].pop();
+          }
+        }
+      } else {
+        this.recent.searches[this.selectedSource.type] = [recent];
+      }
+      this.recent.lastSelectedFilter = this.selectedSourceIndex;
+      this.$.localstorage.save();
+    },
+
+    _cleanSearchQuery: function (query) {
+      // remove non-alphanumerical characters and multiple whitespaces
+      return  query.replace( new RegExp( '[^a-zA-Z0-9 @]' , 'gi' ), " ").replace(new RegExp( "\\s+" , 'gi' ), " ");
     },
 
     _sourceSelected: function(e) {
-      if (this.selectedSource && !this.selectedSource.autoSuggest)
-        this.suggestions = [];
+      this.async(function () {
+        if (this.selectedSource && !this.selectedSource.autoSuggest)
+          this.suggestions = [];
 
-      this._keywordChanged();
-      this.$.inputKeyword.focus();
+        this._keywordChanged();
+        this.$.inputKeyword.focus();
+      }, 100);
     },
 
     _keywordChanged: function(newValue, oldValue) {
+      this.selectedSuggestion = null;
+
       if (this.keyword.length > 2 && this.selectedSource.autoSuggest) {
 
         this.$.jsonpQuery.url = this.selectedSource.api.url;
@@ -126,12 +205,9 @@
 
     _suggestionSelected: function (e) {
       this.async(function () {
-        this.keyword = this.$.listSuggestions.selectedItem.getAttribute('data-value');
+        this.keyword = this.suggestions[this.$.listSuggestions.selected].name;
+        this.selectedSuggestion = this.suggestions[this.$.listSuggestions.selected];
         this.$.menuSuggestions.close();
-
-        //TODO: record GA event: search from auto suggestion
-        //this.$.inputKeyword.value = e.detail.item.getAttribute('data-value');
-
         this._searchActivated();
       }, 100);
     },
@@ -153,7 +229,6 @@
 
     _closeSuggestions: function (e) {
       this.async(function () {
-        if (!this.$.listSuggestions.focusedItem)
           this.$.menuSuggestions.close();
       }, 100);
     },
@@ -213,14 +288,28 @@
     _recentSuggestions: function () {
       var recent = [];
       var that = this;
-      if (this.recent && this.recent.searches && this.recent.searches.hasOwnProperty(this.selectedFilter)) {
-        recent = this.recent.searches[this.selectedFilter].filter(function (v) {
-          return (v.name.toLowerCase().indexOf(that.searchText.toLowerCase()) !== -1);
+      if (this.recent && this.recent.searches && this.recent.searches.hasOwnProperty(this.selectedSource.type)) {
+        recent = this.recent.searches[this.selectedSource.type].filter(function (v) {
+          return (v.name.toLowerCase().indexOf(that.keyword.toLowerCase()) !== -1);
         });
       }
       return recent.sort(function (a, b) {
         return a.name.length - b.name.length;
       }).slice(0, this.maxRecentSuggestions);
+    },
+
+    _localStorageLoaded: function() {
+      if (!this.recent || !this.recent.searches) {
+        this.recent = {searches: {}};
+      }
+
+      if (this.recent && this.recent.lastSelectedFilter) {
+        this.selectedSourceIndex = this.recent.lastSelectedFilter;
+      }
+    },
+
+    _recentSearchClass: function(isRecent) {
+      return isRecent ? 'recent-search' : '';
     },
 
     ready: function() {
@@ -279,7 +368,7 @@
         },
         { name: 'Journals',
           type: 'journals',
-          url: this.journals,
+          url: this.links.journals,
           autoSuggest: true,
           api: this.api.summonApi,
           icon: 'editor:insert-drive-file',
@@ -317,7 +406,8 @@
         },
         { name: 'Course reading lists',
           type: 'learning_resources',
-          url: this.lr, autoSuggest: true,
+          url: this.links.lr,
+          autoSuggest: true,
           api: this.api.lrApi,
           icon: 'icons:list',
           inputPlaceholder: 'Enter a course code',
@@ -326,8 +416,10 @@
       ];
       this.selectedSource = this.sources[this.selectedSourceIndex];
 
-      this.$.menuSuggestions.positionTarget = this.$.inputKeyword;
-
+      this.async(function () {
+        this.$.menuSuggestions.positionTarget = this.$.inputKeyword;
+        this.$.inputKeyword.focus();
+      }, 100);
     }
 
   });
