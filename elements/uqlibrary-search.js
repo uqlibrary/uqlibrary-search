@@ -73,6 +73,12 @@
       maxRecentSearches: {
         type: Number,
         value: 10
+      },
+      inputKeywordTarget: {
+        type: Object,
+        value: function() {
+          return this.$.inputKeyword;
+        }
       }
     },
 
@@ -83,15 +89,17 @@
     },
 
     _searchActivated: function(e) {
+      //TODO: record GA event: search
       //this.$.ga.addEvent('Search performed');
 
-      console.log('looking ...');
+      console.log('_searchActivated: looking ...');
     },
 
     _sourceSelected: function(e) {
       if (this.selectedSource && !this.selectedSource.autoSuggest)
         this.suggestions = [];
 
+      this._keywordChanged();
       this.$.inputKeyword.focus();
     },
 
@@ -109,12 +117,45 @@
 
     _suggestionsLoaded : function(e) {
       this.suggestions = this._processSuggestions(e.detail.result ? e.detail.result : e.detail);
-      console.log(this.suggestions.length);
-      this.$.menuSuggestions.open();
+      this._openSuggestions(e);
     },
 
     _suggestionsLoadingError : function(e) {
       console.log(e);
+    },
+
+    _suggestionSelected: function (e) {
+      this.async(function () {
+        this.keyword = this.$.listSuggestions.selectedItem.getAttribute('data-value');
+        this.$.menuSuggestions.close();
+
+        //TODO: record GA event: search from auto suggestion
+        //this.$.inputKeyword.value = e.detail.item.getAttribute('data-value');
+
+        this._searchActivated();
+      }, 100);
+    },
+
+    _focusSuggestions: function (e) {
+      this.async(function () {
+        if (this.$.menuSuggestions.opened) {
+          this.$.listSuggestions.focus();
+        }
+      }, 100);
+    },
+
+    _openSuggestions: function (e) {
+      this.async(function () {
+        if (this.selectedSource.autoSuggest && this.suggestions && this.suggestions.length > 0)
+          this.$.menuSuggestions.open();
+      }, 100);
+    },
+
+    _closeSuggestions: function (e) {
+      this.async(function () {
+        if (!this.$.listSuggestions.focusedItem)
+          this.$.menuSuggestions.close();
+      }, 100);
     },
 
     _processSuggestions: function (suggestions) {

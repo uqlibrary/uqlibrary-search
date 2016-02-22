@@ -95,7 +95,9 @@ Example:
   </style>
 
     <uqlibrary-ga id="ga" appName="Search"></uqlibrary-ga>
-    <iron-a11y-keys target="[[inputKeyword]]" keys="enter" on-keys-pressed="_searchActivated"></iron-a11y-keys>
+
+    <iron-a11y-keys target="[[inputKeywordTarget]]" keys="enter" on-keys-pressed="_searchActivated"></iron-a11y-keys>
+    <iron-a11y-keys target="[[inputKeywordTarget]]" keys="down" on-keys-pressed="_focusSuggestions"></iron-a11y-keys>
 
     <byutv-jsonp
             id="jsonpQuery"
@@ -104,7 +106,7 @@ Example:
             on-error="_suggestionsLoadingError"
             debounce-duration="300"></byutv-jsonp>
 
-      <paper-dropdown-menu id="menuSources" label="Search" on-paper-dropdown-close="_sourceSelected">
+      <paper-dropdown-menu id="menuSources" label="Search" on-paper-dropdown-close="_sourceSelected" >
         <paper-listbox class="dropdown-content" selected="{{selectedSourceIndex}}">
           <template is="dom-repeat" items="[[sources]]">
             <paper-item>
@@ -114,7 +116,7 @@ Example:
         </paper-listbox>
       </paper-dropdown-menu>
 
-      <paper-input id="inputKeyword" label="[[selectedSource.inputPlaceholder]]" value="{{keyword}}">
+      <paper-input id="inputKeyword" label="[[selectedSource.inputPlaceholder]]" value="{{keyword}}" on-focus="_openSuggestions" on-blur="_closeSuggestions">
       </paper-input>
 
     <paper-button id="buttonSearch" on-tap="_searchActivated" class="button-colored-accent">
@@ -122,10 +124,10 @@ Example:
       <span id="buttonTitle">Search</span>
     </paper-button>
 
-    <iron-dropdown id="menuSuggestions" no-auto-focus="true" allow-outside-scroll="true" horizontal-align="left" vertical-align="top" vertical-offset="60">
-      <paper-listbox class="dropdown-content">
+    <iron-dropdown id="menuSuggestions" no-auto-focus="true" allow-outside-scroll="false" horizontal-align="left" vertical-align="top" vertical-offset="60">
+      <paper-listbox id="listSuggestions" class="dropdown-content" on-iron-activate="_suggestionSelected">
         <template is="dom-repeat" items="{{suggestions}}">
-          <paper-item> [[item.name]] </paper-item>
+          <paper-item data-value$="[[item.name]]"> [[item.name]] </paper-item>
         </template>
       </paper-listbox>
     </iron-dropdown>
