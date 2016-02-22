@@ -132,7 +132,7 @@ Example:
       <span id="buttonTitle">Search</span>
     </paper-button>
 
-    <iron-dropdown id="menuSuggestions" allow-outside-scroll="true" no-auto-focus="true" horizontal-align="left" vertical-align="top" vertical-offset="60" suffix>
+    <iron-dropdown id="menuSuggestions" no-auto-focus="true" horizontal-align="left" vertical-align="top" vertical-offset="60" suffix>
       <paper-listbox id="listSuggestions" class="dropdown-content" on-iron-activate="_suggestionSelected" class="dropdown-content">
         <template is="dom-repeat" items="{{suggestions}}">
           <paper-item class$="{{_recentSearchClass(item.recent)}} "> [[item.name]] </paper-item>
