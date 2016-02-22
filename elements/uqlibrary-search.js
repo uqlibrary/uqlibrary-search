@@ -3,6 +3,9 @@
     is: 'uqlibrary-search',
 
     properties: {
+      /**
+       * Application name for google analytics records
+       */
       gaAppName: {
         type: String,
         value: 'Search'
