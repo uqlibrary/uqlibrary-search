@@ -89,7 +89,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             flush(function () {
 
                 var inputKeyword = testObj.querySelector('#inputKeyword');
-                var menuSuggestions = testObj.querySelector('#menuSuggestions');
+                var menuSuggestions = testObj.querySelector('#listSuggestions');
 
                 expect(menuSuggestions).to.not.be.null;
                 expect(menuSuggestions).not.to.be.visible;
@@ -99,8 +99,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 setTimeout(function(){
                     expect(menuSuggestions).to.not.be.null;
                     expect(menuSuggestions).to.be.visible;
+
+                    var items = menuSuggestions.querySelectorAll('paper-item');
+
+                    expect(items.length).to.be.above(0);
+
                     done();
-                }, 200);
+                }, 500);
+
+//                done();
             });
         });
 

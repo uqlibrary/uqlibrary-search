@@ -109,7 +109,7 @@ Example:
           this.selectedSuggestion = null;
           if (!this.enableAutosuggest || this.keyword.length <= 2) {
             this.$.menuSuggestions.close();
-          } else if (this.suggestions.length > 0) {
+          } else if (this.suggestions && this.suggestions.length > 0) {
             this.$.menuSuggestions.open();
           }
         },
