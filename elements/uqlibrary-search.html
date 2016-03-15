@@ -22,84 +22,53 @@ Example:
       @apply(--layout-wrap);
     }
 
-    #container {
-      @apply(--layout-horizontal);
-      @apply(--layout-wrap);
-    }
-
-    #flexContainer {
-      @apply(--layout-flex);
-    }
-
-    paper-dropdown-menu {
-      @apply(--layout-flex-1);
-      min-width: 200px;
-    }
-
-    paper-input {
-      @apply(--layout-flex);
-      padding: 2px;
-      min-width: 250px;
-    }
-
-    paper-dropdown-menu,
-    paper-input {
+    #menuSources,
+    #searchKeywordInput {
+      margin-right: 8px;
+      padding: 4px;
       background-color: var(--secondary-color-light);
-      padding: 0 4px;
-      margin: 0 4px 0 0;
       border-radius: 3px;
+      min-width: 300px;
     }
 
-    paper-button {
+    #searchKeywordInput {
+      @apply(--layout-flex);
+    }
+
+    #menuSources {
       @apply(--layout-flex-1);
-      margin: 0;
     }
 
-    paper-button iron-icon {
-      margin-top: 5px;
-    }
-    
-    #buttonTitle {
-      display: none;
+    #buttonSearch {
+      @apply(--layout-flex-1);
     }
 
-    .recent-search {
-      color: var(--theme-color);
+    #buttonSearch iron-icon {
+      margin-top: 9px;
     }
 
-    iron-dropdown {
-      border-radius: 3px;
-      @apply(--shadow-elevation-2dp);
+    @media screen and (max-width: 320px) {
+      #menuSources {
+        min-width: calc(100%);
+      }
     }
 
-    @media screen and (max-width: 650px) {
-      :host {
-        @apply(--layout-flex-none);
+    @media screen and (max-width: 815px) {
+
+      #menuSources {
+        @apply(--layout-flex);
+        margin-bottom: 8px;
       }
 
-      #buttonTitle {
-        display: inline;
-      }
-
-      paper-input,
-      paper-dropdown-menu,
-      paper-button {
-        margin: 4px;
-        width: 100%;
-        display: block;
-      }
-
-      paper-button iron-icon {
-        margin-top: 0;
+      #searchKeywordInput {
+        @apply(--layout-flex);
+        min-width: calc(100% - 100px);
       }
     }
 
   </style>
 
-    <uqlibrary-ga id="ga" appName="{{gaAppName}}"></uqlibrary-ga>
-
-    <iron-a11y-keys target="[[inputKeywordTarget]]" keys="enter" on-keys-pressed="_searchActivated"></iron-a11y-keys>
-    <iron-a11y-keys target="[[inputKeywordTarget]]" keys="down" on-keys-pressed="_focusSuggestions"></iron-a11y-keys>
+    <uqlibrary-ga id="ga" app-name="{{gaAppName}}"></uqlibrary-ga>
 
     <byutv-jsonp
             id="jsonpQuery"
@@ -114,31 +83,22 @@ Example:
                        on-iron-localstorage-load="_localStorageLoaded"
                        on-iron-localstorage-load-empty="_localStorageLoaded"></iron-localstorage>
 
-      <paper-dropdown-menu id="menuSources" label="Search" on-paper-dropdown-close="_sourceSelected" on-focus="_closeSuggestions">
-        <paper-listbox class="dropdown-content" selected="{{selectedSourceIndex}}">
-          <template is="dom-repeat" items="[[sources]]">
-            <paper-item>
-              <iron-icon icon="[[item.icon]]"></iron-icon> [[item.name]]
-            </paper-item>
-          </template>
-        </paper-listbox>
-      </paper-dropdown-menu>
-
-      <paper-input id="inputKeyword" label="[[selectedSource.inputPlaceholder]]" value="{{keyword}}" on-focus="_openSuggestions">
-      </paper-input>
-
-    <paper-button id="buttonSearch" on-tap="_searchActivated" class="button-colored-accent" on-focus="_closeSuggestions">
-      <iron-icon icon="icons:search" aria-label="Search [[selectedSource.title]]"></iron-icon>
-      <span id="buttonTitle">Search</span>
-    </paper-button>
-
-    <iron-dropdown id="menuSuggestions" no-auto-focus="true" horizontal-align="left" vertical-align="top" vertical-offset="60" suffix>
-      <paper-listbox id="listSuggestions" class="dropdown-content" on-iron-activate="_suggestionSelected" class="dropdown-content">
-        <template is="dom-repeat" items="{{suggestions}}">
-          <paper-item class$="{{_recentSearchClass(item.recent)}} "> [[item.name]] </paper-item>
+    <paper-dropdown-menu id="menuSources" label="Search" on-paper-dropdown-close="_sourceSelected" allow-outside-scroll="true">
+      <paper-listbox class="dropdown-content" selected="{{selectedSourceIndex}}">
+        <template is="dom-repeat" items="[[sources]]">
+          <paper-item>
+            <iron-icon icon="[[item.icon]]"></iron-icon> [[item.name]]
+          </paper-item>
         </template>
       </paper-listbox>
-    </iron-dropdown>
+    </paper-dropdown-menu>
+
+    <uqlibrary-autosuggest-input id="searchKeywordInput" label="[[selectedSource.inputPlaceholder]]" source="{{selectedSource}}"
+                                 on-activated="_searchActivated" on-keyword-changed="_keywordChanged"></uqlibrary-autosuggest-input>
+
+    <paper-button id="buttonSearch" on-tap="_searchActivated" class="button-colored-accent">
+      <iron-icon icon="icons:search" aria-label="Search [[selectedSource.title]]"></iron-icon>
+    </paper-button>
 
   </template>
 

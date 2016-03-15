@@ -10,6 +10,7 @@
         type: String,
         value: 'Search'
       },
+
       api : {
           type: Object,
           value: {
@@ -40,6 +41,7 @@
               }
           }
       },
+
       links : {
           type: Object,
           value: {
@@ -51,46 +53,40 @@
               catalogue: 'https://library.uq.edu.au/search~S7/X?search='
           }
       },
+
       sources: {
         type: Array
       },
+
       suggestions: {
-        type: Array,
-        value: function() {
-          return [];
-        }
+        type: Array
       },
+
       selectedSourceIndex: {
         type: Number,
         value: 0,
         observer: '_selectedSourceIndexChanged'
       },
+
       selectedSource: {
         type: Object,
         notify: true
       },
-      selectedSourceApi: { type: String },
-      keyword: {
-        type: String,
-        observer: '_keywordChanged'
+
+      selectedSourceApi: {
+        type: String
       },
-      selectedSuggestion: {
-        type: Object
-      },
+
       maxRecentSuggestions: {
         type: Number,
         value: 2
       },
+
       maxRecentSearches: {
         type: Number,
         value: 10
       },
-      inputKeywordTarget: {
-        type: Object,
-        value: function() {
-          return this.$.inputKeyword;
-        }
-      },
+
       recent: {
         type: Object
       }
@@ -104,21 +100,17 @@
 
     _searchActivated: function(e) {
 
-      if (this.searching) {
-        return;
-      }
-      this.searching = true;
-
-      var searchText = this.selectedSuggestion ? this.selectedSuggestion.name : this.keyword;
+      var searchText = e.detail.name ? e.detail.name : this.$.searchKeywordInput.keyword;
+      var selectedSuggestion = e.detail.name ? e.detail : null;
       var searchUrl = '';
-      var recent = {name: this.keyword, origName: searchText, type: this.selectedSource.type, recent: true};
+      var recent = {name: searchText, origName: searchText, type: this.selectedSource.type, recent: true};
 
-      if (this.selectedSuggestion &&
+      if (selectedSuggestion &&
           (this.selectedSource.type === 'databases' || this.selectedSource.type === 'learning_resources')) {
-        searchUrl = this.selectedSuggestion.url;
+        searchUrl = selectedSuggestion.url;
       }
 
-      if (! searchUrl) {
+      if (!searchUrl) {
         if (this.selectedSource.type === 'learning_resources' || this.selectedSource.type === 'exam_papers') {
           var s = searchText.split(" ");
           searchText = s[0];
@@ -134,15 +126,17 @@
         recent.url = searchUrl;
       }
 
-      if (this.selectedSuggestion) {
+      if (selectedSuggestion) {
         this._saveRecentSearch(recent);
       }
 
-      this.async(function () {
-        document.location.href = searchUrl;
-      }, 100);
+      console.log(searchUrl);
 
-      this.$.ga.addEvent(this.selectedSource.type, searchText);
+      //this.async(function () {
+      //  document.location.href = searchUrl;
+      //}, 100);
+      //
+      //this.$.ga.addEvent(this.selectedSource.type, searchText);
     },
 
     _saveRecentSearch: function (recent) {
@@ -170,26 +164,31 @@
 
     _cleanSearchQuery: function (query) {
       // remove non-alphanumerical characters and multiple whitespaces
-      return  query.replace( new RegExp( '[^a-zA-Z0-9 @]' , 'gi' ), " ").replace(new RegExp( "\\s+" , 'gi' ), " ");
+      return  query.replace( new RegExp( '[^a-zA-Z0-9 @]' , 'gi' ), " ").replace(new RegExp( "\\s+" , 'gi' ), " ").replace(/\s/g, '+');
     },
 
     _sourceSelected: function(e) {
       this.async(function () {
-        if (this.selectedSource && !this.selectedSource.autoSuggest)
-          this.suggestions = [];
+
+        if (this.selectedSource && !this.selectedSource.autoSuggest) {
+          this.$.searchKeywordInput.suggestions = [];
+        }
 
         this._keywordChanged();
-        this.$.inputKeyword.focus();
+        this.$.searchKeywordInput.setFocus();
       }, 100);
     },
 
-    _keywordChanged: function(newValue, oldValue) {
-      this.selectedSuggestion = null;
+    _keywordChanged: function(e) {
 
-      if (this.keyword.length > 2 && this.selectedSource.autoSuggest) {
+      var keyword = e && e.detail && e.detail.value ? e.detail.value : this.$.searchKeywordInput.keyword;
+
+      if (keyword.length > 2 && this.selectedSource.autoSuggest) {
 
         this.$.jsonpQuery.url = this.selectedSource.api.url;
-        this.selectedSource.api.params.prefix = encodeURIComponent(this.keyword);
+
+        keyword = this._cleanSearchQuery(keyword);
+        this.selectedSource.api.params.prefix = keyword;// encodeURIComponent(keyword);
         this.$.jsonpQuery.params = this.selectedSource.api.params;
 
         if(!this.$.jsonpQuery.loading)
@@ -199,41 +198,12 @@
 
     _suggestionsLoaded : function(e) {
       this.suggestions = this._processSuggestions(e.detail.result ? e.detail.result : e.detail);
-      this._openSuggestions(e);
+      this.$.searchKeywordInput.suggestions = this.suggestions;
     },
 
     _suggestionsLoadingError : function(e) {
+      console.log('_suggestionsLoadingError');
       console.log(e);
-    },
-
-    _suggestionSelected: function (e) {
-      this.async(function () {
-        this.keyword = this.suggestions[this.$.listSuggestions.selected].name;
-        this.selectedSuggestion = this.suggestions[this.$.listSuggestions.selected];
-        this.$.menuSuggestions.close();
-        this._searchActivated();
-      }, 100);
-    },
-
-    _focusSuggestions: function (e) {
-      this.async(function () {
-        if (this.$.menuSuggestions.opened) {
-          this.$.listSuggestions.focus();
-        }
-      }, 100);
-    },
-
-    _openSuggestions: function (e) {
-      this.async(function () {
-        if (this.selectedSource.autoSuggest && this.suggestions && this.suggestions.length > 0)
-          this.$.menuSuggestions.open();
-      }, 100);
-    },
-
-    _closeSuggestions: function (e) {
-      this.async(function () {
-          this.$.menuSuggestions.close();
-      }, 100);
     },
 
     _processSuggestions: function (suggestions) {
@@ -290,10 +260,11 @@
 
     _recentSuggestions: function () {
       var recent = [];
-      var that = this;
+      var keyword = this.$.searchKeywordInput.keyword;
+
       if (this.recent && this.recent.searches && this.recent.searches.hasOwnProperty(this.selectedSource.type)) {
         recent = this.recent.searches[this.selectedSource.type].filter(function (v) {
-          return (v.name.toLowerCase().indexOf(that.keyword.toLowerCase()) !== -1);
+          return (v.name.toLowerCase().indexOf(keyword.toLowerCase()) !== -1);
         });
       }
       return recent.sort(function (a, b) {
@@ -420,8 +391,7 @@
       this.selectedSource = this.sources[this.selectedSourceIndex];
 
       this.async(function () {
-        this.$.menuSuggestions.positionTarget = this.$.inputKeyword;
-        this.$.inputKeyword.focus();
+        this.$.searchKeywordInput.setFocus();
       }, 100);
     }
 
