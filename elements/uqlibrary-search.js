@@ -132,11 +132,11 @@
 
       console.log(searchUrl);
 
-      //this.async(function () {
-      //  document.location.href = searchUrl;
-      //}, 100);
-      //
-      //this.$.ga.addEvent(this.selectedSource.type, searchText);
+      this.async(function () {
+        document.location.href = searchUrl;
+      }, 100);
+
+      this.$.ga.addEvent(this.selectedSource.type, searchText);
     },
 
     _saveRecentSearch: function (recent) {

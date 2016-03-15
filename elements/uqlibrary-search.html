@@ -28,19 +28,11 @@ Example:
       padding: 4px;
       background-color: var(--secondary-color-light);
       border-radius: 3px;
-      min-width: 300px;
+      width: 200px;
     }
 
     #searchKeywordInput {
       @apply(--layout-flex);
-    }
-
-    #menuSources {
-      @apply(--layout-flex-1);
-    }
-
-    #buttonSearch {
-      @apply(--layout-flex-1);
     }
 
     #buttonSearch iron-icon {
@@ -58,6 +50,7 @@ Example:
       #menuSources {
         @apply(--layout-flex);
         margin-bottom: 8px;
+        min-width: 300px;
       }
 
       #searchKeywordInput {
