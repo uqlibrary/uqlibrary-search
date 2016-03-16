@@ -23,12 +23,18 @@ Example:
     }
 
     #menuSources,
+    #buttonSearch {
+      @apply(--layout-flex-1);
+    }
+
+    #menuSources,
     #searchKeywordInput {
       margin-right: 8px;
-      padding: 4px;
+      padding-left: 8px;
+      padding-right: 8px;
       background-color: var(--secondary-color-light);
       border-radius: 3px;
-      width: 200px;
+      min-width: 200px;
     }
 
     #searchKeywordInput {
@@ -46,16 +52,20 @@ Example:
     }
 
     @media screen and (max-width: 815px) {
+      :host {
+        @apply(--layout-flex-none);
+      }
 
       #menuSources {
-        @apply(--layout-flex);
+        width: 100%;
+        display: block;
         margin-bottom: 8px;
+        margin-right: 0;
         min-width: 300px;
       }
 
       #searchKeywordInput {
-        @apply(--layout-flex);
-        min-width: calc(100% - 100px);
+        min-width: calc(100% - 105px);
       }
     }
 
