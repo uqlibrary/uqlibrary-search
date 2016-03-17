@@ -74,31 +74,49 @@
         type: Array
       },
 
+      /**
+       * Selected search source index
+       */
       selectedSourceIndex: {
         type: Number,
         value: 0,
         observer: '_selectedSourceIndexChanged'
       },
 
+      /**
+       * Selected search source
+       */
       selectedSource: {
         type: Object,
         notify: true
       },
 
+      /**
+       * Selected search source API
+       */
       selectedSourceApi: {
         type: String
       },
 
+      /**
+       * Max number of recent suggestions
+       */
       maxRecentSuggestions: {
         type: Number,
         value: 2
       },
 
+      /**
+       * Max number of recent searchers to keep
+       */
       maxRecentSearches: {
         type: Number,
         value: 10
       },
 
+      /**
+       * Recent searches
+       */
       recent: {
         type: Object
       }
