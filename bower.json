@@ -17,8 +17,8 @@
     "uqlibrary-styles": "uqlibrary/uqlibrary-styles#master",
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "iron-dropdown": "uqlibrary/uqlibrary-iron-dropdown#^1.2.0",
-    "uqlibrary-iron-dropdown": "uqlibrary/uqlibrary-iron-dropdown#master",
-    "byutv-jsonp": "~1.2.0"
+    "uqlibrary-autosuggest-input": "uqlibrary/uqlibrary-autosuggest-input#master",
+    "byutv-jsonp": "uqlibrary/byutv-jsonp#master"
   },
   "devDependencies": {
     "web-component-tester": "*",

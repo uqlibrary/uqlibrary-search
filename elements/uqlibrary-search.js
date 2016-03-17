@@ -11,6 +11,9 @@
         value: 'Search'
       },
 
+      /**
+       * List of api for auto suggestions
+       */
       api : {
           type: Object,
           value: {
@@ -42,6 +45,9 @@
           }
       },
 
+      /**
+       * Redirections list after search is prformed
+       */
       links : {
           type: Object,
           value: {
@@ -54,10 +60,16 @@
           }
       },
 
+      /**
+       * List of search sources
+       */
       sources: {
         type: Array
       },
 
+      /**
+       * List of suggestions to display
+       */
       suggestions: {
         type: Array
       },
@@ -222,7 +234,7 @@
         suggestions.forEach(function (s) {
           s.origName = s.name;
           s.type = type;
-          s.name = s.name + ' (' + (s.course_title ? (s.course_title + '|') : '')  +
+          s.name = s.name + ' (' + (s.course_title ? (s.course_title + ' | ') : '')  +
               (s.campus ? s.campus + ', ' : '') +
               (s.period ? s.period.toLowerCase() : '') +')';
           processed.push(s);
@@ -239,8 +251,8 @@
       else if (api.params.type === this.api.databaseApi.params.type) {
         suggestions.forEach(function (s) {
           s.origName = s.name;
-          s.type = type;
           s.name = s.name + ' (' + (s.type == 'database' ? 'Database' : 'Subject Area')+')';
+          s.type = type;
           processed.push(s);
         });
       }

@@ -1,6 +1,6 @@
 # uqlibrary-search
 
-uqlibrary-search is a simple list view showing opening search for all libraries at the University of Queensland. 
+uqlibrary-search is a search form for UQ Library
 
 Full documentation can be found at [GitHub Pages](http://uqlibrary.github.io/uqlibrary-search).
 

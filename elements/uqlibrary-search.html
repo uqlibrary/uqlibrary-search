@@ -34,7 +34,7 @@ Example:
       padding-right: 8px;
       background-color: var(--secondary-color-light);
       border-radius: 3px;
-      min-width: 200px;
+      min-width: 220px;
     }
 
     #searchKeywordInput {
@@ -78,6 +78,7 @@ Example:
             callback-value="foo"
             on-response="_suggestionsLoaded"
             on-error="_suggestionsLoadingError"
+            disable-uri-encoding="true"
             debounce-duration="300"></byutv-jsonp>
 
     <iron-localstorage id="localstorage"
