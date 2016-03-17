@@ -31,10 +31,10 @@ Example:
     #searchKeywordInput {
       margin-right: 8px;
       padding-left: 8px;
-      padding-right: 8px;
+      padding-right: 4px;
       background-color: var(--secondary-color-light);
       border-radius: 3px;
-      min-width: 220px;
+      min-width: 210px;
     }
 
     #searchKeywordInput {
@@ -87,7 +87,7 @@ Example:
                        on-iron-localstorage-load="_localStorageLoaded"
                        on-iron-localstorage-load-empty="_localStorageLoaded"></iron-localstorage>
 
-    <paper-dropdown-menu id="menuSources" label="Search" on-paper-dropdown-close="_sourceSelected" allow-outside-scroll="true">
+    <paper-dropdown-menu id="menuSources" label="Search" allow-outside-scroll="true" noink no-animations>
       <paper-listbox class="dropdown-content" selected="{{selectedSourceIndex}}">
         <template is="dom-repeat" items="[[sources]]">
           <paper-item>
@@ -98,7 +98,7 @@ Example:
     </paper-dropdown-menu>
 
     <uqlibrary-autosuggest-input id="searchKeywordInput" label="[[selectedSource.inputPlaceholder]]" source="{{selectedSource}}"
-                                 on-activated="_searchActivated" on-keyword-changed="_keywordChanged"></uqlibrary-autosuggest-input>
+                                 on-activated="_searchActivated" on-keyword-changed="_keywordChanged" on-focus="_closeSources"></uqlibrary-autosuggest-input>
 
     <paper-button id="buttonSearch" on-tap="_searchActivated" class="button-colored-accent">
       <iron-icon icon="icons:search" aria-label="Search [[selectedSource.title]]"></iron-icon>

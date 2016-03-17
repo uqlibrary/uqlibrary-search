@@ -125,6 +125,7 @@
     _selectedSourceIndexChanged: function(newValue, oldValue) {
       if (this.sources) {
         this.selectedSource = this.sources[newValue];
+        this._sourceSelected();
       }
     },
 
@@ -159,8 +160,6 @@
       if (selectedSuggestion) {
         this._saveRecentSearch(recent);
       }
-
-      console.log(searchUrl);
 
       this.async(function () {
         document.location.href = searchUrl;
@@ -197,7 +196,7 @@
       return  query.replace( new RegExp( '[^a-zA-Z0-9 @]' , 'gi' ), " ").replace(new RegExp( "\\s+" , 'gi' ), " ").replace(/\s/g, '+');
     },
 
-    _sourceSelected: function(e) {
+    _sourceSelected: function() {
       this.async(function () {
 
         if (this.selectedSource && !this.selectedSource.autoSuggest) {
@@ -312,8 +311,8 @@
       }
     },
 
-    _recentSearchClass: function(isRecent) {
-      return isRecent ? 'recent-search' : '';
+    _closeSources : function(e) {
+      this.$.menuSources.close();
     },
 
     ready: function() {
