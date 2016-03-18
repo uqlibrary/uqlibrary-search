@@ -95,7 +95,9 @@ Example:
 
 
 
-    <paper-input label="Search" id="inputSources" on-tap="_keywordFocused" value="{{selectedSource.name}}">
+    <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value="{{selectedSource.name}}">
+      <paper-icon-button suffix icon="unfold-more" alt="select search scope" title="select search scope" style="margin-top: -15px;">
+      </paper-icon-button>
     </paper-input>
 
     <uqlibrary-iron-dropdown id="menuSources2" no-auto-focus="true"
