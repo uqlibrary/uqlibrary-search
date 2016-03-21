@@ -135,6 +135,8 @@
         this.$.menuSources.close();
         this._sourceSelected();
       }
+
+      return;
     },
 
     _searchActivated: function(e) {
