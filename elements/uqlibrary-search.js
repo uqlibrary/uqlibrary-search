@@ -119,13 +119,20 @@
        */
       recent: {
         type: Object
+      },
+
+      _inputSourcesTarget: {
+        type: Object,
+        value: function () {
+          return this.$.inputSources;
+        }
       }
     },
 
     _selectedSourceIndexChanged: function(newValue, oldValue) {
       if (this.sources) {
         this.selectedSource = this.sources[newValue];
-        this.$.menuSources2.close();
+        this.$.menuSources.close();
         this._sourceSelected();
       }
     },
@@ -314,11 +321,13 @@
 
     _closeSources : function(e) {
       this.$.menuSources.close();
-      this.$.menuSources2.close();
     },
 
     _keywordFocused: function() {
-        this.$.menuSources2.open();
+      if (this.$.menuSources.opened)
+        this.$.menuSources.close();
+      else
+        this.$.menuSources.open();
     },
 
     ready: function() {

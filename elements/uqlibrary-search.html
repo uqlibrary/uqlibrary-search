@@ -22,13 +22,11 @@ Example:
       @apply(--layout-wrap);
     }
 
-    #menuSources,
     #inputSources,
     #buttonSearch {
       @apply(--layout-flex-1);
     }
 
-    #menuSources,
     #inputSources,
     #searchKeywordInput {
       margin-right: 8px;
@@ -39,9 +37,13 @@ Example:
       min-width: 210px;
     }
 
-    #menuSources2 {
+    #menuSources {
       border-radius: 3px;
       @apply(--shadow-elevation-2dp);
+    }
+
+    #listSources paper-item {
+      cursor: pointer;
     }
 
     #searchKeywordInput {
@@ -53,7 +55,6 @@ Example:
     }
 
     @media screen and (max-width: 320px) {
-      #menuSources,
       #inputSources {
         min-width: calc(100%);
       }
@@ -64,7 +65,6 @@ Example:
         @apply(--layout-flex-none);
       }
 
-      #menuSources,
       #inputSources{
         width: 100%;
         display: block;
@@ -98,42 +98,33 @@ Example:
 
 
 
-    <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value="{{selectedSource.name}}">
-      <paper-icon-button suffix icon="unfold-more" alt="select search scope" title="select search scope" style="margin-top: -15px;">
+    <iron-a11y-keys target="[[_inputSourcesTarget]]" keys="enter" on-keys-pressed="_keywordFocused"></iron-a11y-keys>
+    <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value="{{selectedSource.name}}" role="combobox">
+      <paper-icon-button suffix icon="unfold-more" aria-label="select search scope" role="button" alt="select search scope"
+                         title="select search scope" style="margin-top: -15px;">
       </paper-icon-button>
     </paper-input>
 
-    <uqlibrary-iron-dropdown id="menuSources2" no-auto-focus="true"
+    <uqlibrary-iron-dropdown id="menuSources" no-auto-focus="true"
                              horizontal-align="left" vertical-align="top" position-absolute="true"
-                             horizontal-offset="25" vertical-offset="70" tabindex="-1">
+                             horizontal-offset="25" vertical-offset="70" tabindex="-1" aria-label="Search scopes">
 
-      <paper-listbox id="listSources" class="dropdown-content" selected="{{selectedSourceIndex}}">
+      <paper-listbox id="listSources" class="dropdown-content" selected="{{selectedSourceIndex}}" >
         <template is="dom-repeat" items="[[sources]]">
-          <paper-item>
-            <iron-icon icon="[[item.icon]]"></iron-icon> [[item.name]]
+          <paper-item role="option" aria-label="Search in [[item.name]]" title="Search in [[item.name]]">
+            <iron-icon icon="[[item.icon]]" aria-hidden></iron-icon> [[item.name]]
           </paper-item>
         </template>
       </paper-listbox>
-
     </uqlibrary-iron-dropdown>
 
     <uqlibrary-autosuggest-input id="searchKeywordInput" label="[[selectedSource.inputPlaceholder]]" source="{{selectedSource}}"
                                  on-activated="_searchActivated" on-keyword-changed="_keywordChanged" on-focus="_closeSources"></uqlibrary-autosuggest-input>
 
-    <paper-button id="buttonSearch" on-tap="_searchActivated" class="button-colored-accent">
+    <paper-button id="buttonSearch" role="button" on-tap="_searchActivated" class="button-colored-accent"
+                  aria-label="Search [[selectedSource.title]]" title="Search [[selectedSource.title]]">
       <iron-icon icon="icons:search" aria-label="Search [[selectedSource.title]]"></iron-icon>
     </paper-button>
-
-
-    <paper-dropdown-menu id="menuSources" label="Search" allow-outside-scroll="true" noink no-animations style="display: none;">
-      <paper-listbox class="dropdown-content" selected="{{selectedSourceIndex}}">
-        <template is="dom-repeat" items="[[sources]]">
-          <paper-item>
-            <iron-icon icon="[[item.icon]]"></iron-icon> [[item.name]]
-          </paper-item>
-        </template>
-      </paper-listbox>
-    </paper-dropdown-menu>
 
   </template>
 
