@@ -23,6 +23,7 @@ Example:
     }
 
     #menuSources,
+    #inputSources,
     #buttonSearch {
       @apply(--layout-flex-1);
     }
@@ -52,7 +53,8 @@ Example:
     }
 
     @media screen and (max-width: 320px) {
-      #menuSources {
+      #menuSources,
+      #inputSources {
         min-width: calc(100%);
       }
     }
@@ -62,7 +64,8 @@ Example:
         @apply(--layout-flex-none);
       }
 
-      #menuSources {
+      #menuSources,
+      #inputSources{
         width: 100%;
         display: block;
         margin-bottom: 8px;
