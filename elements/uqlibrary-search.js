@@ -218,19 +218,25 @@
     },
 
     _keywordChanged: function(e) {
-
       var keyword = e && e.detail && e.detail.value ? e.detail.value : this.$.searchKeywordInput.keyword;
 
       if (keyword.length > 2 && this.selectedSource.autoSuggest) {
 
-        this.$.jsonpQuery.url = this.selectedSource.api.url;
+        var that = this;
 
-        keyword = this._cleanSearchQuery(keyword);
-        this.selectedSource.api.params.prefix = keyword;// encodeURIComponent(keyword);
-        this.$.jsonpQuery.params = this.selectedSource.api.params;
+        if (that.$.jsonpQuery.loading)
+          that.$.jsonpQuery.abortRequest();
 
-        if(!this.$.jsonpQuery.loading)
-          this.$.jsonpQuery.generateRequest();
+        //new callback value to start a new call as user types
+        that.$.jsonpQuery.callbackValue = "foo" + keyword.length;
+        that.$.jsonpQuery.url = that.selectedSource.api.url;
+
+        keyword = that._cleanSearchQuery(keyword);
+        that.selectedSource.api.params.prefix = keyword;// encodeURIComponent(keyword);
+        that.$.jsonpQuery.params = that.selectedSource.api.params;
+
+        if (!that.$.jsonpQuery.loading)
+          that.$.jsonpQuery.generateRequest();
       }
     },
 
