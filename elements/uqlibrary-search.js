@@ -167,9 +167,7 @@
         recent.url = searchUrl;
       }
 
-      if (selectedSuggestion) {
-        this._saveRecentSearch(recent);
-      }
+      this._saveRecentSearch(recent);
 
       this.async(function () {
         document.location.href = searchUrl;
@@ -182,21 +180,22 @@
       if (!this.recent || !this.recent.searches) {
         this.recent = {searches: {}};
       }
-      if (
-          this.recent.searches.hasOwnProperty(this.selectedSource.type)
-      ) {
+      if (this.recent.searches.hasOwnProperty(this.selectedSource.type)) {
         var exists = this.recent.searches[this.selectedSource.type].filter(function (v) {
           return (v.name === recent.name);
         });
-        if (! exists.length) {
+
+        if (!exists.length) {
           this.recent.searches[this.selectedSource.type].unshift(recent);
           if (this.recent.searches[this.selectedSource.type].length >= this.maxRecentSearches) {
             this.recent.searches[this.selectedSource.type].pop();
           }
         }
+
       } else {
         this.recent.searches[this.selectedSource.type] = [recent];
       }
+
       this.recent.lastSelectedFilter = this.selectedSourceIndex;
       this.$.localstorage.save();
     },
