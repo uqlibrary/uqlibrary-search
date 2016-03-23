@@ -173,6 +173,7 @@
         document.location.href = searchUrl;
       }, 100);
 
+      this.$.inputSources.value = this.selectedSource.name;
       this.$.ga.addEvent(this.selectedSource.type, searchText);
     },
 

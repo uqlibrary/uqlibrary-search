@@ -100,7 +100,7 @@ Example:
 
     <iron-a11y-keys target="[[_inputSourcesTarget]]" keys="enter" on-keys-pressed="_keywordFocused"></iron-a11y-keys>
 
-    <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value="{{selectedSource.name}}" role="combobox">
+    <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value$="{{selectedSource.name}}" role="combobox">
       <paper-icon-button suffix icon="unfold-more" aria-label="select search scope" role="button" alt="select search scope"
                          title="select search scope" style="margin-top: -15px;">
       </paper-icon-button>

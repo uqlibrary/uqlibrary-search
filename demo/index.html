@@ -28,6 +28,17 @@
     <br>
     <br>
     <br>
+    <a href="http://google.com/">Move to another page....</a> and then click back <br><br>
+    <input id="testInput" style="width: 100%">
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <br>
     <br>
     <br>
@@ -54,6 +65,9 @@
     (function () {
         document.cookie="UQLMockData=enabled";
         document.cookie="UQLMockData-PType=1";
+
+      document.querySelector('#testInput').value = "this text should stay when clicking back and forward";
+
     }());
 </script>
 </body>
