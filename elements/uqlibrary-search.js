@@ -331,10 +331,12 @@
     },
 
     _keywordFocused: function() {
-      if (this.$.menuSources.opened)
+      if (this.$.menuSources.opened){
         this.$.menuSources.close();
-      else
+      }
+      else {
         this.$.menuSources.open();
+      }
     },
 
     ready: function() {
