@@ -411,7 +411,7 @@
           icon: 'editor:format-align-justify',
           inputPlaceholder: 'Enter a keyword or database name',
           helpLinks: [
-            { title: 'Database help', url: 'https://www.library.uq.edu.au/v/6559' },
+            { title: 'Database help', url: 'https://www.library.uq.edu.au/research-tools-techniques/searching-databases' },
             { title: 'Browse databases', url: 'https://app.library.uq.edu.au/#/gateways/database' }
           ]
         },
