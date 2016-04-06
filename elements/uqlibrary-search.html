@@ -54,12 +54,6 @@ Example:
       margin-top: 9px;
     }
 
-    @media screen and (max-width: 320px) {
-      #inputSources {
-        min-width: calc(100%);
-      }
-    }
-
     @media screen and (max-width: 815px) {
       :host {
         @apply(--layout-flex-none);
@@ -75,6 +69,12 @@ Example:
 
       #searchKeywordInput {
         min-width: calc(100% - 105px);
+      }
+    }
+
+    @media screen and (max-width: 320px) {
+      #inputSources {
+        min-width: unset;
       }
     }
 
