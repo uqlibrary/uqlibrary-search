@@ -100,7 +100,8 @@ Example:
 
     <iron-a11y-keys target="[[_inputSourcesTarget]]" keys="enter" on-keys-pressed="_keywordFocused"></iron-a11y-keys>
 
-    <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value$="{{selectedSource.name}}" role="combobox">
+    <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value$="{{selectedSource.name}}"
+                 role="combobox" aria-label="select search scope">
       <paper-icon-button suffix icon="unfold-more" aria-label="select search scope" role="button" alt="select search scope"
                          title="select search scope" style="margin-top: -15px;">
       </paper-icon-button>
@@ -119,7 +120,7 @@ Example:
       </paper-listbox>
     </uqlibrary-iron-dropdown>
 
-    <uqlibrary-autosuggest-input id="searchKeywordInput" label="[[selectedSource.inputPlaceholder]]" source="{{selectedSource}}"
+    <uqlibrary-autosuggest-input id="searchKeywordInput" label="[[selectedSource.inputPlaceholder]]" source="{{selectedSource}}" aria-label="enter search keyword"
                                  on-activated="_searchActivated" on-keyword-changed="_keywordChanged" on-focus="_closeSources"></uqlibrary-autosuggest-input>
 
     <paper-button id="buttonSearch" role="button" on-tap="_searchActivated" class="button-colored-accent"

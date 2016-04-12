@@ -83,6 +83,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             });
         });
 
+        test('Test aria label is set for search sources', function (done) {
+            // Data bindings will stamp out new DOM asynchronously
+            // so wait to check for updates
+            flush(function () {
+
+                var sources = testObj.querySelector('#inputSources');
+
+                var ariaLabel = sources.attributes['aria-label'];
+
+                expect(ariaLabel).to.not.be.null;
+                expect(ariaLabel).not.to.equal('');
+
+                done();
+            });
+        });
+
         test('Display autosuggestions', function (done) {
             // Data bindings will stamp out new DOM asynchronously
             // so wait to check for updates
