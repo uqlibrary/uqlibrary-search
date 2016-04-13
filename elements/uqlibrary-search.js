@@ -135,8 +135,6 @@
         this.$.menuSources.close();
         this._sourceSelected();
       }
-
-      return;
     },
 
     _searchActivated: function(e) {
@@ -384,7 +382,7 @@
           inputPlaceholder: 'Enter a keyword, article title, author, publication, etc',
           helpLinks: defaultHelpLinks
         },
-        { name: 'Multimedia',
+        { name: 'Video & audio',
           type: 'multimedia',
           url: this.links.summon,
           urlAppend: '&fvf=ContentType,Newspaper%20Article,t%7CContentType,Book%20Review,t%7CContentType,Audio%20Recording,f%7CContentType,Spoken%20Word%20Recording,f%7CContentType,Video%20Recording,f%7CContentType,Streaming%20Video,f%7CContentType,Slide,f%7CContentType,Photograph,f%7CContentType,Music%20Recording,f%7CContentType,Music%20Score,f%7CContentType,Painting,f%7CContentType,Sheet%20Music,f%7CContentType,Poster,f%7CContentType,Art,f%7CContentType,Compact%20Disc,f%7CContentType,Drawing,f%7CContentType,Graphic%20Arts,f%7CContentType,Image,f%7CContentType,Kit,f',
