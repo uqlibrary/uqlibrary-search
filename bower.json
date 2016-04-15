@@ -13,12 +13,12 @@
     "polymer": "Polymer/polymer#^1.2.0",
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.0",
-    "uqlibrary-api": "uqlibrary/uqlibrary-api#polymer1.0",
-    "uqlibrary-ga": "uqlibrary/uqlibrary-ga#polymer1.0",
-    "uqlibrary-styles": "uqlibrary/uqlibrary-styles#master",
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "iron-dropdown": "uqlibrary/uqlibrary-iron-dropdown#^1.2.0",
-    "uqlibrary-autosuggest-input": "uqlibrary/uqlibrary-autosuggest-input#master",
+    "uqlibrary-api": "uqlibrary/uqlibrary-api#v1.0.0",
+    "uqlibrary-ga": "uqlibrary/uqlibrary-ga#v1.0.0",
+    "uqlibrary-styles": "uqlibrary/uqlibrary-styles#v1.0.0",
+    "uqlibrary-autosuggest-input": "uqlibrary/uqlibrary-autosuggest-input#v1.0.0",
     "byutv-jsonp": "uqlibrary/byutv-jsonp#master"
   },
   "devDependencies": {
