@@ -173,6 +173,7 @@
 
       this.$.inputSources.value = this.selectedSource.name;
       this.$.ga.addEvent(this.selectedSource.type, searchText);
+      this.$.searchKeywordInput.selectedSuggestion = null;
     },
 
     _saveRecentSearch: function (recent) {
@@ -219,7 +220,7 @@
     _keywordChanged: function(e) {
       var keyword = e && e.detail && e.detail.value ? e.detail.value : this.$.searchKeywordInput.keyword;
 
-      if (keyword.length > 2 && this.selectedSource.autoSuggest) {
+      if (!this.$.searchKeywordInput.selectedSuggestion && keyword.length > 2 && this.selectedSource.autoSuggest) {
 
         var that = this;
 
