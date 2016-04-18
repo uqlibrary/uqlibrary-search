@@ -25,6 +25,8 @@ git clone -b $BRANCH https://github.com/$ORG/$REPO.git --single-branch
 cd $REPO >/dev/null
 git checkout --orphan gh-pages
 
+sed -i -e "s#\.\.#bower_components#g" .bowerrc
+
 # Remove all non-relevant content
 git rm -rf .gitignore
 git rm -rf bin

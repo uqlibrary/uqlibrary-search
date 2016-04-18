@@ -157,7 +157,7 @@
         else if (this.selectedSource.type === 'catalogue') {
           searchText = this._cleanSearchQuery(searchText);
         }
-        searchUrl = this.selectedSource.url + encodeURIComponent(searchText);
+        searchUrl = encodeURI(this.selectedSource.url + searchText);
         if (this.selectedSource.urlAppend) {
           searchUrl += this.selectedSource.urlAppend;
         }
