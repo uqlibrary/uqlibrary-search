@@ -344,7 +344,7 @@
       var defaultHelpLinks = [
         {
           title: 'Search help',
-          url: 'https://www.library.uq.edu.au/research-tools-techniques/searching-uq-library'
+          url: 'https://web.library.uq.edu.au/research-tools-techniques/search-techniques/searching-uq-library'
         },
         {
           title: 'Advanced search',
@@ -410,7 +410,7 @@
           icon: 'editor:format-align-justify',
           inputPlaceholder: 'Enter a keyword or database name',
           helpLinks: [
-            { title: 'Database help', url: 'https://www.library.uq.edu.au/research-tools-techniques/searching-databases' },
+            { title: 'Database help', url: 'https://web.library.uq.edu.au/research-tools-techniques/search-techniques/searching-databases' },
             { title: 'Browse databases', url: 'https://app.library.uq.edu.au/#/gateways/database' }
           ]
         },
