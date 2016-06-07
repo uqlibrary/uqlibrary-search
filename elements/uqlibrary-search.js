@@ -1,3 +1,11 @@
+//SOLR (PRIMO) expects a callback function, which is not part of polymer
+//TODO: investigate if SOLR can work with JSONP
+function dataResponse(data) {
+  var searchElement = this.document.querySelector('uqlibrary-search');
+  if (typeof(searchElement) !== 'undefined')
+    searchElement._suggestionsLoaded( { detail : data} );
+}
+
 (function () {
   Polymer({
     is: 'uqlibrary-search',
@@ -21,6 +29,18 @@
                 url: 'https://d3nm82zk9ronst.cloudfront.net/metadata/suggest/suggest',
                 params:
                   { prefix: '' }
+              },
+              primoApi: {
+                url: 'http://primo-instant-apac.hosted.exlibrisgroup.com:1997/solr/ac',
+                params:
+                  {
+                    'json.wrf' : 'dataResponse',
+                    'q' : '',
+                    'fq' : 'scope%3A(f62343bc-ab97-488a-ae30-e165629a79be)+AND+context%3A(L+OR+C)', //TODO: replace with proper scope values
+                    'wt' : 'json',
+                    'facet' : 'off',
+                    'rows' : '10'
+                  }
               },
               lrApi: {
                 url: 'https://app.library.uq.edu.au/api/search_suggestions',
@@ -52,6 +72,7 @@
           type: Object,
           value: {
               summon: 'http://uq.summon.serialssolutions.com/search?q=',
+              primo: 'http://uq-edu-primo.hosted.exlibrisgroup.com/primo_library/libweb/action/search.do',
               exams: 'https://www.library.uq.edu.au/exams/papers.php?stub=',
               lr: 'http://lr.library.uq.edu.au/search?q=',
               database: 'https://www.library.uq.edu.au/resources/database/#/?title=',
@@ -228,11 +249,16 @@
           that.$.jsonpQuery.abortRequest();
 
         //new callback value to start a new call as user types
-        that.$.jsonpQuery.callbackValue = "foo" + keyword.length;
+        that.$.jsonpQuery.callbackValue = 'foo' + keyword.length;
         that.$.jsonpQuery.url = that.selectedSource.api.url;
 
         keyword = that._cleanSearchQuery(keyword);
-        that.selectedSource.api.params.prefix = keyword;// encodeURIComponent(keyword);
+
+        if (typeof(that.selectedSource.api.params.prefix) != 'undefined')
+          that.selectedSource.api.params.prefix = keyword;// encodeURIComponent(keyword);
+        else if (typeof(that.selectedSource.api.params.q) != 'undefined')
+          that.selectedSource.api.params.q = keyword;// encodeURIComponent(keyword);
+
         that.$.jsonpQuery.params = that.selectedSource.api.params;
 
         if (!that.$.jsonpQuery.loading)
@@ -241,7 +267,16 @@
     },
 
     _suggestionsLoaded : function(e) {
-      this.suggestions = this._processSuggestions(e.detail.result ? e.detail.result : e.detail);
+      if (typeof(e.detail.response) !== 'undefined') {
+        this.suggestions = this._processSuggestions(e.detail.response.docs);
+      }
+      else if (typeof(e.detail.result) !== 'undefined') {
+        this.suggestions = this._processSuggestions(e.detail.result);
+      }
+      else {
+        this.suggestions = this._processSuggestions(e.detail);
+      }
+
       this.$.searchKeywordInput.suggestions = this.suggestions;
     },
 
@@ -255,7 +290,15 @@
       var api = this.selectedSource.api;
       var type = this.selectedSource.type;
 
-      if (api.url === this.api.summonApi.url) {
+      if (api.url === this.api.primoApi.url) {
+        suggestions.forEach(function (s) {
+          s.origName = s.text;
+          s.name = s.text;
+          s.type = type;
+          processed.push(s);
+        });
+      }
+      else if (api.url === this.api.summonApi.url) {
         suggestions.forEach(function (s) {
           s.origName = s.name;
           s.type = type;
@@ -352,7 +395,18 @@
         }
       ];
 
+      //TODO: primo urlAppend should be updated to point to real search....
       this.sources = [
+        { name: 'Primo',
+          type: 'all',
+          url: this.links.primo,
+          urlAppend: '&fn=search&ct=search&initialSearch=true&mode=Basic&tab=61uq_all&indx=1&dum=true&srt=rank&vid=61UQ&frbg=&tb=t&vl%28freeText0%29=china&scp.scps=scope%3A%2861UQ_eSpace%29%2Cscope%3A%2861UQ_FEZ_130846%29%2Cscope%3A%2861UQ_FEZ_13197%29%2Cscope%3A%2861UQ_FEZ_13199%29%2Cscope%3A%2861UQ_FEZ_152799%29%2Cscope%3A%2861UQ_FEZ_155729%29%2Cscope%3A%2861UQ_FEZ_151710%29%2Cscope%3A%2861UQ_FEZ_179407%29%2Cscope%3A%2861UQ_FEZ_209864%29%2Cscope%3A%2861UQ_FEZ_219034%29%2Cscope%3A%28%2261UQ_ALMA%22%29%2Cscope%3A%2861UQ%29%2Cscope%3A%2861UQ_FEZ_216496%29%2Cscope%3A%2861UQ_FEZ_183974%29%2Cscope%3A%2861UQ_FEZ_216495%29%2Cprimo_central_multiple_fe&vl%281UIStartWith0%29=contains&vl%28D75285834UI0%29=any&vl%28D75285834UI0%29=title&vl%28D75285834UI0%29=any',
+          autoSuggest: true,
+          api: this.api.primoApi,
+          icon: 'social:public',
+          inputPlaceholder: 'Test primo search....',
+          helpLinks: defaultHelpLinks
+        },
         { name: 'Library',
           type: 'all',
           url: this.links.summon,
