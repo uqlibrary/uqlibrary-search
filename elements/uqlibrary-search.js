@@ -170,7 +170,6 @@ function dataResponse(data) {
     },
 
     _searchActivated: function(e) {
-console.log('_searchActivated started');
       var searchText = e.detail.name ? e.detail.name : this.$.searchKeywordInput.keyword;
       var selectedSuggestion = e.detail.name ? e.detail : null;
       var searchUrl = '';
