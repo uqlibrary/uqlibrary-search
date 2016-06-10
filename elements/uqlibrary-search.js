@@ -21,27 +21,41 @@ function dataResponse(data) {
 
       /**
        * List of api for auto suggestions
+       *
+       * primo sample url:
+
+       http://primo-instant-apac.hosted.exlibrisgroup.com:1997/solr/ac?q=test
+       &fq=scope%3A(f62343bc-ab97-488a-ae30-e165629a79be)+AND+context%3A(L+OR+C)&wt=json&facet=off&rows=6
+
+       *
        */
       api : {
           type: Object,
           value: {
-              summonApi: {
-                url: 'https://d3nm82zk9ronst.cloudfront.net/metadata/suggest/suggest',
-                params:
-                  { prefix: '' }
-              },
-              primoApi: {
-                url: 'http://primo-instant-apac.hosted.exlibrisgroup.com:1997/solr/ac',
-                params:
-                  {
-                    'json.wrf' : 'dataResponse',
-                    'q' : '',
-                    'fq' : 'scope%3A(f62343bc-ab97-488a-ae30-e165629a79be)+AND+context%3A(L+OR+C)', //TODO: replace with proper scope values
-                    'wt' : 'json',
-                    'facet' : 'off',
-                    'rows' : '10'
-                  }
-              },
+            primoApiType1: {
+              url: 'http://primo-instant-apac.hosted.exlibrisgroup.com:1997/solr/ac',
+              params:
+              {
+                'json.wrf' : 'dataResponse',
+                'q' : '',
+                'fq' : 'scope%3A(f62343bc-ab97-488a-ae30-e165629a79be)+AND+context%3A(L+OR+C)',
+                'wt' : 'json',
+                'facet' : 'off',
+                'rows' : '5'
+              }
+          },
+            primoApiType2: {
+              url: 'http://primo-instant-apac.hosted.exlibrisgroup.com:1997/solr/ac',
+              params:
+              {
+                'json.wrf' : 'dataResponse',
+                'q' : '',
+                'fq' : 'scope%3A(f62343bc-ab97-488a-ae30-e165629a79be)+AND+context%3A(L)',
+                'wt' : 'json',
+                'facet' : 'off',
+                'rows' : '2'
+              }
+            },
               lrApi: {
                 url: 'https://app.library.uq.edu.au/api/search_suggestions',
                 params: {
@@ -66,19 +80,16 @@ function dataResponse(data) {
       },
 
       /**
-       * Redirections list after search is prformed
+       * Redirections list after search is performed
        */
       links : {
-          type: Object,
-          value: {
-              summon: 'http://uq.summon.serialssolutions.com/search?q=',
-              primo: 'http://uq-edu-primo.hosted.exlibrisgroup.com/primo_library/libweb/action/search.do',
-              exams: 'https://www.library.uq.edu.au/exams/papers.php?stub=',
-              lr: 'http://lr.library.uq.edu.au/search?q=',
-              database: 'https://www.library.uq.edu.au/resources/database/#/?title=',
-              journals: 'https://app.library.uq.edu.au/#/journals?S=AC_T_B&C=',
-              catalogue: 'https://library.uq.edu.au/search~S7/X?search='
-          }
+        type: Object,
+        value: {
+          primo: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do',
+          exams: 'https://www.library.uq.edu.au/exams/papers.php?stub=',
+          lr: 'http://lr.library.uq.edu.au/search?q=',
+          database: 'https://www.library.uq.edu.au/resources/database/#/?title='
+        }
       },
 
       /**
@@ -159,12 +170,11 @@ function dataResponse(data) {
     },
 
     _searchActivated: function(e) {
-
+console.log('_searchActivated started');
       var searchText = e.detail.name ? e.detail.name : this.$.searchKeywordInput.keyword;
       var selectedSuggestion = e.detail.name ? e.detail : null;
       var searchUrl = '';
       var recent = {name: searchText, origName: searchText, type: this.selectedSource.type, recent: true};
-
       if (selectedSuggestion &&
           (this.selectedSource.type === 'databases' || this.selectedSource.type === 'learning_resources')) {
         searchUrl = selectedSuggestion.url;
@@ -175,7 +185,7 @@ function dataResponse(data) {
           var s = searchText.split(" ");
           searchText = s[0];
         }
-        else if (this.selectedSource.type === 'catalogue') {
+        else if (this.selectedSource.type === 'physical_items') {
           searchText = this._cleanSearchQuery(searchText);
         }
         searchUrl = encodeURI(this.selectedSource.url + searchText);
@@ -290,7 +300,15 @@ function dataResponse(data) {
       var api = this.selectedSource.api;
       var type = this.selectedSource.type;
 
-      if (api.url === this.api.primoApi.url) {
+      if (api.url === this.api.primoApiType1.url) {
+        suggestions.forEach(function (s) {
+          s.origName = s.text;
+          s.name = s.text;
+          s.type = type;
+          processed.push(s);
+        });
+      }
+      else if (api.url === this.api.primoApiType2.url) {
         suggestions.forEach(function (s) {
           s.origName = s.text;
           s.name = s.text;
@@ -390,71 +408,67 @@ function dataResponse(data) {
           url: 'https://web.library.uq.edu.au/research-tools-techniques/search-techniques/searching-uq-library'
         },
         {
+          title: 'Browse search',
+          url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=61UQ'
+        },
+        {
           title: 'Advanced search',
-          url: 'http://uq.summon.serialssolutions.com/#!/advanced'
+          url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ'
         }
       ];
 
-      //TODO: primo urlAppend should be updated to point to real search....
+      var escapedSearchFieldValue = encodeURIComponent(this.searchFieldValue );
+
       this.sources = [
-        { name: 'Primo',
-          type: 'all',
-          url: this.links.primo,
-          urlAppend: '&fn=search&ct=search&initialSearch=true&mode=Basic&tab=61uq_all&indx=1&dum=true&srt=rank&vid=61UQ&frbg=&tb=t&vl%28freeText0%29=china&scp.scps=scope%3A%2861UQ_eSpace%29%2Cscope%3A%2861UQ_FEZ_130846%29%2Cscope%3A%2861UQ_FEZ_13197%29%2Cscope%3A%2861UQ_FEZ_13199%29%2Cscope%3A%2861UQ_FEZ_152799%29%2Cscope%3A%2861UQ_FEZ_155729%29%2Cscope%3A%2861UQ_FEZ_151710%29%2Cscope%3A%2861UQ_FEZ_179407%29%2Cscope%3A%2861UQ_FEZ_209864%29%2Cscope%3A%2861UQ_FEZ_219034%29%2Cscope%3A%28%2261UQ_ALMA%22%29%2Cscope%3A%2861UQ%29%2Cscope%3A%2861UQ_FEZ_216496%29%2Cscope%3A%2861UQ_FEZ_183974%29%2Cscope%3A%2861UQ_FEZ_216495%29%2Cprimo_central_multiple_fe&vl%281UIStartWith0%29=contains&vl%28D75285834UI0%29=any&vl%28D75285834UI0%29=title&vl%28D75285834UI0%29=any',
-          autoSuggest: true,
-          api: this.api.primoApi,
-          icon: 'social:public',
-          inputPlaceholder: 'Test primo search....',
-          helpLinks: defaultHelpLinks
-        },
         { name: 'Library',
           type: 'all',
-          url: this.links.summon,
-          urlAppend: '&fvf=ContentType,Newspaper%20Article,t%7CContentType,Book%20Review,t',
+          url: this.links.primo,
+          urlAppend: 'fn=search&vid=61UQ&fctExcV=newspaper_articles&fctExcV=reviews&mulExcFctN=facet_rtype&rfnExcGrp=1&mulExcFctN=facet_rtype&rfnExcGrp=1&vl(freeText0)=' + escapedSearchFieldValue,
           autoSuggest: true,
-          api: this.api.summonApi,
+          api: this.api.primoApiType1,
           icon: 'social:public',
           inputPlaceholder: 'Find books, articles, databases, conferences and more',
           helpLinks: defaultHelpLinks
         },
         { name: 'Books',
           type: 'books',
-          url: this.links.summon,
-          urlAppend: '&fvf=ContentType,Book%20%2F%20eBook,f%7CContentType,Newspaper%20Article,t%7CContentType,Book%20Review,t%7CContentType,Book%20Chapter,f',
+          url: this.links.primo,
+          urlAppend: '?fn=search&fctN=facet_rtype&fctV=books&ct=facet&vl(freeText0)='+escapedSearchFieldValue,
           autoSuggest: true,
-          api: this.api.summonApi,
+          api: this.api.primoApiType2,
           icon: 'communication:import-contacts',
           inputPlaceholder: 'Enter a keyword, title, author, etc',
           helpLinks: defaultHelpLinks
         },
         { name: 'Journal articles',
           type: 'journal_articles',
-          url: this.links.summon,
-          urlAppend: '&fvf=ContentType,Newspaper%20Article,t%7CContentType,Book%20Review,t%7CContentType,Journal%20Article,f%7CContentType,Magazine%20Article,f',
+          url: this.links.primo,
+          urlAppend: '?fn=search&fctN=facet_rtype&fctV=articles&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&tab=61uq_all&mode=Basic&vid=61UQ&vl(freeText0)='+escapedSearchFieldValue,
           autoSuggest: true,
-          api: this.api.summonApi,
+          api: this.api.primoApiType1,
           icon: 'social:school',
           inputPlaceholder: 'Enter a keyword, article title, author, publication, etc',
           helpLinks: defaultHelpLinks
         },
         { name: 'Video & audio',
           type: 'multimedia',
-          url: this.links.summon,
-          urlAppend: '&fvf=ContentType,Audio%20Recording,f%7CContentType,Streaming%20Video,f%7CContentType,Streaming%20Audio,f%7CContentType,Video%20Recording,f%7CContentType,Music%20Recording,f%7CContentType,Spoken%20Word%20Recording,f',
+          url: this.links.primo,
+          urlAppend: '?fn=search&fctN=facet_rtype&fctV=media&indx=1&vid=61UQ&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(freeText0)='+escapedSearchFieldValue,
           autoSuggest: true,
-          api: this.api.summonApi,
+          api: this.api.primoApiType1,
           icon: 'icons:theaters',
           inputPlaceholder: 'Enter a keyword, title, cast, crew, composer, artist, etc',
           helpLinks: defaultHelpLinks
         },
         { name: 'Journals',
           type: 'journals',
-          url: this.links.journals,
+          url: this.links.primo,
+          urlAppend: '?fn=search&fctN=facet_rtype&fctV=journals&vl(1UIStartWith0)=begins_with&ct=search&srt=title&vl(D75285834UI0)=title&vl(freeText0)='+escapedSearchFieldValue,
           autoSuggest: true,
-          api: this.api.summonApi,
+          api: this.api.primoApiType2,
           icon: 'editor:insert-drive-file',
           inputPlaceholder: 'Enter journal or newspaper title',
-          helpLinks: [ { title: 'Browse journals', url: 'https://app.library.uq.edu.au/#/journals' } ]
+          helpLinks: defaultHelpLinks
         },
         { name: 'Databases',
           type: 'databases',
@@ -468,13 +482,15 @@ function dataResponse(data) {
             { title: 'Browse databases', url: 'https://app.library.uq.edu.au/#/gateways/database' }
           ]
         },
-        { name: 'Catalogue',
-          type: 'catalogue',
-          url: this.links.catalogue,
-          autoSuggest: false,
+        { name: 'Physical Items',
+          type: 'physical_items',
+          url: this.links.primo,
+          urlAppend: '?fn=search&rfnId=rfin9&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&fctIncV=61UQ_BDMB&fctIncV=61UQ_HERON&fctIncV=61UQ_BDMS&fctIncV=61UQ_JKMRC&fctIncV=61UQ_STR&fctIncV=61UQ_ROC&fctIncV=61UQ_HVY&fctIncV=61UQ_BND&fctIncV=61UQ_TBA&fctIncV=61UQ_ONLINE&fctIncV=61UQ_PACE&fctIncV=61UQ_MATER&fctIncV=61UQ_GATTON&fctIncV=61UQ_HERSTON&fctIncV=61UQ_FRY&fctIncV=61UQ_ARMUS&fctIncV=61UQ_ESL&fctIncV=61UQ_WHS&fctIncV=61UQ_SSH&vl(freeText0)='+escapedSearchFieldValue,
+          autoSuggest: true,
+          api: this.api.primoApiType2,
           icon: 'icons:inbox',
           inputPlaceholder: 'Enter a keyword, title, author, etc',
-          helpLinks: [{title: 'Advanced catalogue search', url: 'https://library.uq.edu.au/search~S7/X'}]
+          helpLinks: defaultHelpLinks
         },
         { name: 'Past exam papers',
           type: 'exam_papers',
