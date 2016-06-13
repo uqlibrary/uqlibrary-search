@@ -433,7 +433,7 @@ function dataResponse(data) {
         { name: 'Journal articles',
           type: 'journal_articles',
           url: this.links.primo,
-          urlAppend: '&fn=search&fctN=facet_rtype&fctV=articles&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&tab=61uq_all&mode=Basic&vid=61UQ',
+          urlAppend: '&fn=search&fctN=facet_rtype&fctV=articles&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&tab=61uq_all&mode=Basic&vid=61UQ&indx=1',
           autoSuggest: true,
           api: this.api.primoApiAll,
           icon: 'social:school',
