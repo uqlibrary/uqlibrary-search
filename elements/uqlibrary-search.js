@@ -32,7 +32,7 @@ function dataResponse(data) {
       api : {
           type: Object,
           value: {
-            primoApiType1: {
+            primoApiAll: {
               url: 'http://primo-instant-apac.hosted.exlibrisgroup.com:1997/solr/ac',
               params:
               {
@@ -41,10 +41,10 @@ function dataResponse(data) {
                 'fq' : 'scope%3A(f62343bc-ab97-488a-ae30-e165629a79be)+AND+context%3A(L+OR+C)',
                 'wt' : 'json',
                 'facet' : 'off',
-                'rows' : '5'
+                'rows' : '10'
               }
           },
-            primoApiType2: {
+            primoApiLocal: {
               url: 'http://primo-instant-apac.hosted.exlibrisgroup.com:1997/solr/ac',
               params:
               {
@@ -53,7 +53,7 @@ function dataResponse(data) {
                 'fq' : 'scope%3A(f62343bc-ab97-488a-ae30-e165629a79be)+AND+context%3A(L)',
                 'wt' : 'json',
                 'facet' : 'off',
-                'rows' : '2'
+                'rows' : '10'
               }
             },
               lrApi: {
@@ -85,7 +85,7 @@ function dataResponse(data) {
       links : {
         type: Object,
         value: {
-          primo: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do',
+          primo: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?vl(freeText0)=',
           exams: 'https://www.library.uq.edu.au/exams/papers.php?stub=',
           lr: 'http://lr.library.uq.edu.au/search?q=',
           database: 'https://www.library.uq.edu.au/resources/database/#/?title='
@@ -299,15 +299,8 @@ function dataResponse(data) {
       var api = this.selectedSource.api;
       var type = this.selectedSource.type;
 
-      if (api.url === this.api.primoApiType1.url) {
-        suggestions.forEach(function (s) {
-          s.origName = s.text;
-          s.name = s.text;
-          s.type = type;
-          processed.push(s);
-        });
-      }
-      else if (api.url === this.api.primoApiType2.url) {
+      if (api.url === this.api.primoApiAll.url
+          || api.url === this.api.primoApiLocal.url) {
         suggestions.forEach(function (s) {
           s.origName = s.text;
           s.name = s.text;
@@ -416,15 +409,13 @@ function dataResponse(data) {
         }
       ];
 
-      var escapedSearchFieldValue = encodeURIComponent(this.searchFieldValue );
-
       this.sources = [
         { name: 'Library',
           type: 'all',
           url: this.links.primo,
-          urlAppend: 'fn=search&vid=61UQ&fctExcV=newspaper_articles&fctExcV=reviews&mulExcFctN=facet_rtype&rfnExcGrp=1&mulExcFctN=facet_rtype&rfnExcGrp=1&vl(freeText0)=' + escapedSearchFieldValue,
+          urlAppend: '&ct=facet&rfnGrpCounter=1&frbg=&&indx=1&fn=search&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&fctExcV=newspaper_articles&mulExcFctN=facet_rtype&rfnExcGrp=1&fctExcV=reviews&mulExcFctN=facet_rtype&rfnExcGrp=1',
           autoSuggest: true,
-          api: this.api.primoApiType1,
+          api: this.api.primoApiAll,
           icon: 'social:public',
           inputPlaceholder: 'Find books, articles, databases, conferences and more',
           helpLinks: defaultHelpLinks
@@ -432,9 +423,9 @@ function dataResponse(data) {
         { name: 'Books',
           type: 'books',
           url: this.links.primo,
-          urlAppend: '?fn=search&fctN=facet_rtype&fctV=books&ct=facet&vl(freeText0)='+escapedSearchFieldValue,
+          urlAppend: '&fn=search&fctN=facet_rtype&fctV=books&ct=facet',
           autoSuggest: true,
-          api: this.api.primoApiType2,
+          api: this.api.primoApiLocal,
           icon: 'communication:import-contacts',
           inputPlaceholder: 'Enter a keyword, title, author, etc',
           helpLinks: defaultHelpLinks
@@ -442,9 +433,9 @@ function dataResponse(data) {
         { name: 'Journal articles',
           type: 'journal_articles',
           url: this.links.primo,
-          urlAppend: '?fn=search&fctN=facet_rtype&fctV=articles&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&tab=61uq_all&mode=Basic&vid=61UQ&vl(freeText0)='+escapedSearchFieldValue,
+          urlAppend: '&fn=search&fctN=facet_rtype&fctV=articles&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&tab=61uq_all&mode=Basic&vid=61UQ',
           autoSuggest: true,
-          api: this.api.primoApiType1,
+          api: this.api.primoApiAll,
           icon: 'social:school',
           inputPlaceholder: 'Enter a keyword, article title, author, publication, etc',
           helpLinks: defaultHelpLinks
@@ -452,9 +443,9 @@ function dataResponse(data) {
         { name: 'Video & audio',
           type: 'multimedia',
           url: this.links.primo,
-          urlAppend: '?fn=search&fctN=facet_rtype&fctV=media&indx=1&vid=61UQ&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(freeText0)='+escapedSearchFieldValue,
+          urlAppend: '&fn=search&fctN=facet_rtype&fctV=media&indx=1&vid=61UQ&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe',
           autoSuggest: true,
-          api: this.api.primoApiType1,
+          api: this.api.primoApiAll,
           icon: 'icons:theaters',
           inputPlaceholder: 'Enter a keyword, title, cast, crew, composer, artist, etc',
           helpLinks: defaultHelpLinks
@@ -462,9 +453,9 @@ function dataResponse(data) {
         { name: 'Journals',
           type: 'journals',
           url: this.links.primo,
-          urlAppend: '?fn=search&fctN=facet_rtype&fctV=journals&vl(1UIStartWith0)=begins_with&ct=search&srt=title&vl(D75285834UI0)=title&vl(freeText0)='+escapedSearchFieldValue,
+          urlAppend: '&fn=search&fctN=facet_rtype&fctV=journals&vl(1UIStartWith0)=begins_with&ct=search&srt=title&vl(D75285834UI0)=title',
           autoSuggest: true,
-          api: this.api.primoApiType2,
+          api: this.api.primoApiLocal,
           icon: 'editor:insert-drive-file',
           inputPlaceholder: 'Enter journal or newspaper title',
           helpLinks: defaultHelpLinks
@@ -484,9 +475,9 @@ function dataResponse(data) {
         { name: 'Physical Items',
           type: 'physical_items',
           url: this.links.primo,
-          urlAppend: '?fn=search&rfnId=rfin9&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&fctIncV=61UQ_BDMB&fctIncV=61UQ_HERON&fctIncV=61UQ_BDMS&fctIncV=61UQ_JKMRC&fctIncV=61UQ_STR&fctIncV=61UQ_ROC&fctIncV=61UQ_HVY&fctIncV=61UQ_BND&fctIncV=61UQ_TBA&fctIncV=61UQ_ONLINE&fctIncV=61UQ_PACE&fctIncV=61UQ_MATER&fctIncV=61UQ_GATTON&fctIncV=61UQ_HERSTON&fctIncV=61UQ_FRY&fctIncV=61UQ_ARMUS&fctIncV=61UQ_ESL&fctIncV=61UQ_WHS&fctIncV=61UQ_SSH&vl(freeText0)='+escapedSearchFieldValue,
+          urlAppend: '&fn=search&rfnId=rfin9&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&fctIncV=61UQ_BDMB&fctIncV=61UQ_HERON&fctIncV=61UQ_BDMS&fctIncV=61UQ_JKMRC&fctIncV=61UQ_STR&fctIncV=61UQ_ROC&fctIncV=61UQ_HVY&fctIncV=61UQ_BND&fctIncV=61UQ_TBA&fctIncV=61UQ_ONLINE&fctIncV=61UQ_PACE&fctIncV=61UQ_MATER&fctIncV=61UQ_GATTON&fctIncV=61UQ_HERSTON&fctIncV=61UQ_FRY&fctIncV=61UQ_ARMUS&fctIncV=61UQ_ESL&fctIncV=61UQ_WHS&fctIncV=61UQ_SSH',
           autoSuggest: true,
-          api: this.api.primoApiType2,
+          api: this.api.primoApiLocal,
           icon: 'icons:inbox',
           inputPlaceholder: 'Enter a keyword, title, author, etc',
           helpLinks: defaultHelpLinks
