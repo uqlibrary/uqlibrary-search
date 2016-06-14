@@ -118,6 +118,60 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
                     var items = menuSuggestions.querySelectorAll('paper-item');
 
+                    expect(items.length).to.be.equal(10);
+
+                    done();
+                }, 1900);
+            });
+        });
+
+        test('Exams display autosuggestions', function (done) {
+            // Data bindings will stamp out new DOM asynchronously
+            // so wait to check for updates
+            flush(function () {
+
+                var sources = testObj.querySelector('#menuSources');
+                sources.value = 'exam-papers';
+
+                var inputKeyword = testObj.querySelector('#inputKeyword');
+                inputKeyword.value = "PHYS"; // preset text to Physics subject
+
+                var menuSuggestions = testObj.querySelector('#listSuggestions');
+                expect(menuSuggestions).to.not.be.null;
+                expect(menuSuggestions).not.to.be.visible;
+
+                setTimeout(function(){
+                    expect(menuSuggestions).to.not.be.null;
+                    expect(menuSuggestions).to.be.visible;
+
+                    var items = menuSuggestions.querySelectorAll('paper-item');
+                    expect(items.length).to.be.above(0);
+
+                    done();
+                }, 1900);
+            });
+        });
+
+        test('Databases display autosuggestions', function (done) {
+            // Data bindings will stamp out new DOM asynchronously
+            // so wait to check for updates
+            flush(function () {
+
+                var sources = testObj.querySelector('#menuSources');
+                sources.value = 'databases';
+
+                var inputKeyword = testObj.querySelector('#inputKeyword');
+                inputKeyword.value = "journal"; // random keyword to display autocompletes
+
+                var menuSuggestions = testObj.querySelector('#listSuggestions');
+                expect(menuSuggestions).to.not.be.null;
+                expect(menuSuggestions).not.to.be.visible;
+
+                setTimeout(function(){
+                    expect(menuSuggestions).to.not.be.null;
+                    expect(menuSuggestions).to.be.visible;
+
+                    var items = menuSuggestions.querySelectorAll('paper-item');
                     expect(items.length).to.be.above(0);
 
                     done();

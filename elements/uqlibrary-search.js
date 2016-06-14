@@ -21,13 +21,6 @@ function dataResponse(data) {
 
       /**
        * List of api for auto suggestions
-       *
-       * primo sample url:
-
-       http://primo-instant-apac.hosted.exlibrisgroup.com:1997/solr/ac?q=test
-       &fq=scope%3A(f62343bc-ab97-488a-ae30-e165629a79be)+AND+context%3A(L+OR+C)&wt=json&facet=off&rows=6
-
-       *
        */
       api : {
           type: Object,
@@ -304,13 +297,6 @@ function dataResponse(data) {
         suggestions.forEach(function (s) {
           s.origName = s.text;
           s.name = s.text;
-          s.type = type;
-          processed.push(s);
-        });
-      }
-      else if (api.url === this.api.summonApi.url) {
-        suggestions.forEach(function (s) {
-          s.origName = s.name;
           s.type = type;
           processed.push(s);
         });
