@@ -82,13 +82,9 @@ Example:
 
     <uqlibrary-ga id="ga" app-name="{{gaAppName}}"></uqlibrary-ga>
 
-    <byutv-jsonp
-            id="jsonpQuery"
-            callback-value="foo"
-            on-response="_suggestionsLoaded"
-            on-error="_suggestionsLoadingError"
-            disable-uri-encoding="true"
-            debounce-duration="300"></byutv-jsonp>
+    <uqlibrary-api-search-suggestions
+            id="ajax"
+            on-uqlibrary-api-search-suggestions-loaded="_suggestionsLoaded"></uqlibrary-api-search-suggestions>
 
     <iron-localstorage id="localstorage"
                        name="uqlibrary-search-storage"

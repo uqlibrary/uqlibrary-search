@@ -1,11 +1,3 @@
-//SOLR (PRIMO) expects a callback function, which is not part of polymer
-//TODO: investigate if SOLR can work with JSONP
-function dataResponse(data) {
-  var searchElement = this.document.querySelector('uqlibrary-search');
-  if (typeof(searchElement) !== 'undefined')
-    searchElement._suggestionsLoaded( { detail : data} );
-}
-
 (function () {
   Polymer({
     is: 'uqlibrary-search',
@@ -26,44 +18,30 @@ function dataResponse(data) {
           type: Object,
           value: {
             primoApiAll: {
-              url: 'http://primo-instant-apac.hosted.exlibrisgroup.com:1997/solr/ac',
-              params:
-              {
-                'json.wrf' : 'dataResponse',
-                'q' : '',
-                'fq' : 'scope%3A(f62343bc-ab97-488a-ae30-e165629a79be)+AND+context%3A(L+OR+C)',
-                'wt' : 'json',
-                'facet' : 'off',
-                'rows' : '10'
+              params: {
+                type : 'primoAll',
+                prefix: ''
               }
           },
             primoApiLocal: {
-              url: 'http://primo-instant-apac.hosted.exlibrisgroup.com:1997/solr/ac',
-              params:
-              {
-                'json.wrf' : 'dataResponse',
-                'q' : '',
-                'fq' : 'scope%3A(f62343bc-ab97-488a-ae30-e165629a79be)+AND+context%3A(L)',
-                'wt' : 'json',
-                'facet' : 'off',
-                'rows' : '10'
+              params: {
+                type : 'primoLocal',
+                prefix: ''
               }
             },
               lrApi: {
-                url: 'https://app.library.uq.edu.au/api/search_suggestions',
                 params: {
                   type : 'learning_resource',
-                  prefix: '' }
+                  prefix: ''
+                }
               },
               examsApi: {
-                url: 'https://app.library.uq.edu.au/api/search_suggestions',
                 params: {
                   type : 'exam_paper',
                   prefix: ''
                 }
               },
               databaseApi: {
-                url: 'https://app.library.uq.edu.au/api/search_suggestions',
                 params: {
                   type: 'database',
                   prefix: ''
@@ -244,47 +222,14 @@ function dataResponse(data) {
       var keyword = e && e.detail && e.detail.value ? e.detail.value : this.$.searchKeywordInput.keyword;
 
       if (!this.$.searchKeywordInput.selectedSuggestion && keyword.length > 2 && this.selectedSource.autoSuggest) {
-
-        var that = this;
-
-        if (that.$.jsonpQuery.loading)
-          that.$.jsonpQuery.abortRequest();
-
-        //new callback value to start a new call as user types
-        that.$.jsonpQuery.callbackValue = 'foo' + keyword.length;
-        that.$.jsonpQuery.url = that.selectedSource.api.url;
-
-        keyword = that._cleanSearchQuery(keyword);
-
-        if (typeof(that.selectedSource.api.params.prefix) != 'undefined')
-          that.selectedSource.api.params.prefix = keyword;// encodeURIComponent(keyword);
-        else if (typeof(that.selectedSource.api.params.q) != 'undefined')
-          that.selectedSource.api.params.q = keyword;// encodeURIComponent(keyword);
-
-        that.$.jsonpQuery.params = that.selectedSource.api.params;
-
-        if (!that.$.jsonpQuery.loading)
-          that.$.jsonpQuery.generateRequest();
+        this.$.ajax.type = this.selectedSource.api.params.type;
+        this.$.ajax.get(encodeURIComponent(this._cleanSearchQuery(keyword)));
       }
     },
 
     _suggestionsLoaded : function(e) {
-      if (typeof(e.detail.response) !== 'undefined') {
-        this.suggestions = this._processSuggestions(e.detail.response.docs);
-      }
-      else if (typeof(e.detail.result) !== 'undefined') {
-        this.suggestions = this._processSuggestions(e.detail.result);
-      }
-      else {
-        this.suggestions = this._processSuggestions(e.detail);
-      }
-
+      this.suggestions = this._processSuggestions(e.detail);
       this.$.searchKeywordInput.suggestions = this.suggestions;
-    },
-
-    _suggestionsLoadingError : function(e) {
-      console.log('_suggestionsLoadingError');
-      console.log(e);
     },
 
     _processSuggestions: function (suggestions) {
@@ -292,11 +237,10 @@ function dataResponse(data) {
       var api = this.selectedSource.api;
       var type = this.selectedSource.type;
 
-      if (api.url === this.api.primoApiAll.url
-          || api.url === this.api.primoApiLocal.url) {
+      if (api.params.type === this.api.primoApiAll.params.type
+          || api.params.type === this.api.primoApiLocal.params.type) {
         suggestions.forEach(function (s) {
-          s.origName = s.text;
-          s.name = s.text;
+          s.origName = s.name;
           s.type = type;
           processed.push(s);
         });
@@ -322,7 +266,7 @@ function dataResponse(data) {
       else if (api.params.type === this.api.databaseApi.params.type) {
         suggestions.forEach(function (s) {
           s.origName = s.name;
-          s.name = s.name + ' (' + (s.type == 'database' ? 'Database' : 'Subject Area')+')';
+          s.name = s.name + ' (' + (s.type == 'database' ? 'Database' : 'Subject Area') +')';
           s.type = type;
           processed.push(s);
         });
