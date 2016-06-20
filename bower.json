@@ -26,6 +26,6 @@
     "test-fixture": "PolymerElements/test-fixture#^1.0.0"
   },
   "resolutions": {
-   "uqlibrary-autosuggest-input": "^v1.0.9"
+   "uqlibrary-autosuggest-input": "^v1.1.0"
   }
 }
