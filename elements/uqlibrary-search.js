@@ -402,7 +402,7 @@
             { title: 'Browse databases', url: 'https://app.library.uq.edu.au/#/gateways/database' }
           ]
         },
-        { name: 'Physical Items',
+        { name: 'Physical items',
           type: 'physical_items',
           url: this.links.primo,
           urlAppend: '&fn=search&rfnId=rfin9&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&fctIncV=61UQ_BDMB&fctIncV=61UQ_HERON&fctIncV=61UQ_BDMS&fctIncV=61UQ_JKMRC&fctIncV=61UQ_STR&fctIncV=61UQ_ROC&fctIncV=61UQ_HVY&fctIncV=61UQ_BND&fctIncV=61UQ_TBA&fctIncV=61UQ_ONLINE&fctIncV=61UQ_PACE&fctIncV=61UQ_MATER&fctIncV=61UQ_GATTON&fctIncV=61UQ_HERSTON&fctIncV=61UQ_FRY&fctIncV=61UQ_ARMUS&fctIncV=61UQ_ESL&fctIncV=61UQ_WHS&fctIncV=61UQ_SSH',
