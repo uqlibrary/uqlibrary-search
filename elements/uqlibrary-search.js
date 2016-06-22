@@ -383,7 +383,7 @@
         { name: 'Journals',
           type: 'journals',
           url: this.links.primo,
-          urlAppend: '&fn=search&fctN=facet_rtype&fctV=journals&vl(1UIStartWith0)=contains&ct=search&srt=rank&begins_with1=1&vl(D75285834UI0)=title&vid=61UQ',
+          urlAppend: '&fn=search&vl(1UIStartWith0)=contains&ct=search&srt=rank&begins_with1=1&vl(D75285834UI0)=title&vid=61UQ&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&tb=t&mode=Basic&tab=61uq_all&dum=true&fctIncV=journals&mulIncFctN=facet_rtype&rfnIncGrp=1',
           autoSuggest: true,
           api: this.api.primoApiLocal,
           icon: 'editor:insert-drive-file',
