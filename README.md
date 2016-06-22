@@ -2,7 +2,10 @@
 
 uqlibrary-search is a search form for UQ Library
 
-Full documentation can be found at [GitHub Pages](http://uqlibrary.github.io/uqlibrary-search).
+[GitHub Pages](http://uqlibrary.github.io/uqlibrary-search) could be used for documentation.
+
+### Status:
+At June 2016, this component is being built in branch **primo**.
 
 ### Getting Started
 Install Node.JS and run the following oneliner in the project directory:
@@ -20,3 +23,11 @@ Tests are run using the Web Component Tester. Either navigate to /tests/index.ht
 ```sh
 wct --local all
 ```
+
+### Rebuilding
+This component is called by:
+* uqlibrary-search
+* uqlibrary-mylibrary
+* uqlibrary-pages
+
+These will need to be rebuilt in codeship to push this change live.
