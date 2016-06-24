@@ -393,7 +393,7 @@
         { name: 'Physical items',
           type: 'physical_items',
           url: this.links.primo,
-          urlAppend: '&fn=search&vid=61UQ&rfnId=rfin9&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&mulIncFctN=facet_library&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&rfnIncGrp=1&fctIncV=61UQ_BDMB&fctIncV=61UQ_HERON&fctIncV=61UQ_BDMS&fctIncV=61UQ_JKMRC&fctIncV=61UQ_STR&fctIncV=61UQ_ROC&fctIncV=61UQ_HVY&fctIncV=61UQ_BND&fctIncV=61UQ_TBA&fctIncV=61UQ_ONLINE&fctIncV=61UQ_PACE&fctIncV=61UQ_MATER&fctIncV=61UQ_GATTON&fctIncV=61UQ_HERSTON&fctIncV=61UQ_FRY&fctIncV=61UQ_ARMUS&fctIncV=61UQ_ESL&fctIncV=61UQ_WHS&fctIncV=61UQ_SSH',
+          urlAppend: '&ct=facet&fctN=facet_tlevel&fctV=physical_items&rfnGrp=show_only&frbg=&&indx=1&fn=search&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
           autoSuggest: true,
           api: this.api.primoApiLocal,
           icon: 'icons:inbox',
