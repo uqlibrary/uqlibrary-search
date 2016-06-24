@@ -393,7 +393,7 @@
         { name: 'Physical items',
           type: 'physical_items',
           url: this.links.primo,
-          urlAppend: '&fn=search&ct=search&initialSearch=true&mode=Basic&tab=61uq_all&indx=1&dum=true&srt=rank&vid=61UQ&frbg=&tb=t&ac=O3=128&O6=12&O9=1&&scp.scps=scope:(61UQ),primo_central_multiple_fe&vl(1UIStartWith0)=contains&vl(D75285834UI0)=any&vl(D75285834UI0)=title&vl(D75285834UI0)=any',
+          urlAppend: '&ct=facet&fctN=facet_tlevel&fctV=physical_items&rfnGrp=show_only&frbg=&&indx=1&fn=search&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
           autoSuggest: true,
           api: this.api.primoApiLocal,
           icon: 'icons:inbox',
