@@ -5,7 +5,7 @@ uqlibrary-search is a search form for UQ Library
 [GitHub Pages](http://uqlibrary.github.io/uqlibrary-search) could be used for documentation.
 
 ### Status:
-At June 2016, this component is being built in branch **primo**.
+At June 2016, post-primo, this component is being built in branch **polymer1.0**.
 
 ## primo branch
 TODO: this branch required uqlibrary-api#primo - release uqlibrary-api#primo first 
