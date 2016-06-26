@@ -327,7 +327,7 @@
       var defaultHelpLinks = [
         {
           title: 'Search help',
-          url: 'https://web.library.uq.edu.au/research-tools-techniques/search-techniques/searching-uq-library'
+          url: 'https://web.library.uq.edu.au/research-tools-techniques/uq-library-search'
         },
         {
           title: 'Browse search',
