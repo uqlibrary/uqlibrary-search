@@ -29,7 +29,7 @@ wct --local all
 
 ### Rebuilding
 This component is called by:
-* uqlibrary-search
+* uqlibrary-reusable-components
 * uqlibrary-mylibrary
 * uqlibrary-pages
 
