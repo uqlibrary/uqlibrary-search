@@ -158,7 +158,7 @@
         else if (this.selectedSource.type === 'physical_items') {
           searchText = this._cleanSearchQuery(searchText);
         }
-        searchUrl = encodeURI(this.selectedSource.url + searchText);
+        searchUrl = encodeURI(this.selectedSource.url) +  encodeURIComponent(searchText);
         if (this.selectedSource.urlAppend) {
           searchUrl += this.selectedSource.urlAppend;
         }
