@@ -198,7 +198,16 @@
       }
 
       this.recent.lastSelectedFilter = this.selectedSourceIndex;
+
+      this.recent.dateSaved = this._now();
+
       this.$.localstorage.save();
+    },
+
+    _now: function() {
+      var d = new Date();
+      var now = d.getTime();
+      return now;
     },
 
     _cleanSearchQuery: function (query) {
@@ -304,7 +313,11 @@
         this.recent = {searches: {}};
       }
 
-      if (this.recent && this.recent.lastSelectedFilter) {
+      // we only use filters from searches less than 12 hours old
+      var twelveHours = 12*60*60*1000;
+      if (this.recent && this.recent.lastSelectedFilter
+        && this._now() < this.recent.dateSaved + twelveHours
+      ) {
         this.selectedSourceIndex = this.recent.lastSelectedFilter;
       }
     },
