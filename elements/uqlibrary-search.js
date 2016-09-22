@@ -313,10 +313,10 @@
         this.recent = {searches: {}};
       }
 
-      // we only use filters from searches less than 12 hours old
-      var twelveHours = 12*60*60*1000;
+      // we only reuse the dropdown filter selection from searches less than 1 hour ago
+      var oneHour = 60*60*1000;
       if (this.recent && this.recent.lastSelectedFilter
-        && this._now() < this.recent.dateSaved + twelveHours
+        && this._now() < this.recent.dateSaved + oneHour
       ) {
         this.selectedSourceIndex = this.recent.lastSelectedFilter;
       }
