@@ -50,6 +50,25 @@
           }
       },
 
+      urlLinkOldSearchVersion : {
+        type: String,
+        value: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?vl(freeText0)='
+      },
+
+      urlAppendLinkOldSearchVersion : {
+        type: String,
+        value: '&ct=facet&rfnGrpCounter=1&frbg=&&indx=1&fn=search&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&fctExcV=newspaper_articles&mulExcFctN=facet_rtype&rfnExcGrp=1&fctExcV=reviews&mulExcFctN=facet_rtype&rfnExcGrp=1'
+      },
+
+      urlLinkNewSearchVersion : {
+        type: String,
+        value: 'https://search.library.uq.edu.au/primo-explore/search?query=any,contains,'
+      },
+
+      urlAppendLinkNewSearchVersion : {
+        type: String,
+        value: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ&offset=0'
+      },
       /**
        * Redirections list after search is performed
        */
@@ -129,7 +148,17 @@
         value: function () {
           return this.$.inputSources;
         }
+      },
+
+      /**
+       * which tab is selected on the beta test (old primo or new primo)
+       */
+      _selectedSearchVersion : {
+        type: String,
+        value: 'oldPrimo',
+        observer: '_selectedSearchVersionChanged'
       }
+
     },
 
     _selectedSourceIndexChanged: function(newValue, oldValue) {
@@ -138,6 +167,49 @@
         this.$.menuSources.close();
         this._sourceSelected();
       }
+    },
+
+    _selectedSearchVersionChanged: function (newValue, oldValue) {
+
+      if (newValue === 1) {
+        // new version tab selected
+
+        this.sources.forEach(function(source) {
+          if (source.name == 'Library') {
+            // update url
+            source.url = this.urlLinkOldSearchVersion;
+
+            // update urlappend
+            source.urlAppend = this.urlAppendLinkOldSearchVersion
+          }
+        });
+
+        // update display color
+        var newclassName = ' betaSearchMarker';
+        var htmlElement =  document.getElementById('inputSources');
+        htmlElement.className+= newclassName;
+
+        htmlElement = document.getElementById('searchKeywordInput');
+        htmlElement.className+= newclassName;
+
+      } else if (newValue === 0) {
+        // old version tab selected
+
+        this.sources.forEach(function(source) {
+          if (source.name == 'Library') {
+            // update url
+            source.url = this.urlLinkNewSearchVersion;
+
+            // update urlappend
+            source.urlAppend = this.urlAppendLinkNewSearchVersion0
+          }
+        });
+
+      }
+
+      // set cookie
+
+
     },
 
     _searchActivated: function(e) {

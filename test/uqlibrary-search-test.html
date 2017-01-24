@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <html>
 <head>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>uql-ia-button</title>
+    <title>uqlibrary-search tests</title>
 
     <script src="../../webcomponentsjs/webcomponents.min.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
@@ -40,6 +40,144 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             testObj = fixture('basic');
         });
+
+      //
+      test('the beta interface should have two tabs', function (done) {
+        // Data bindings will stamp out new DOM asynchronously
+        // so wait to check for updates
+        flush(function () {
+
+          setTimeout(function(){
+            var els = testObj.querySelectorAll('#betaTestSelector paper-tab');
+            expect(els.length).to.equal(2);
+
+            done();
+          }, 1900);
+
+        });
+      });
+
+      test('when beta interface Try Next Version is clicked the display changes correctly', function (done) {
+        // Data bindings will stamp out new DOM asynchronously
+        // so wait to check for updates
+        flush(function () {
+
+
+          setTimeout(function(){
+            // the tests
+
+            var els = testObj.querySelectorAll('#betaTestSelector paper-tab');
+console.log(els);
+            els[1].click();
+            var el = testObj.querySelector('#betaTestSelector paper-tab.iron-selected');
+            expect(el.textContent).to.match(/Try the next version/);
+
+            done();
+          }, 1900);
+
+        });
+      });
+
+      test('when beta interface old primo tab is clicked the display changes correctly and data fields update to correct values', function (done) {
+        // Data bindings will stamp out new DOM asynchronously
+        // so wait to check for updates
+        flush(function () {
+
+          setTimeout(function(){
+            // the tests
+
+            var els = testObj.querySelectorAll('#betaTestSelector paper-tab');
+            els[0].click();
+            var el = testObj.querySelector('paper-tab.iron-selected');
+            expect(el.textContent).to.match(/UQ Library search/);
+
+            done();
+          }, 1900);
+
+        });
+      });
+
+      test('beta interface old primo displayed when no cookie is present', function (done) {
+        // Data bindings will stamp out new DOM asynchronously
+        // so wait to check for updates
+        flush(function () {
+
+          // set cookie
+
+          setTimeout(function(){
+            // the tests
+
+            // not built
+            result = false;
+            expect(result).to.be.true;
+
+            done();
+          }, 1900);
+
+        });
+      });
+
+      test('beta interface old primo displayed when cookie says oldPrimo', function (done) {
+        // Data bindings will stamp out new DOM asynchronously
+        // so wait to check for updates
+        flush(function () {
+
+          // set cookie
+          document.cookie =
+
+          setTimeout(function(){
+            // the tests
+
+            // not built
+            result = false;
+            expect(result).to.be.true;
+
+            done();
+          }, 1900);
+
+        });
+      });
+
+      test('beta interface new primo search tab is selected when cookie says new', function (done) {
+        // Data bindings will stamp out new DOM asynchronously
+        // so wait to check for updates
+        flush(function () {
+
+          // setup
+
+          setTimeout(function(){
+            // the tests
+
+            // not built
+            result = false;
+            expect(result).to.be.true;
+
+            done();
+          }, 1900);
+
+        });
+      });
+
+      test('new test', function (done) {
+        // Data bindings will stamp out new DOM asynchronously
+        // so wait to check for updates
+        flush(function () {
+
+          // setup
+
+          setTimeout(function(){
+            // the tests
+
+            // not built
+            result = false;
+            expect(result).to.be.true;
+
+            done();
+          }, 1900);
+
+        });
+      });
+
 
         test('Display uqlibrary-search elements', function (done) {
             // Data bindings will stamp out new DOM asynchronously
@@ -178,6 +316,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }, 1900);
             });
         });
+
 
     });
 </script>
