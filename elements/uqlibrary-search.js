@@ -53,13 +53,53 @@
             urls: {
                 type: Object,
                 value: {
-                    old: {
-                        search: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?vl(freeText0)=',
-                        urlAppend: '&ct=facet&rfnGrpCounter=1&frbg=&&indx=1&fn=search&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&fctExcV=newspaper_articles&mulExcFctN=facet_rtype&rfnExcGrp=1&fctExcV=reviews&mulExcFctN=facet_rtype&rfnExcGrp=1'
+                    all: {
+                        old: {
+                            urlAppend: '&ct=facet&rfnGrpCounter=1&frbg=&&indx=1&fn=search&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&fctExcV=newspaper_articles&mulExcFctN=facet_rtype&rfnExcGrp=1&fctExcV=reviews&mulExcFctN=facet_rtype&rfnExcGrp=1',
+                        },
+                        new: {
+                            urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&offset=0'
+                        }
                     },
-                    new: {
-                        search: 'https://search.library.uq.edu.au/primo-explore/search?query=any,contains,',
-                        urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ&offset=0'
+                    books: {
+                        old: {
+                            urlAppend: '&fn=search&ct=facet&fctN=facet_rtype&fctV=books&rfnGrp=1&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
+                        },
+                        new: {
+                            urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&offset=0&facet=rtype,include,books'
+                        }
+                    },
+                    multimedia: {
+                        old: {
+                            urlAppend: '&fn=search&ct=facet&fctN=facet_rtype&fctV=media&rfnGrp=1&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
+                        },
+                        new: {
+                            urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&offset=0&facet=rtype,include,media'
+                        }
+                    },
+                    journal_articles: {
+                        old: {
+                            urlAppend: '&fn=search&ct=facet&fctN=facet_rtype&fctV=articles&rfnGrp=1&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
+                        },
+                        new: {
+                            urlAppend: '&tab=61uq_all&search_scope=61UQ_All&vid=61UQ_DEV&offset=0&fctV=articles&facet=rtype,include,articles'
+                        }
+                    },
+                    journals: {
+                        old: {
+                            urlAppend: '&fn=search&vl(1UIStartWith0)=contains&ct=search&srt=rank&begins_with1=1&vl(D75285834UI0)=title&vid=61UQ&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&tb=t&mode=Basic&tab=61uq_all&dum=true&fctIncV=journals&mulIncFctN=facet_rtype&rfnIncGrp=1',
+                        },
+                        new: {
+                            urlAppend: ',AND&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&mode=advanced&offset=0&facet=rtype,include,journals'
+                        }
+                    },
+                    physical_items: {
+                        old: {
+                            urlAppend: '&ct=facet&fctN=facet_tlevel&fctV=physical_items&rfnGrp=show_only&frbg=&&indx=1&fn=search&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
+                        },
+                        new: {
+                            urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=title&vid=61UQ_DEV&offset=0&facet=tlevel,include,physical_items'
+                        }
                     }
                 }
             },
@@ -71,6 +111,7 @@
                 type: Object,
                 value: {
                     primo: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?vl(freeText0)=',
+                    newPrimo: 'https://search.library.uq.edu.au/primo-explore/search?query=any,contains,',
                     exams: 'https://www.library.uq.edu.au/exams/papers.php?stub=',
                     lr: 'http://lr.library.uq.edu.au/search?q=',
                     database: 'https://www.library.uq.edu.au/resources/database/#/?title='
@@ -144,15 +185,6 @@
                     return this.$.inputSources;
                 }
             },
-
-            /**
-             * which tab is selected on the beta test (old primo or new primo)
-             */
-            _selectedSearchVersion: {
-                type: String,
-                observer: '_selectedSearchVersionChanged'
-            }
-
         },
 
         _selectedSourceIndexChanged: function (newValue, oldValue) {
@@ -164,63 +196,70 @@
         },
 
         onTabSelect: function (event, details) {
-            if (details.item.id == 'oldPrimo') {
-                document.getElementById('newPrimoTagLine').style.display = 'none';
-            } else if (details.item.id == 'newPrimo') {
-                document.getElementById('newPrimoTagLine').style.display = 'block';
-            }
+            // check if tab with new version is clicked
+            var isNew = details.item.id == 'newPrimo';
+
+            // toggle tag line
+            this._toggleTagLine(isNew);
+
+            // toggle input fields color
+            this._toggleInputColor(isNew);
+
+            // toggle primo urls for sources
+            this._togglePrimoUrl(isNew);
+
+            // set cookie
+            this._setCookie('LibrarySearchChoice', details.item.id);
+
+            // focus input
+            this.$.searchKeywordInput.setFocus();
         },
 
-        _selectedSearchVersionChanged: function (newValue, oldValue) {
-            if (newValue === 1) {
-                // new version tab selected
-                // change colors
-                this._betaAddHighlighting('#d7e2ef');
+        _toggleTagLine: function(isNew) {
+            document.getElementById('newPrimoTagLine').style.display = isNew ? 'block' : 'none';
+        },
 
-                // update search url
-                this._changeLibraryUrl(this.urls.new);
+        _toggleInputColor: function(isNew) {
+            var color = isNew ? '#d7e2ef' : '#f2f2f2';
+            this._betaAddHighlighting(color);
+        },
 
-                // set cookie
-                this._setCookie('LibrarySearchChoice', 'newPrimo');
-            } else if (newValue === 0) {
-                // change colors back
-                this._betaAddHighlighting('#f2f2f2');
-
-                // update search url to old
-                this._changeLibraryUrl(this.urls.old);
-
-                // set cookie
-                this._setCookie('LibrarySearchChoice', 'oldPrimo');
-            }
-
-            var inputKeyword = document.querySelector('#inputKeyword');
-            if (inputKeyword) inputKeyword.focus();
+        _togglePrimoUrl: function(isNew) {
+            var url = isNew ? this.links.newPrimo : this.links.primo;
+            this._changePrimoUrl(url, isNew);
         },
 
         /**
-         * Change Library Url
+         * Change Primo Url
          * @param url
+         * @param isNew
          * @private
          */
-        _changeLibraryUrl: function(url) {
+        _changePrimoUrl: function(url, isNew) {
+            var newPrimoSources = ['all', 'books', 'journal_articles', 'journals', 'multimedia', 'physical_items'];
+
             this.sources.forEach(function (source) {
-                if (source.name == 'Library') {
+                if (newPrimoSources.indexOf(source.type) > -1) {
                     // update url
-                    source.url = url.search;
+                    source.url = url;
 
                     // update urlappend
-                    source.urlAppend = url.urlAppend;
+                    source.urlAppend = isNew ? this.urls[source.type].new.urlAppend : this.urls[source.type].old.urlAppend;
                 }
-            });
+            }.bind(this));
         },
 
-        _betaAddHighlighting: function (inputBackgroundColor, inputBorderColor) {
+        _betaAddHighlighting: function (inputBackgroundColor) {
+
             // update display inputBackgroundColor
             var htmlElement = document.getElementById('inputSources');
             if (htmlElement) htmlElement.style.backgroundColor = inputBackgroundColor;
 
             htmlElement = document.getElementById('searchKeywordInput');
             if (htmlElement) htmlElement.style.backgroundColor = inputBackgroundColor;
+
+            var listSource = document.getElementById('listSources');
+            if (listSource) listSource.style.backgroundColor = inputBackgroundColor;
         },
 
         _searchActivated: function (e) {
@@ -358,19 +397,6 @@
                 }
             }
             return "";
-        },
-
-        /**
-         * Check cookie
-         * @private
-         */
-        _checkCookie: function () {
-            var choice = this._getCookie("LibrarySearchChoice");
-            console.log('checkCookie', choice);
-            if (choice == null) {
-                choice = 'oldPrimo';
-            }
-            this._selectedSearchVersion = choice;
         },
 
         _processSuggestions: function (suggestions) {
@@ -589,9 +615,8 @@
                 }
             ];
 
-            this._checkCookie();
             this.selectedSource = this.sources[this.selectedSourceIndex];
-            this._selectedSearchVersion = this._getCookie('LibrarySearchChoice') == 'newPrimo' ? 1 : 0;
+            this.userChoice = this._getCookie('LibrarySearchChoice') == 'newPrimo' ? 1 : 0;
 
             this.async(function () {
                 this.$.searchKeywordInput.setFocus();
