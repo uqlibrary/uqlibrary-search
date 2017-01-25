@@ -36,148 +36,66 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var testObj;
 
         setup(function () {
-            document.cookie="UQLMockData=enabled";
+            document.cookie = "UQLMockData=enabled";
 
             testObj = fixture('basic');
         });
 
-      //
-      test('the beta interface should have two tabs', function (done) {
-        // Data bindings will stamp out new DOM asynchronously
-        // so wait to check for updates
-        flush(function () {
+        //
+        test('the beta interface should have two tabs', function (done) {
+            // Data bindings will stamp out new DOM asynchronously
+            // so wait to check for updates
+            flush(function () {
 
-          setTimeout(function(){
-            var els = testObj.querySelectorAll('#betaTestSelector paper-tab');
-            expect(els.length).to.equal(2);
+                setTimeout(function () {
+                    var els = testObj.querySelectorAll('#betaTestSelector paper-tab');
+                    expect(els.length).to.equal(2);
 
-            done();
-          }, 1900);
+                    done();
+                }, 1900);
 
+            });
         });
-      });
 
-      test('when beta interface Try Next Version is clicked the display changes correctly', function (done) {
-        // Data bindings will stamp out new DOM asynchronously
-        // so wait to check for updates
-        flush(function () {
+        test('when beta interface Try Next Version is clicked the display changes correctly', function (done) {
+            // Data bindings will stamp out new DOM asynchronously
+            // so wait to check for updates
+            flush(function () {
 
 
-          setTimeout(function(){
-            // the tests
+                setTimeout(function () {
+                    // the tests
 
-            var els = testObj.querySelectorAll('#betaTestSelector paper-tab');
-console.log(els);
-            els[1].click();
-            var el = testObj.querySelector('#betaTestSelector paper-tab.iron-selected');
-            expect(el.textContent).to.match(/Try the next version/);
+                    var els = testObj.querySelectorAll('#betaTestSelector paper-tab');
+                    console.log(els);
+                    els[1].click();
+                    var el = testObj.querySelector('#betaTestSelector paper-tab.iron-selected');
+                    expect(el.textContent).to.match(/Try the next version/);
 
-            done();
-          }, 1900);
+                    done();
+                }, 1900);
 
+            });
         });
-      });
 
-      test('when beta interface old primo tab is clicked the display changes correctly and data fields update to correct values', function (done) {
-        // Data bindings will stamp out new DOM asynchronously
-        // so wait to check for updates
-        flush(function () {
+        test('when beta interface old primo tab is clicked the display changes correctly and data fields update to correct values', function (done) {
+            // Data bindings will stamp out new DOM asynchronously
+            // so wait to check for updates
+            flush(function () {
 
-          setTimeout(function(){
-            // the tests
+                setTimeout(function () {
+                    // the tests
 
-            var els = testObj.querySelectorAll('#betaTestSelector paper-tab');
-            els[0].click();
-            var el = testObj.querySelector('paper-tab.iron-selected');
-            expect(el.textContent).to.match(/UQ Library search/);
+                    var els = testObj.querySelectorAll('#betaTestSelector paper-tab');
+                    els[0].click();
+                    var el = testObj.querySelector('paper-tab.iron-selected');
+                    expect(el.textContent).to.match(/UQ Library search/);
 
-            done();
-          }, 1900);
+                    done();
+                }, 1900);
 
+            });
         });
-      });
-
-      test('beta interface old primo displayed when no cookie is present', function (done) {
-        // Data bindings will stamp out new DOM asynchronously
-        // so wait to check for updates
-        flush(function () {
-
-          // set cookie
-
-          setTimeout(function(){
-            // the tests
-
-            // not built
-            result = false;
-            expect(result).to.be.true;
-
-            done();
-          }, 1900);
-
-        });
-      });
-
-      test('beta interface old primo displayed when cookie says oldPrimo', function (done) {
-        // Data bindings will stamp out new DOM asynchronously
-        // so wait to check for updates
-        flush(function () {
-
-          // set cookie
-          document.cookie =
-
-          setTimeout(function(){
-            // the tests
-
-            // not built
-            result = false;
-            expect(result).to.be.true;
-
-            done();
-          }, 1900);
-
-        });
-      });
-
-      test('beta interface new primo search tab is selected when cookie says new', function (done) {
-        // Data bindings will stamp out new DOM asynchronously
-        // so wait to check for updates
-        flush(function () {
-
-          // setup
-
-          setTimeout(function(){
-            // the tests
-
-            // not built
-            result = false;
-            expect(result).to.be.true;
-
-            done();
-          }, 1900);
-
-        });
-      });
-
-      test('new test', function (done) {
-        // Data bindings will stamp out new DOM asynchronously
-        // so wait to check for updates
-        flush(function () {
-
-          // setup
-
-          setTimeout(function(){
-            // the tests
-
-            // not built
-            result = false;
-            expect(result).to.be.true;
-
-            done();
-          }, 1900);
-
-        });
-      });
-
 
         test('Display uqlibrary-search elements', function (done) {
             // Data bindings will stamp out new DOM asynchronously
@@ -250,7 +168,7 @@ console.log(els);
 
                 inputKeyword.value = "search";
 
-                setTimeout(function(){
+                setTimeout(function () {
                     expect(menuSuggestions).to.not.be.null;
                     expect(menuSuggestions).to.be.visible;
 
@@ -278,7 +196,7 @@ console.log(els);
                 expect(menuSuggestions).to.not.be.null;
                 expect(menuSuggestions).not.to.be.visible;
 
-                setTimeout(function(){
+                setTimeout(function () {
                     expect(menuSuggestions).to.not.be.null;
                     expect(menuSuggestions).to.be.visible;
 
@@ -305,7 +223,7 @@ console.log(els);
                 expect(menuSuggestions).to.not.be.null;
                 expect(menuSuggestions).not.to.be.visible;
 
-                setTimeout(function(){
+                setTimeout(function () {
                     expect(menuSuggestions).to.not.be.null;
                     expect(menuSuggestions).to.be.visible;
 

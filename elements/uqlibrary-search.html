@@ -55,13 +55,6 @@ Example:
       margin-top: 9px;
     }
 
-    .betaSearchMarker {
-      background-color: blue;
-      color: inherit;
-    }
-
-
-
     @media screen and (max-width: 815px) {
       :host {
         @apply(--layout-flex-none);
@@ -86,6 +79,29 @@ Example:
       }
     }
 
+      paper-tabs {
+        width: 100%;
+        text-transform: uppercase;
+        font-size: 20px;
+        --paper-tabs-selection-bar-color: var(--accent-color);
+        margin-bottom: 20px;
+        border-bottom: 1px solid lightgrey;
+      }
+
+      .betaSearchMarker paper-input-container {
+        background-color: #d7e2ef;
+      }
+
+      paper-tab.iron-selected {
+        color: var(--accent-color);
+      }
+
+      #newPrimoTagLine {
+        display: none;
+        width: 100%;
+        margin-top: 10px;
+        color: var(--secondary-color);
+      }
   </style>
 
     <uqlibrary-ga id="ga" app-name="{{gaAppName}}"></uqlibrary-ga>
@@ -104,22 +120,30 @@ Example:
 
     <iron-a11y-keys target="[[_inputSourcesTarget]]" keys="enter" on-keys-pressed="_keywordFocused"></iron-a11y-keys>
 
-    <paper-tabs id="betaTestSelector" selected="{{_selectedSearchVersion}}">
-      <paper-tab name="oldPrimo" aria-label="UQ Library search">
+    <paper-tabs id="betaTestSelector" selected="{{_selectedSearchVersion}}" on-iron-select="onTabSelect">
+      <paper-tab id="oldPrimo" name="oldPrimo" aria-label="UQ Library search">
         UQ Library search
       </paper-tab>
-      <paper-tab name="newPrimo" aria-label="Try the next version">
+      <paper-tab id="newPrimo" name="newPrimo" aria-label="Try the next version">
         Try the next version
       </paper-tab>
     </paper-tabs>
 
+      <paper-item id="newPrimoTagLine">
+        <div>Updated look, better filtering <a href="#">and more</a>.  Try it and tell us what you think.</div>
+      </paper-item>
 
-    <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value$="{{selectedSource.name}}"
-                 role="combobox" aria-label="select search scope">
-      <paper-icon-button suffix icon="unfold-more" aria-label="select search scope" role="button" alt="select search scope"
-                         title="select search scope" style="margin-top: -15px;">
-      </paper-icon-button>
-    </paper-input>
+      <paper-item>
+        <div>
+          <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value$="{{selectedSource.name}}"
+                       role="combobox" aria-label="select search scope">
+            <paper-icon-button suffix icon="unfold-more" aria-label="select search scope" role="button" alt="select search scope"
+                               title="select search scope" style="margin-top: -15px;">
+            </paper-icon-button>
+          </paper-input>
+        </div>
+      </paper-item>
+
 
     <uqlibrary-iron-dropdown id="menuSources"
                              horizontal-align="left" vertical-align="top" position-absolute="true"
