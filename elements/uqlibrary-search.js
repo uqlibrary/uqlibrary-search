@@ -212,7 +212,7 @@
 
     _cleanSearchQuery: function (query) {
       // remove non-alphanumerical characters and multiple whitespaces
-      return  query.replace( new RegExp( '[^a-zA-Z0-9 @]' , 'gi' ), " ").replace(new RegExp( "\\s+" , 'gi' ), " ").replace(/\s/g, ' ');
+      return  query.replace( new RegExp( '[^a-zA-Z0-9 @]' , 'gi' ), " ").replace(new RegExp( "\\s+" , 'gi' ), " ");
     },
 
     _sourceSelected: function() {
