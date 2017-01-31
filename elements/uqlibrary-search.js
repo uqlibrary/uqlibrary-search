@@ -506,7 +506,7 @@
                 },
                 {
                     title: 'Advanced search',
-                    url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ'
+                    url: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ_DEV'
                 }
             ];
 
