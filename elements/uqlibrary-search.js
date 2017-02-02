@@ -216,8 +216,8 @@
             // toggle primo urls for sources
             this._togglePrimoUrl(isNew);
 
-            // hide and show the advanced button
-            this._toggleAdvancedSearchButtonDisplay(isNew);
+            // change the search buttons
+            this._toggleSearchButtons(isNew);
 
             // set cookie
             this._setCookie('LibrarySearchChoice', details.item.id);
@@ -276,86 +276,104 @@
         },
 
           /**
-           * Beta of new primo - show hide the advanced button (there isnt an advanced page for new primo)
+           * Beta of new primo - show hide the Browse Search button (there isnt a browse page for new primo)
+           * & change the Advanced Search landing url
            * @param isNew
            * @private
            */
-          _toggleAdvancedSearchButtonDisplay: function(isNew) {
+          _toggleSearchButtons: function(isNew) {
+            // because this is temporary code, we are hard coding the index arrays - should only last a month
+             var indexBrowseSearch = 1; // position of 'Browse Search' in the array
+             var indexAdvancedSearch = 2; // position of 'Advanced Search' in the array
 
-             var replaceButton = {
-               title: 'Advanced search',
-               url: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ_DEV'
+             var replaceBrowseButton =  {
+               title: 'Browse search',
+               url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=61UQ'
              };
 
-             // uqlibrary-pages buttons is mapped to this element in scrips/app.js
+             var advancedSearchButtonUrl = {
+               old: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ',
+               new: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ_DEV'
+             };
+
+             // uqlibrary-pages buttons is mapped to this.selectedSource in scripts/app.js
              if (isNew) {
-               // because this is only temporary code we are hard coding the third element
-               if (typeof this.selectedSource.helpLinks[2] !== 'undefined') {
-                 this.selectedSource.helpLinks.splice(2);
+               // change Advanced Search link to new link
+               this.selectedSource.helpLinks[indexAdvancedSearch].url = advancedSearchButtonUrl.new;
+
+               // remove the Browse Search link. It doesnt exist in new primo
+               if (typeof this.selectedSource.helpLinks[indexBrowseSearch] !== 'undefined') {
+                 this.selectedSource.helpLinks.splice(indexBrowseSearch, 1);
                }
              } else {
-               if (typeof this.selectedSource.helpLinks[2] === 'undefined') {
-                this.selectedSource.helpLinks.push(replaceButton);
-                }
+
+               // supply the Browse Search link for Old Primo
+               if (typeof this.selectedSource.helpLinks[indexBrowseSearch] !== 'undefined') {
+                 this.selectedSource.helpLinks.splice(indexBrowseSearch, 0, replaceBrowseButton);
+               }
+
+               // change Advanced Search link to new link
+               this.selectedSource.helpLinks[indexAdvancedSearch].url = advancedSearchButtonUrl.old;
+
              }
 
           },
 
-      /**
-       * Beta of new primo - highlight the fields when using new primo
-       * @param inputBackgroundColor
-       * @private
-       */
-        _betaAddHighlighting: function (inputBackgroundColor) {
+          /**
+           * Beta of new primo - highlight the fields when using new primo
+           * @param inputBackgroundColor
+           * @private
+           */
+            _betaAddHighlighting: function (inputBackgroundColor) {
 
-            // update display inputBackgroundColor
-            var htmlElement = document.getElementById('inputSources');
-            if (htmlElement) htmlElement.style.backgroundColor = inputBackgroundColor;
+                // update display inputBackgroundColor
+                var htmlElement = document.getElementById('inputSources');
+                if (htmlElement) htmlElement.style.backgroundColor = inputBackgroundColor;
 
-            htmlElement = document.getElementById('searchKeywordInput');
-            if (htmlElement) htmlElement.style.backgroundColor = inputBackgroundColor;
+                htmlElement = document.getElementById('searchKeywordInput');
+                if (htmlElement) htmlElement.style.backgroundColor = inputBackgroundColor;
 
-            var listSource = document.getElementById('listSources');
-            if (listSource) listSource.style.backgroundColor = inputBackgroundColor;
-        },
-      /**
-       * Beta of new primo - Set cookie
-       * @param cname
-       * @param cvalue
-       * @param exdays
-       * @private
-       */
-      _setCookie: function (cname, cvalue, exdays) {
-        exdays = exdays || 25; // new primo goes live in a few weeks, so 25 days is enough
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = "expires=" + d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        console.log(document.cookie);
-      },
+                var listSource = document.getElementById('listSources');
+                if (listSource) listSource.style.backgroundColor = inputBackgroundColor;
+            },
+          /**
+           * Beta of new primo - Set cookie
+           * @param cname
+           * @param cvalue
+           * @param exdays
+           * @private
+           */
+          _setCookie: function (cname, cvalue, exdays) {
+            exdays = exdays || 25; // new primo goes live in a few weeks, so 25 days is enough
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            console.log(document.cookie);
+          },
 
-      /**
-       * Beta of new primo - Get cookie
-       * @param cname
-       * @returns {*}
-       * @private
-       */
-      _getCookie: function (cname) {
-        var name = cname + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-          var c = ca[i];
-          while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-          }
-          if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-          }
-        }
-        return "";
-      },
+          /**
+           * Beta of new primo - Get cookie
+           * @param cname
+           * @returns {*}
+           * @private
+           */
+          _getCookie: function (cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+              var c = ca[i];
+              while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+              }
+              if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+              }
+            }
+            return "";
+          },
 
-      _searchActivated: function (e) {
+        _searchActivated: function (e) {
             var searchText = e.detail.name ? e.detail.name : this.$.searchKeywordInput.keyword;
             var selectedSuggestion = e.detail.name ? e.detail : null;
             var searchUrl = '';
@@ -563,7 +581,7 @@
                 },
                 {
                     title: 'Advanced search',
-                    url: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ_DEV'
+                    url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ'
                 }
             ];
 
