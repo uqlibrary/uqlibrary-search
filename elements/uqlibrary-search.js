@@ -50,6 +50,9 @@
                 }
             },
 
+          /**
+           * Beta of new primo - set up the old and new urls to be swapped in and out as the tabs change
+           */
             urls: {
                 type: Object,
                 value: {
@@ -184,7 +187,7 @@
                 value: function () {
                     return this.$.inputSources;
                 }
-            },
+            }
         },
 
         _selectedSourceIndexChanged: function (newValue, oldValue) {
@@ -195,6 +198,11 @@
             }
         },
 
+      /**
+       * Beta of new primo - show and hide the tabs
+       * @param event
+       * @param details
+       */
         onTabSelect: function (event, details) {
             // check if tab with new version is clicked
             var isNew = details.item.id == 'newPrimo';
@@ -218,16 +226,31 @@
             this.$.searchKeywordInput.setFocus();
         },
 
-        _toggleTagLine: function(isNew) {
+      /**
+       * Beta of new primo - show and hide the tab tag line
+       * @param isNew
+       * @private
+       */
+      _toggleTagLine: function(isNew) {
             document.getElementById('newPrimoTagLine').style.display = isNew ? 'block' : 'none';
         },
 
+      /**
+       * Beta of new primo - change the background color of the input fields to blue for the beta tab
+       * @param isNew
+       * @private
+       */
         _toggleInputColor: function(isNew) {
             var color = isNew ? '#d7e2ef' : '#f2f2f2';
             this._betaAddHighlighting(color);
         },
 
-        _togglePrimoUrl: function(isNew) {
+      /**
+       * Beta of new primo - change the landing url for each dropdown type
+       * @param isNew
+       * @private
+       */
+      _togglePrimoUrl: function(isNew) {
             var url = isNew ? this.links.newPrimo : this.links.primo;
             this._changePrimoUrl(url, isNew);
         },
@@ -278,6 +301,11 @@
 
           },
 
+      /**
+       * Beta of new primo - highlight the fields when using new primo
+       * @param inputBackgroundColor
+       * @private
+       */
         _betaAddHighlighting: function (inputBackgroundColor) {
 
             // update display inputBackgroundColor
@@ -290,8 +318,44 @@
             var listSource = document.getElementById('listSources');
             if (listSource) listSource.style.backgroundColor = inputBackgroundColor;
         },
+      /**
+       * Beta of new primo - Set cookie
+       * @param cname
+       * @param cvalue
+       * @param exdays
+       * @private
+       */
+      _setCookie: function (cname, cvalue, exdays) {
+        exdays = exdays || 25; // new primo goes live in a few weeks, so 25 days is enough
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        console.log(document.cookie);
+      },
 
-        _searchActivated: function (e) {
+      /**
+       * Beta of new primo - Get cookie
+       * @param cname
+       * @returns {*}
+       * @private
+       */
+      _getCookie: function (cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      },
+
+      _searchActivated: function (e) {
             var searchText = e.detail.name ? e.detail.name : this.$.searchKeywordInput.keyword;
             var selectedSuggestion = e.detail.name ? e.detail : null;
             var searchUrl = '';
@@ -390,41 +454,6 @@
         _suggestionsLoaded: function (e) {
             this.suggestions = this._processSuggestions(e.detail);
             this.$.searchKeywordInput.suggestions = this.suggestions;
-        },
-
-        /**
-         * Set cookie
-         * @param cname
-         * @param cvalue
-         * @param exdays
-         * @private
-         */
-        _setCookie: function (cname, cvalue) {
-            var d = new Date();
-            d.setTime(d.getTime() + (25 * 24 * 60 * 60 * 1000));
-            var expires = "expires=" + d.toUTCString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        },
-
-        /**
-         * Get cookie
-         * @param cname
-         * @returns {*}
-         * @private
-         */
-        _getCookie: function (cname) {
-            var name = cname + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
         },
 
         _processSuggestions: function (suggestions) {
