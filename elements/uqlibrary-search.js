@@ -208,6 +208,9 @@
             // toggle primo urls for sources
             this._togglePrimoUrl(isNew);
 
+            // hide and show the advanced button
+            this._toggleAdvancedSearchButtonDisplay(isNew);
+
             // set cookie
             this._setCookie('LibrarySearchChoice', details.item.id);
 
@@ -248,6 +251,32 @@
                 }
             }.bind(this));
         },
+
+          /**
+           * Beta of new primo - show hide the advanced button (there isnt an advanced page for new primo)
+           * @param isNew
+           * @private
+           */
+          _toggleAdvancedSearchButtonDisplay: function(isNew) {
+
+             var replaceButton = {
+               title: 'Advanced search',
+               url: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ_DEV'
+             };
+
+             // uqlibrary-pages buttons is mapped to this element in scrips/app.js
+             if (isNew) {
+               // because this is only temporary code we are hard coding the third element
+               if (typeof this.selectedSource.helpLinks[2] !== 'undefined') {
+                 this.selectedSource.helpLinks.splice(2);
+               }
+             } else {
+               if (typeof this.selectedSource.helpLinks[2] === 'undefined') {
+                this.selectedSource.helpLinks.push(replaceButton);
+                }
+             }
+
+          },
 
         _betaAddHighlighting: function (inputBackgroundColor) {
 
@@ -375,7 +404,6 @@
             d.setTime(d.getTime() + (25 * 24 * 60 * 60 * 1000));
             var expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-            console.log(document.cookie);
         },
 
         /**
