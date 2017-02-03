@@ -93,7 +93,8 @@
                             urlAppend: '&fn=search&vl(1UIStartWith0)=contains&ct=search&srt=rank&begins_with1=1&vl(D75285834UI0)=title&vid=61UQ&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&tb=t&mode=Basic&tab=61uq_all&dum=true&fctIncV=journals&mulIncFctN=facet_rtype&rfnIncGrp=1',
                         },
                         new: {
-                            urlAppend: ',AND&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&mode=advanced&offset=0&facet=rtype,include,journals'
+                          url: 'https://search.library.uq.edu.au/primo-explore/search?query=title,contains,',
+                          urlAppend: ',AND&pfilter=pfilter,exact,journals,AND&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&mode=advanced&offset=0'
                         }
                     },
                     physical_items: {
@@ -294,17 +295,25 @@
          * @private
          */
         _changePrimoUrl: function(url, isNew) {
-            var newPrimoSources = ['all', 'books', 'journal_articles', 'journals', 'multimedia', 'physical_items'];
+          var newPrimoSources = ['all', 'books', 'journal_articles', 'journals', 'multimedia', 'physical_items'];
 
-            this.sources.forEach(function (source) {
-                if (newPrimoSources.indexOf(source.type) > -1) {
-                    // update url
-                    source.url = url;
-
-                    // update urlappend
-                    source.urlAppend = isNew ? this.urls[source.type].new.urlAppend : this.urls[source.type].old.urlAppend;
+          this.sources.forEach(function (source) {
+            if (newPrimoSources.indexOf(source.type) > -1) {
+              // update url
+              if (isNew) {
+                if (typeof this.urls[source.type].new.url === 'string') { // if we supply a specific one, use it
+                  source.url = this.urls[source.type].new.url;
+                } else {                                                  // otherwise use the default new Primo one
+                  source.url = this.links.newPrimo;
                 }
-            }.bind(this));
+              } else {
+                source.url = this.links.primo;
+              }
+
+              // update urlappend
+              source.urlAppend = isNew ? this.urls[source.type].new.urlAppend : this.urls[source.type].old.urlAppend;
+            }
+          }.bind(this));
         },
 
           /**
