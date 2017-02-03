@@ -155,9 +155,6 @@
           var s = searchText.split(" ");
           searchText = s[0];
         }
-        else if (this.selectedSource.type === 'physical_items') {
-          searchText = this._cleanSearchQuery(searchText);
-        }
         searchUrl = encodeURI(this.selectedSource.url) +  encodeURIComponent(searchText);
         if (this.selectedSource.urlAppend) {
           searchUrl += this.selectedSource.urlAppend;
@@ -212,7 +209,7 @@
 
     _cleanSearchQuery: function (query) {
       // remove non-alphanumerical characters and multiple whitespaces
-      return  query.replace( new RegExp( '[^a-zA-Z0-9 @]' , 'gi' ), " ").replace(new RegExp( "\\s+" , 'gi' ), " ");
+      return  query.replace( new RegExp( '[^a-zA-Z0-9 @]' , 'gi' ), " ").replace(new RegExp( "\\s+" , 'gi' ), " ").replace(/\s/g, '+');
     },
 
     _sourceSelected: function() {
