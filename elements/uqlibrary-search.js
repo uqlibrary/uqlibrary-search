@@ -207,11 +207,6 @@
       return now;
     },
 
-    _cleanSearchQuery: function (query) {
-      // remove non-alphanumerical characters and multiple whitespaces
-      return  query.replace( new RegExp( '[^a-zA-Z0-9 @]' , 'gi' ), " ").replace(new RegExp( "\\s+" , 'gi' ), " ").replace(/\s/g, '+');
-    },
-
     _sourceSelected: function() {
       this.async(function () {
 
@@ -229,7 +224,7 @@
 
       if (!this.$.searchKeywordInput.selectedSuggestion && keyword.length > 2 && this.selectedSource.autoSuggest) {
         this.$.ajax.type = this.selectedSource.api.params.type;
-        this.$.ajax.get(encodeURIComponent(this._cleanSearchQuery(keyword)));
+        this.$.ajax.get(encodeURIComponent(keyword));
       }
     },
 
