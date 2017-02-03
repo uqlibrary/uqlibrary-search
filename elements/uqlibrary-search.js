@@ -151,6 +151,23 @@
                 type: Object,
                 notify: true
             },
+            /**
+             * the tab chosen - beta the new primo (value = 1) or use the current primo (value = 0)
+             * defaults to cookie value, or current primo if no cookie
+             */
+            userChoiceIndex: {
+              type: Number,
+              notify: true,
+              observer: '_userChoiceIndexChanged'
+            },
+
+            /**
+             * the tab chosen
+             */
+            userChoice: {
+              type: String,
+              notify: true
+            },
 
             /**
              * Selected search source API
@@ -190,7 +207,17 @@
             }
         },
 
-        _selectedSourceIndexChanged: function (newValue, oldValue) {
+      _userChoiceIndexChanged: function(newValue, oldValue) {
+//console.log('_userChoiceIndexChanged run');
+//console.log("newValue = ", newValue);
+//console.log("oldValue = ", oldValue);
+        this.userChoice = (newValue == 1);
+        if (oldValue != undefined) {
+          this._toggleBetaDisplayItems(this.userChoice);
+        }
+      },
+
+      _selectedSourceIndexChanged: function (newValue, oldValue) {
             if (this.sources) {
                 this.selectedSource = this.sources[newValue];
                 this.$.menuSources.close();
@@ -207,6 +234,10 @@
             // check if tab with new version is clicked
             var isNew = details.item.id == 'newPrimo';
 
+        this._toggleBetaDisplayItems(isNew);
+      },
+
+      _toggleBetaDisplayItems: function(isNew) {
             // toggle tag line
             this._toggleTagLine(isNew);
 
@@ -217,7 +248,8 @@
             this._togglePrimoUrl(isNew);
 
             // change the search buttons
-            this._toggleSearchButtons(isNew);
+//done in app.js
+//      this._toggleSearchButtons(isNew);
 
             // set cookie
             this._setCookie('LibrarySearchChoice', details.item.id);
@@ -283,39 +315,45 @@
            */
           _toggleSearchButtons: function(isNew) {
             // because this is temporary code, we are hard coding the index arrays - should only last a month
-             var indexBrowseSearch = 1; // position of 'Browse Search' in the array
-             var indexAdvancedSearch = 2; // position of 'Advanced Search' in the array
+            var indexBrowseSearch = 1; // position of 'Browse Search' in the array
+            var indexAdvancedSearch = 2; // position of 'Advanced Search' in the array
 
-             var replaceBrowseButton =  {
-               title: 'Browse search',
-               url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=61UQ'
-             };
+            var advancedSearchButtonUrl = {
+              old: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ',
+              new: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ_DEV'
+            };
 
-             var advancedSearchButtonUrl = {
-               old: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ',
-               new: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ_DEV'
-             };
+            // this.selectedSource is mapped to buttons in uqlibrary-pages/scripts/app.js
+            if (isNew) {
+console.log("new primo shown");
+              // change Advanced Search link to new link
+              if (typeof this.selectedSource.helpLinks[indexAdvancedSearch] !== 'undefined'
+                && 'Advanced search' == this.selectedSource.helpLinks[indexAdvancedSearch].title) {
+                //this.set(this.selectedSource.helpLinks[indexAdvancedSearch].url, advancedSearchButtonUrl.new);
+                this.selectedSource.helpLinks[indexAdvancedSearch].url = advancedSearchButtonUrl.new;
+              }
+              if (typeof this.selectedSource.helpLinks[indexBrowseSearch] !== 'undefined'
+                && 'Browse search' == this.selectedSource.helpLinks[indexBrowseSearch].title) {
+                //this.set(this.selectedSource.helpLinks[indexBrowseSearch].enabled, false);
+                this.selectedSource.helpLinks[indexBrowseSearch].enabled = false;
+              }
 
-             // uqlibrary-pages buttons is mapped to this.selectedSource in scripts/app.js
-             if (isNew) {
-               // change Advanced Search link to new link
-               this.selectedSource.helpLinks[indexAdvancedSearch].url = advancedSearchButtonUrl.new;
+            } else {
+console.log("old primo shown");
+              // change Advanced Search link to new link
+              if (typeof this.selectedSource.helpLinks[indexAdvancedSearch] !== 'undefined'
+                && 'Advanced search' == this.selectedSource.helpLinks[indexAdvancedSearch].title) {
+                //this.set(this.selectedSource.helpLinks[indexAdvancedSearch].url, advancedSearchButtonUrl.old);
+                this.selectedSource.helpLinks[indexAdvancedSearch].url = advancedSearchButtonUrl.old;
+              }
+              if (typeof this.selectedSource.helpLinks[indexBrowseSearch] !== 'undefined'
+                && 'Browse search' == this.selectedSource.helpLinks[indexBrowseSearch].title) {
+                //this.set(this.selectedSource.helpLinks[indexBrowseSearch].enabled, true);
+                this.selectedSource.helpLinks[indexBrowseSearch].enabled = true;
+              }
 
-               // remove the Browse Search link. It doesnt exist in new primo
-               if (typeof this.selectedSource.helpLinks[indexBrowseSearch] !== 'undefined') {
-                 this.selectedSource.helpLinks.splice(indexBrowseSearch, 1);
-               }
-             } else {
-
-               // supply the Browse Search link for Old Primo
-               if (typeof this.selectedSource.helpLinks[indexBrowseSearch] !== 'undefined') {
-                 this.selectedSource.helpLinks.splice(indexBrowseSearch, 0, replaceBrowseButton);
-               }
-
-               // change Advanced Search link to new link
-               this.selectedSource.helpLinks[indexAdvancedSearch].url = advancedSearchButtonUrl.old;
-
-             }
+            }
+console.log(this.selectedSource.helpLinks);
 
           },
 
@@ -349,7 +387,7 @@
             d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
             var expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-            console.log(document.cookie);
+console.log(document.cookie);
           },
 
           /**
@@ -573,15 +611,18 @@
             var defaultHelpLinks = [
                 {
                     title: 'Search help',
-                    url: 'https://web.library.uq.edu.au/research-tools-techniques/uq-library-search'
+                    url: 'https://web.library.uq.edu.au/research-tools-techniques/uq-library-search',
+                    enabled: true
                 },
                 {
                     title: 'Browse search',
-                    url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=61UQ'
+                    url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=61UQ',
+                    enabled: true
                 },
                 {
                     title: 'Advanced search',
-                    url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ'
+                    url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ',
+                    enabled: true
                 }
             ];
 
@@ -691,7 +732,13 @@
             ];
 
             this.selectedSource = this.sources[this.selectedSourceIndex];
+console.log(this.selectedSource);
+
             this.userChoice = this._getCookie('LibrarySearchChoice') == 'newPrimo' ? 1 : 0;
+
+            this._toggleSearchButtons(this.userChoice);
+
+console.log(this.selectedSource);
 
             this.async(function () {
                 this.$.searchKeywordInput.setFocus();
