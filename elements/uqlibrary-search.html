@@ -14,77 +14,64 @@ Example:
 <dom-module id="uqlibrary-search">
   <template>
     <style is="custom-style" include="common-styles">
-    :host {
-      font-family: var(--font-family);
-      font-size: var(--body-font-size);
-      position: relative;
-
-      @apply(--layout-horizontal);
-      @apply(--layout-wrap);
-    }
-
-    #inputSources,
-    #buttonSearch {
-      @apply(--layout-flex-1);
-    }
-
-    #inputSources,
-    #searchKeywordInput {
-      margin-right: 8px;
-      padding-left: 8px;
-      padding-right: 4px;
-      background-color: var(--secondary-color-light);
-      border-radius: 3px;
-      min-width: 210px;
-    }
-
-    #menuSources {
-      border-radius: 3px;
-      @apply(--shadow-elevation-2dp);
-    }
-
-    #listSources paper-item {
-      cursor: pointer;
-    }
-
-    #searchKeywordInput {
-      @apply(--layout-flex);
-    }
-
-    #buttonSearch iron-icon {
-      margin-top: 9px;
-    }
-
-    @media screen and (max-width: 815px) {
       :host {
-        @apply(--layout-flex-none);
+        font-family: var(--font-family);
+        font-size: var(--body-font-size);
+        position: relative;
+
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);
       }
 
-      #inputSources{
-        width: 100%;
-        display: block;
-        margin-bottom: 8px;
-        margin-right: 0;
-        min-width: 270px;
+      #inputSources,
+      #buttonSearch {
+        @apply(--layout-flex-1);
+      }
+
+      #inputSources,
+      #searchKeywordInput {
+        margin-right: 8px;
+        padding-left: 8px;
+        padding-right: 4px;
+        background-color: var(--secondary-color-light);
+        border-radius: 3px;
+        min-width: 210px;
+      }
+
+      #menuSources {
+        border-radius: 3px;
+        @apply(--shadow-elevation-2dp);
+      }
+
+      #listSources paper-item {
+        cursor: pointer;
       }
 
       #searchKeywordInput {
-        min-width: calc(100% - 105px);
+        @apply(--layout-flex);
       }
-    }
 
-    /* resize the tab font size in the primo beta test */
-    @media screen and (max-width: 480px) {
-      paper-tab {
-        font-size: 14px;
+      #buttonSearch iron-icon {
+        margin-top: 9px;
       }
-    }
 
-    @media screen and (max-width: 320px) {
-      #inputSources {
-        min-width: 100%;
+      @media screen and (max-width: 815px) {
+        :host {
+          @apply(--layout-flex-none);
+        }
+
+        #inputSources{
+          width: 100%;
+          display: block;
+          margin-bottom: 8px;
+          margin-right: 0;
+          min-width: 270px;
+        }
+
+        #searchKeywordInput {
+          min-width: calc(100% - 105px);
+        }
       }
-    }
 
       paper-tabs {
         width: 100%;
@@ -117,14 +104,17 @@ Example:
         color: var(--secondary-color);
       }
 
-      paper-card {
+      paper-item.card-actions {
+        display: block;
         width: 100%;
         position: relative;
+        border-top-width: 0;
+        padding: 0;
       }
-      .card-actions {
+      .card-actions div {
         border-top: 1px solid var(--border-color);
-        padding: 5px 16px;
-        padding: .3125rem 1rem;
+        padding: 5px 0 16px 0;
+        padding: .3125rem 0 1rem 0;
         margin-top: 16px;
         margin-top: 1rem;
         position: relative;
@@ -133,13 +123,27 @@ Example:
         font-size: 1rem;
       }
 
-      @media all and (max-width: 400px) {
+
+      @media screen and (max-width: 480px) {
+        paper-tab {
+          // resize the tab font size in the primo beta test
+          font-size: 14px;
+        }
+      }
+
+      @media screen and (max-width: 320px) {
+        #inputSources {
+          min-width: 100%;
+        }
+      }
+
+      @media screen and (max-width: 400px) {
         .card-actions paper-button {
           @apply(--layout-vertical);
           margin: 8px 0;
         }
       }
-  </style>
+    </style>
 
     <uqlibrary-ga id="ga" app-name="{{gaAppName}}"></uqlibrary-ga>
 
@@ -158,29 +162,28 @@ Example:
     <iron-a11y-keys target="[[_inputSourcesTarget]]" keys="enter" on-keys-pressed="_keywordFocused"></iron-a11y-keys>
 
     <paper-tabs id="betaTestSelector" selected="{{userChoiceIndex}}" on-iron-select="onTabSelect">
-    <!-- <paper-tabs id="betaTestSelector" selected="{{userChoice}}"> -->
       <paper-tab id="oldPrimo" name="oldPrimo" aria-label="UQ Library search">
         UQ Library search
       </paper-tab>
-      <paper-tab id="newPrimo" name="newPrimo" aria-label="Try the new look">
-        Try the new look
+      <paper-tab id="newPrimo" name="newPrimo" aria-label="Try the next version">
+        Try the next version
       </paper-tab>
     </paper-tabs>
 
-      <paper-item id="newPrimoTagLine">
-        <div>Updated look, better filtering <a href="#">and more</a>.  Try it and tell us what you think.</div>
-      </paper-item>
+    <paper-item id="newPrimoTagLine">
+      <div>Updated look, better filtering <a href="#">and more</a>.  Try it and tell us what you think.</div>
+    </paper-item>
 
-      <paper-item>
-        <div>
-          <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value$="{{selectedSource.name}}"
-                       role="combobox" aria-label="select search scope">
-            <paper-icon-button suffix icon="unfold-more" aria-label="select search scope" role="button" alt="select search scope"
-                               title="select search scope" style="margin-top: -15px;">
-            </paper-icon-button>
-          </paper-input>
-        </div>
-      </paper-item>
+    <paper-item>
+      <div>
+        <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value$="{{selectedSource.name}}"
+                     role="combobox" aria-label="select search scope">
+          <paper-icon-button suffix icon="unfold-more" aria-label="select search scope" role="button" alt="select search scope"
+                             title="select search scope" style="margin-top: -15px;">
+          </paper-icon-button>
+        </paper-input>
+      </div>
+    </paper-item>
 
 
     <uqlibrary-iron-dropdown id="menuSources"
@@ -204,13 +207,13 @@ Example:
       <iron-icon icon="icons:search" aria-label="Search [[selectedSource.title]]"></iron-icon>
     </paper-button>
 
-    <paper-card>
-      <div class="card-actions">
+    <paper-item class="card-actions">
+      <div>
         <template is="dom-repeat" id="selectedSearchSource" items="[[selectedSource.helpLinks]]">
           <paper-button class="button-secondary" tabindex="-1" disabled$="[[!item.enabled]]"><a href$="[[item.url]]">[[item.title]]</a></paper-button>
         </template>
       </div>
-    </paper-card>
+    </paper-item>
 
   </template>
 
