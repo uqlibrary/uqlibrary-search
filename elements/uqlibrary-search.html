@@ -116,6 +116,29 @@ Example:
         margin-top: 10px;
         color: var(--secondary-color);
       }
+
+      paper-card {
+        width: 100%;
+        position: relative;
+      }
+      .card-actions {
+        border-top: 1px solid var(--border-color);
+        padding: 5px 16px;
+        padding: .3125rem 1rem;
+        margin-top: 16px;
+        margin-top: 1rem;
+        position: relative;
+        text-align: right;
+        font-size: 16px;
+        font-size: 1rem;
+      }
+
+      @media all and (max-width: 400px) {
+        .card-actions paper-button {
+          @apply(--layout-vertical);
+          margin: 8px 0;
+        }
+      }
   </style>
 
     <uqlibrary-ga id="ga" app-name="{{gaAppName}}"></uqlibrary-ga>
@@ -134,8 +157,8 @@ Example:
 
     <iron-a11y-keys target="[[_inputSourcesTarget]]" keys="enter" on-keys-pressed="_keywordFocused"></iron-a11y-keys>
 
-    <!--    <paper-tabs id="betaTestSelector" selected="{{userChoiceIndex}}" on-iron-select="onTabSelect"> -->
-    <paper-tabs id="betaTestSelector" selected="{{userChoice}}">
+    <paper-tabs id="betaTestSelector" selected="{{userChoiceIndex}}" on-iron-select="onTabSelect">
+    <!-- <paper-tabs id="betaTestSelector" selected="{{userChoice}}"> -->
       <paper-tab id="oldPrimo" name="oldPrimo" aria-label="UQ Library search">
         UQ Library search
       </paper-tab>
@@ -180,6 +203,14 @@ Example:
                   aria-label="Search [[selectedSource.title]]" title="Search [[selectedSource.title]]">
       <iron-icon icon="icons:search" aria-label="Search [[selectedSource.title]]"></iron-icon>
     </paper-button>
+
+    <paper-card>
+      <div class="card-actions">
+        <template is="dom-repeat" id="selectedSearchSource" items="[[selectedSource.helpLinks]]">
+          <paper-button class="button-secondary" tabindex="-1" disabled$="[[!item.enabled]]"><a href$="[[item.url]]">[[item.title]]</a></paper-button>
+        </template>
+      </div>
+    </paper-card>
 
   </template>
 

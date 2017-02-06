@@ -50,62 +50,62 @@
                 }
             },
 
-          /**
-           * Beta of new primo - set up the old and new urls to be swapped in and out as the tabs change
-           */
+            /**
+             * Beta of new primo - set up the old and new urls to be swapped in and out as the tabs change
+             */
             urls: {
-                type: Object,
-                value: {
-                    all: {
-                        old: {
-                            urlAppend: '&ct=facet&rfnGrpCounter=1&frbg=&&indx=1&fn=search&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&fctExcV=newspaper_articles&mulExcFctN=facet_rtype&rfnExcGrp=1&fctExcV=reviews&mulExcFctN=facet_rtype&rfnExcGrp=1',
-                        },
-                        new: {
-                            urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&offset=0'
-                        }
-                    },
-                    books: {
-                        old: {
-                            urlAppend: '&fn=search&ct=facet&fctN=facet_rtype&fctV=books&rfnGrp=1&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
-                        },
-                        new: {
-                            urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&offset=0&facet=rtype,include,books'
-                        }
-                    },
-                    multimedia: {
-                        old: {
-                            urlAppend: '&fn=search&ct=facet&fctN=facet_rtype&fctV=media&rfnGrp=1&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
-                        },
-                        new: {
-                            urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&offset=0&facet=rtype,include,media'
-                        }
-                    },
-                    journal_articles: {
-                        old: {
-                            urlAppend: '&fn=search&ct=facet&fctN=facet_rtype&fctV=articles&rfnGrp=1&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
-                        },
-                        new: {
-                            urlAppend: '&tab=61uq_all&search_scope=61UQ_All&vid=61UQ_DEV&offset=0&fctV=articles&facet=rtype,include,articles'
-                        }
-                    },
-                    journals: {
-                        old: {
-                            urlAppend: '&fn=search&vl(1UIStartWith0)=contains&ct=search&srt=rank&begins_with1=1&vl(D75285834UI0)=title&vid=61UQ&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&tb=t&mode=Basic&tab=61uq_all&dum=true&fctIncV=journals&mulIncFctN=facet_rtype&rfnIncGrp=1',
-                        },
-                        new: {
-                          url: 'https://search.library.uq.edu.au/primo-explore/search?query=title,contains,',
-                          urlAppend: ',AND&pfilter=pfilter,exact,journals,AND&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&mode=advanced&offset=0'
-                        }
-                    },
-                    physical_items: {
-                        old: {
-                            urlAppend: '&ct=facet&fctN=facet_tlevel&fctV=physical_items&rfnGrp=show_only&frbg=&&indx=1&fn=search&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
-                        },
-                        new: {
-                            urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=title&vid=61UQ_DEV&offset=0&facet=tlevel,include,physical_items'
-                        }
-                    }
+              type: Object,
+              value: {
+                all: {
+                  old: {
+                    urlAppend: '&ct=facet&rfnGrpCounter=1&frbg=&&indx=1&fn=search&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&fctExcV=newspaper_articles&mulExcFctN=facet_rtype&rfnExcGrp=1&fctExcV=reviews&mulExcFctN=facet_rtype&rfnExcGrp=1',
+                  },
+                  new: {
+                    urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&offset=0'
+                  }
+                },
+                books: {
+                  old: {
+                    urlAppend: '&fn=search&ct=facet&fctN=facet_rtype&fctV=books&rfnGrp=1&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
+                  },
+                  new: {
+                    urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&offset=0&facet=rtype,include,books'
+                  }
+                },
+                multimedia: {
+                  old: {
+                    urlAppend: '&fn=search&ct=facet&fctN=facet_rtype&fctV=media&rfnGrp=1&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
+                  },
+                  new: {
+                    urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&offset=0&facet=rtype,include,media'
+                  }
+                },
+                journal_articles: {
+                  old: {
+                    urlAppend: '&fn=search&ct=facet&fctN=facet_rtype&fctV=articles&rfnGrp=1&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
+                  },
+                  new: {
+                    urlAppend: '&tab=61uq_all&search_scope=61UQ_All&vid=61UQ_DEV&offset=0&fctV=articles&facet=rtype,include,articles'
+                  }
+                },
+                journals: {
+                  old: {
+                    urlAppend: '&fn=search&vl(1UIStartWith0)=contains&ct=search&srt=rank&begins_with1=1&vl(D75285834UI0)=title&vid=61UQ&rfnGrpCounter=1&frbg=&&indx=1&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&tb=t&mode=Basic&tab=61uq_all&dum=true&fctIncV=journals&mulIncFctN=facet_rtype&rfnIncGrp=1',
+                  },
+                  new: {
+                    url: 'https://search.library.uq.edu.au/primo-explore/search?query=title,contains,',
+                    urlAppend: ',AND&pfilter=pfilter,exact,journals,AND&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&mode=advanced&offset=0'
+                  }
+                },
+                physical_items: {
+                  old: {
+                    urlAppend: '&ct=facet&fctN=facet_tlevel&fctV=physical_items&rfnGrp=show_only&frbg=&&indx=1&fn=search&dscnt=0&scp.scps=scope%3A(61UQ)%2Cprimo_central_multiple_fe&vl(1UIStartWith0)=contains&tb=t&vid=61UQ&mode=Basic&ct=search&srt=rank&tab=61uq_all&vl(D75285834UI0)=any&dum=true',
+                  },
+                  new: {
+                    urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=title&vid=61UQ_DEV&offset=0&facet=tlevel,include,physical_items'
+                  }
                 }
+              }
             },
 
             /**
@@ -152,23 +152,6 @@
                 type: Object,
                 notify: true
             },
-            /**
-             * the tab chosen - beta the new primo (value = 1) or use the current primo (value = 0)
-             * defaults to cookie value, or current primo if no cookie
-             */
-            userChoiceIndex: {
-              type: Number,
-              notify: true,
-              observer: '_userChoiceIndexChanged'
-            },
-
-            /**
-             * the tab chosen
-             */
-            userChoice: {
-              type: String,
-              notify: true
-            },
 
             /**
              * Selected search source API
@@ -208,84 +191,80 @@
             }
         },
 
-      _userChoiceIndexChanged: function(newValue, oldValue) {
-//console.log('_userChoiceIndexChanged run');
-//console.log("newValue = ", newValue);
-//console.log("oldValue = ", oldValue);
-        this.userChoice = (newValue == 1);
-        if (oldValue != undefined) {
-          this._toggleBetaDisplayItems(this.userChoice);
-        }
-      },
-
-      _selectedSourceIndexChanged: function (newValue, oldValue) {
-            if (this.sources) {
-                this.selectedSource = this.sources[newValue];
-                this.$.menuSources.close();
-                this._sourceSelected();
-            }
+        _selectedSourceIndexChanged: function (newValue, oldValue) {
+          if (this.sources) {
+            this.selectedSource = this.sources[newValue];
+            this.$.menuSources.close();
+            this._sourceSelected();
+          }
         },
 
-      /**
-       * Beta of new primo - show and hide the tabs
-       * @param event
-       * @param details
-       */
-        onTabSelect: function (event, details) {
-            // check if tab with new version is clicked
-            var isNew = details.item.id == 'newPrimo';
+        /**
+         * Beta of new primo - show and hide the tabs
+         * chosen tab - beta the new primo (value = 1) or use the current primo (value = 0)
+         * defaults to cookie value, or current primo if no cookie
+         * @param event
+         * @param details
+         */
+        onTabSelect: function (event) {
+                                                                      console.log("onTabSelect");
+          // check if tab with new version is clicked
+          var isNew = event.detail.item.id == 'newPrimo';
+          this._toggleBetaDisplayItems(isNew);
 
-        this._toggleBetaDisplayItems(isNew);
-      },
-
-      _toggleBetaDisplayItems: function(isNew) {
-            // toggle tag line
-            this._toggleTagLine(isNew);
-
-            // toggle input fields color
-            this._toggleInputColor(isNew);
-
-            // toggle primo urls for sources
-            this._togglePrimoUrl(isNew);
-
-            // change the search buttons
-//done in app.js
-//      this._toggleSearchButtons(isNew);
-
-            // set cookie
-            this._setCookie('LibrarySearchChoice', details.item.id);
-
-            // focus input
-            this.$.searchKeywordInput.setFocus();
+          // set cookie
+          this._setCookie('LibrarySearchChoice', event.detail.item.id);
         },
 
-      /**
-       * Beta of new primo - show and hide the tab tag line
-       * @param isNew
-       * @private
-       */
-      _toggleTagLine: function(isNew) {
-            document.getElementById('newPrimoTagLine').style.display = isNew ? 'block' : 'none';
+        _toggleBetaDisplayItems: function(isNew) {
+                                                                      if (isNew) {
+                                                                        console.log("new primo shown");
+                                                                      } else {
+                                                                        console.log("oldprimo shown");
+                                                                      }
+          // toggle tag line
+          this._toggleTagLine(isNew);
+
+          // toggle input fields color
+          this._toggleInputColor(isNew);
+
+          // toggle primo urls for sources
+          this._togglePrimoUrl(isNew);
+
+          // change the search buttons
+          this._toggleSearchButtons(isNew);
+
+          // focus input
+          this.$.searchKeywordInput.setFocus();
         },
 
-      /**
-       * Beta of new primo - change the background color of the input fields to blue for the beta tab
-       * @param isNew
-       * @private
-       */
-        _toggleInputColor: function(isNew) {
+        /**
+         * Beta of new primo - show and hide the tab tag line
+         * @param isNew
+         * @private
+         */
+        _toggleTagLine: function(isNew) {
+              document.getElementById('newPrimoTagLine').style.display = isNew ? 'block' : 'none';
+          },
+
+        /**
+         * Beta of new primo - change the background color of the input fields to blue for the beta tab
+         * @param isNew
+         * @private
+         */
+          _toggleInputColor: function(isNew) {
             var color = isNew ? '#d7e2ef' : '#f2f2f2';
             this._betaAddHighlighting(color);
         },
 
-      /**
-       * Beta of new primo - change the landing url for each dropdown type
-       * @param isNew
-       * @private
-       */
-      _togglePrimoUrl: function(isNew) {
-            var url = isNew ? this.links.newPrimo : this.links.primo;
-            this._changePrimoUrl(url, isNew);
+        /**
+         * Beta of new primo - change the landing url for each dropdown type
+         * @param isNew
+         * @private
+         */
+        _togglePrimoUrl: function(isNew) {
+          var url = isNew ? this.links.newPrimo : this.links.primo;
+          this._changePrimoUrl(url, isNew);
         },
 
         /**
@@ -316,109 +295,104 @@
           }.bind(this));
         },
 
-          /**
-           * Beta of new primo - show hide the Browse Search button (there isnt a browse page for new primo)
-           * & change the Advanced Search landing url
-           * @param isNew
-           * @private
-           */
-          _toggleSearchButtons: function(isNew) {
-            // because this is temporary code, we are hard coding the index arrays - should only last a month
-            var indexBrowseSearch = 1; // position of 'Browse Search' in the array
-            var indexAdvancedSearch = 2; // position of 'Advanced Search' in the array
+        /**
+         * Beta of new primo - show hide the Browse Search button (there isnt a browse page for new primo)
+         * & change the Advanced Search landing url
+         * @param isNew
+         * @private
+         */
+        _toggleSearchButtons: function(isNew) {
+          // because this is temporary code, we are hard coding the index arrays - should only last a month
+           var indexBrowseSearch = 1; // position of 'Browse Search' button in the array
+           var indexAdvancedSearch = 2; // position of 'Advanced Search' button in the array
 
-            var advancedSearchButtonUrl = {
-              old: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ',
-              new: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ_DEV'
-            };
+          var advancedSearchButtonUrl = {
+            old: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ',
+            new: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ_DEV'
+          };
 
-            // this.selectedSource is mapped to buttons in uqlibrary-pages/scripts/app.js
-            if (isNew) {
-console.log("new primo shown");
-              // change Advanced Search link to new link
-              if (typeof this.selectedSource.helpLinks[indexAdvancedSearch] !== 'undefined'
-                && 'Advanced search' == this.selectedSource.helpLinks[indexAdvancedSearch].title) {
-                //this.set(this.selectedSource.helpLinks[indexAdvancedSearch].url, advancedSearchButtonUrl.new);
-                this.selectedSource.helpLinks[indexAdvancedSearch].url = advancedSearchButtonUrl.new;
-              }
-              if (typeof this.selectedSource.helpLinks[indexBrowseSearch] !== 'undefined'
-                && 'Browse search' == this.selectedSource.helpLinks[indexBrowseSearch].title) {
-                //this.set(this.selectedSource.helpLinks[indexBrowseSearch].enabled, false);
-                this.selectedSource.helpLinks[indexBrowseSearch].enabled = false;
-              }
-
-            } else {
-console.log("old primo shown");
-              // change Advanced Search link to new link
-              if (typeof this.selectedSource.helpLinks[indexAdvancedSearch] !== 'undefined'
-                && 'Advanced search' == this.selectedSource.helpLinks[indexAdvancedSearch].title) {
-                //this.set(this.selectedSource.helpLinks[indexAdvancedSearch].url, advancedSearchButtonUrl.old);
-                this.selectedSource.helpLinks[indexAdvancedSearch].url = advancedSearchButtonUrl.old;
-              }
-              if (typeof this.selectedSource.helpLinks[indexBrowseSearch] !== 'undefined'
-                && 'Browse search' == this.selectedSource.helpLinks[indexBrowseSearch].title) {
-                //this.set(this.selectedSource.helpLinks[indexBrowseSearch].enabled, true);
-                this.selectedSource.helpLinks[indexBrowseSearch].enabled = true;
-              }
-
+          if (isNew) {
+            // change Advanced Search link to new link
+            if (typeof this.selectedSource.helpLinks[indexAdvancedSearch] !== 'undefined'
+              && 'Advanced search' == this.selectedSource.helpLinks[indexAdvancedSearch].title) {
+              this.notifyPath('selectedSource.helpLinks.' + indexAdvancedSearch + '.url', advancedSearchButtonUrl.new);
             }
-console.log(this.selectedSource.helpLinks);
-
-          },
-
-          /**
-           * Beta of new primo - highlight the fields when using new primo
-           * @param inputBackgroundColor
-           * @private
-           */
-            _betaAddHighlighting: function (inputBackgroundColor) {
-
-                // update display inputBackgroundColor
-                var htmlElement = document.getElementById('inputSources');
-                if (htmlElement) htmlElement.style.backgroundColor = inputBackgroundColor;
-
-                htmlElement = document.getElementById('searchKeywordInput');
-                if (htmlElement) htmlElement.style.backgroundColor = inputBackgroundColor;
-
-                var listSource = document.getElementById('listSources');
-                if (listSource) listSource.style.backgroundColor = inputBackgroundColor;
-            },
-          /**
-           * Beta of new primo - Set cookie
-           * @param cname
-           * @param cvalue
-           * @param exdays
-           * @private
-           */
-          _setCookie: function (cname, cvalue, exdays) {
-            exdays = exdays || 25; // new primo goes live in a few weeks, so 25 days is enough
-            var d = new Date();
-            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-            var expires = "expires=" + d.toUTCString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-console.log(document.cookie);
-          },
-
-          /**
-           * Beta of new primo - Get cookie
-           * @param cname
-           * @returns {*}
-           * @private
-           */
-          _getCookie: function (cname) {
-            var name = cname + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-              var c = ca[i];
-              while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-              }
-              if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-              }
+            if (typeof this.selectedSource.helpLinks[indexBrowseSearch] !== 'undefined'
+              && 'Browse search' == this.selectedSource.helpLinks[indexBrowseSearch].title) {
+              this.notifyPath('selectedSource.helpLinks.' + indexBrowseSearch + '.enabled', false);
             }
-            return "";
-          },
+
+          } else {
+            // change Advanced Search link to new link
+            if (typeof this.selectedSource.helpLinks[indexAdvancedSearch] !== 'undefined'
+              && 'Advanced search' == this.selectedSource.helpLinks[indexAdvancedSearch].title) {
+              this.notifyPath('selectedSource.helpLinks.' + indexAdvancedSearch + '.url', advancedSearchButtonUrl.old);
+            }
+            if (typeof this.selectedSource.helpLinks[indexBrowseSearch] !== 'undefined'
+              && 'Browse search' == this.selectedSource.helpLinks[indexBrowseSearch].title) {
+              this.notifyPath('selectedSource.helpLinks.' + indexBrowseSearch + '.enabled', true);
+            }
+
+          }
+
+        },
+
+        /**
+         * Beta of new primo - highlight the fields when using new primo
+         * @param inputBackgroundColor
+         * @private
+         */
+          _betaAddHighlighting: function (inputBackgroundColor) {
+
+              // update display inputBackgroundColor
+              var htmlElement = document.getElementById('inputSources');
+              if (htmlElement) htmlElement.style.backgroundColor = inputBackgroundColor;
+
+              htmlElement = document.getElementById('searchKeywordInput');
+              if (htmlElement) htmlElement.style.backgroundColor = inputBackgroundColor;
+
+              var listSource = document.getElementById('listSources');
+              if (listSource) listSource.style.backgroundColor = inputBackgroundColor;
+        },
+
+        /**
+         * Beta of new primo - Set cookie
+         * @param cname
+         * @param cvalue
+         * @param exdays
+         * @private
+         */
+        // if the beta test tabs were going to be used for longer it should be converted to be saved with the this.recent, same as the last-used search
+        // but we didnt notice in time, so will leave as this is a temporary fix
+        _setCookie: function (cname, cvalue, exdays) {
+          exdays = exdays || 25; // new primo goes live in a few weeks, so 25 days is enough
+          var d = new Date();
+          d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+          var expires = "expires=" + d.toUTCString();
+          document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        },
+
+        /**
+         * Beta of new primo - Get cookie
+         * @param cname
+         * @returns {*}
+         * @private
+         */
+        _getCookie: function (cname) {
+          var name = cname + "=";
+                                                                                 console.log(document.cookie);
+          var ca = document.cookie.split(';');
+          for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+            }
+          }
+          return "";
+        },
 
         _searchActivated: function (e) {
             var searchText = e.detail.name ? e.detail.name : this.$.searchKeywordInput.keyword;
@@ -618,21 +592,21 @@ console.log(document.cookie);
         ready: function () {
             var self = this;
             var defaultHelpLinks = [
-                {
-                    title: 'Search help',
-                    url: 'https://web.library.uq.edu.au/research-tools-techniques/uq-library-search',
-                    enabled: true
-                },
-                {
-                    title: 'Browse search',
-                    url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=61UQ',
-                    enabled: true
-                },
-                {
-                    title: 'Advanced search',
-                    url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ',
-                    enabled: true
-                }
+              {
+                title: 'Search help',
+                url: 'https://web.library.uq.edu.au/research-tools-techniques/uq-library-search',
+                enabled: true
+              },
+              {
+                title: 'Browse search',
+                url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=61UQ',
+                enabled: true
+              },
+              {
+                title: 'Advanced search',
+                url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ',
+                enabled: true
+              }
             ];
 
             this.sources = [
@@ -741,18 +715,13 @@ console.log(document.cookie);
             ];
 
             this.selectedSource = this.sources[this.selectedSourceIndex];
-console.log(this.selectedSource);
-
             this.userChoice = this._getCookie('LibrarySearchChoice') == 'newPrimo' ? 1 : 0;
-
-            this._toggleSearchButtons(this.userChoice);
-
-console.log(this.selectedSource);
+            this._toggleBetaDisplayItems(this.userChoice);
 
             this.async(function () {
-                this.$.searchKeywordInput.setFocus();
+              this.$.searchKeywordInput.setFocus();
             }, 100);
         }
 
-    });
+  });
 })();
