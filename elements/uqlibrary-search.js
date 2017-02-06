@@ -204,10 +204,8 @@
          * chosen tab - beta the new primo (value = 1) or use the current primo (value = 0)
          * defaults to cookie value, or current primo if no cookie
          * @param event
-         * @param details
          */
         onTabSelect: function (event) {
-                                                                      console.log("onTabSelect");
           // check if tab with new version is clicked
           var isNew = event.detail.item.id == 'newPrimo';
           this._toggleBetaDisplayItems(isNew);
@@ -244,18 +242,13 @@
          * @private
          */
         _toggleTagLine: function(isNew) {
-              document.getElementById('newPrimoTagLine').style.display = isNew ? 'block' : 'none';
+            var newPrimoTagLine = document.getElementById('newPrimoTagLine');
+            if (newPrimoTagLine) {
+              newPrimoTagLine.style.display = isNew ? 'block' : 'none';
+            } else {
+              console.log('newPrimoTagLine not found');
+            }
           },
-
-        /**
-         * Beta of new primo - change the background color of the input fields to blue for the beta tab
-         * @param isNew
-         * @private
-         */
-          _toggleInputColor: function(isNew) {
-            var color = isNew ? '#d7e2ef' : '#f2f2f2';
-            this._betaAddHighlighting(color);
-        },
 
         /**
          * Beta of new primo - change the landing url for each dropdown type
@@ -338,6 +331,16 @@
         },
 
         /**
+         * Beta of new primo - change the background color of the input fields to blue for the beta tab
+         * @param isNew
+         * @private
+         */
+        _toggleInputColor: function(isNew) {
+          var color = isNew ? '#d7e2ef' : '#f2f2f2';
+          this._betaAddHighlighting(color);
+        },
+
+        /**
          * Beta of new primo - highlight the fields when using new primo
          * @param inputBackgroundColor
          * @private
@@ -380,7 +383,6 @@
          */
         _getCookie: function (cname) {
           var name = cname + "=";
-                                                                                 console.log(document.cookie);
           var ca = document.cookie.split(';');
           for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
@@ -716,9 +718,9 @@
 
             this.selectedSource = this.sources[this.selectedSourceIndex];
             this.userChoice = this._getCookie('LibrarySearchChoice') == 'newPrimo' ? 1 : 0;
-            this._toggleBetaDisplayItems(this.userChoice);
 
             this.async(function () {
+              this._toggleBetaDisplayItems(this.userChoice);
               this.$.searchKeywordInput.setFocus();
             }, 100);
         }
