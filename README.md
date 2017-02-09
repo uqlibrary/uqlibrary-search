@@ -1,5 +1,8 @@
 # uqlibrary-search
 
+[![Dependency Status](https://david-dm.org/uqlibrary/uqlibrary-search.svg)](https://david-dm.org/uqlibrary/uqlibrary-search)
+[![Dev Dependency Status](https://david-dm.org/uqlibrary/uqlibrary-search/dev-status.svg)](https://david-dm.org/uqlibrary/uqlibrary-search?type=dev)
+
 uqlibrary-search is a search form for UQ Library
 
 [GitHub Pages](http://uqlibrary.github.io/uqlibrary-search) could be used for documentation.
