@@ -694,7 +694,13 @@
                     api: this.api.examsApi,
                     icon: 'icons:assessment',
                     inputPlaceholder: 'Enter a course code',
-                    helpLinks: [{title: 'Browse courses', url: 'https://www.library.uq.edu.au/exams/search.html'}]
+                    helpLinks: [
+                      {
+                        title: 'Browse courses',
+                        url: 'https://www.library.uq.edu.au/exams/search.html',
+                        enabled: true
+                      }
+                    ]
                 },
                 {
                     name: 'Course reading lists',
@@ -704,7 +710,13 @@
                     api: this.api.lrApi,
                     icon: 'icons:list',
                     inputPlaceholder: 'Enter a course code',
-                    helpLinks: [{title: 'Browse courses', url: 'http://lr.library.uq.edu.au/index.html?browse'}]
+                    helpLinks: [
+                      {
+                        title: 'Browse courses',
+                        url: 'http://lr.library.uq.edu.au/index.html?browse',
+                        enabled: true
+                      }
+                    ]
                 }
             ];
 
