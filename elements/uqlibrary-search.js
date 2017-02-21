@@ -211,7 +211,7 @@
 
           //to be removed for go live, this is only available for Home page (not my library, etc)
           if (isNew) {
-            this.gaAppName = 'Homepage search (newPrimo)';
+            this.gaAppName = 'Homepage search demo';
           } else {
             this.gaAppName = 'Homepage search';
           }
