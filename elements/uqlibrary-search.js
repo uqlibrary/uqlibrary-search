@@ -114,7 +114,7 @@
             links: {
                 type: Object,
                 value: {
-                    primo: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?vl(freeText0)=',
+                    primo: 'https://search.library.uq.edu.au/primo_library/libweb/action/search.do?vl(freeText0)=',
                     newPrimo: 'https://search.library.uq.edu.au/primo-explore/search?query=any,contains,',
                     exams: 'https://www.library.uq.edu.au/exams/papers.php?stub=',
                     lr: 'http://lr.library.uq.edu.au/search?q=',
@@ -208,6 +208,14 @@
         onTabSelect: function (event) {
           // check if tab with new version is clicked
           var isNew = event.detail.item.id == 'newPrimo';
+
+          //to be removed for go live, this is only available for Home page (not my library, etc)
+          if (isNew) {
+            this.gaAppName = 'Homepage search (newPrimo)';
+          } else {
+            this.gaAppName = 'Homepage search';
+          }
+
           this._toggleBetaDisplayItems(isNew);
 
           // set cookie
@@ -295,8 +303,8 @@
            var indexAdvancedSearch = 2; // position of 'Advanced Search' button in the array
 
           var advancedSearchButtonUrl = {
-            old: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ',
-            new: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ_DEV'
+            old: 'https://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ',
+            new: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ_DEV&sortby=rank&mode=advanced'
           };
 
           if (isNew) {
@@ -588,12 +596,12 @@
               },
               {
                 title: 'Browse search',
-                url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=61UQ',
+                url: 'https://search.library.uq.edu.au/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=61UQ',
                 enabled: true
               },
               {
                 title: 'Advanced search',
-                url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ',
+                url: 'https://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ',
                 enabled: true
               }
             ];
