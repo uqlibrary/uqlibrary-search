@@ -56,7 +56,7 @@
       links : {
         type: Object,
         value: {
-          primo: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?vl(freeText0)=',
+          primo: 'https://search.library.uq.edu.au/primo_library/libweb/action/search.do?vl(freeText0)=',
           exams: 'https://www.library.uq.edu.au/exams/papers.php?stub=',
           lr: 'http://lr.library.uq.edu.au/search?q=',
           database: 'https://www.library.uq.edu.au/resources/database/#/?title='
@@ -336,11 +336,11 @@
         },
         {
           title: 'Browse search',
-          url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=61UQ'
+          url: 'https://search.library.uq.edu.au/primo_library/libweb/action/search.do?fn=showBrowse&mode=BrowseSearch&vid=61UQ'
         },
         {
           title: 'Advanced search',
-          url: 'http://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ'
+          url: 'https://search.library.uq.edu.au/primo_library/libweb/action/search.do?mode=Advanced&ct=AdvancedSearch&vid=61UQ'
         }
       ];
 

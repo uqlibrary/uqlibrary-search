@@ -47,20 +47,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             flush(function () {
 
                 var sources = testObj.querySelector('#menuSources');
-
-                expect(sources).to.not.be.null;
-                expect(sources).to.be.visible;
+                expect(sources).not.to.be.null;
 
                 var inputKeyword = testObj.querySelector('#inputKeyword');
-
-                expect(inputKeyword).to.not.be.null;
-                expect(inputKeyword).to.be.visible;
-
+                expect(inputKeyword).not.to.be.null;
 
                 var buttonSearch = testObj.querySelector('#buttonSearch');
-
-                expect(buttonSearch).to.not.be.null;
-                expect(buttonSearch).to.be.visible;
+                expect(buttonSearch).not.to.be.null;
 
                 done();
             });
@@ -72,9 +65,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             flush(function () {
 
                 var sources = testObj.querySelector('#menuSources');
-
-                expect(sources).to.not.be.null;
-                expect(sources).to.be.visible;
+                expect(sources).not.to.be.null;
 
                 var sourceItems = sources.querySelectorAll('paper-item');
                 expect(sourceItems.length).to.be.equal(9);
@@ -89,10 +80,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             flush(function () {
 
                 var sources = testObj.querySelector('#inputSources');
-
                 var ariaLabel = sources.attributes['aria-label'];
-
-                expect(ariaLabel).to.not.be.null;
+                expect(ariaLabel).not.to.be.null;
                 expect(ariaLabel).not.to.equal('');
 
                 done();
@@ -107,19 +96,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 var inputKeyword = testObj.querySelector('#inputKeyword');
                 var menuSuggestions = testObj.querySelector('#listSuggestions');
 
-                expect(menuSuggestions).to.not.be.null;
-                expect(menuSuggestions).not.to.be.visible;
+                expect(menuSuggestions).not.to.be.null;
 
                 inputKeyword.value = "search";
 
                 setTimeout(function(){
-                    expect(menuSuggestions).to.not.be.null;
-                    expect(menuSuggestions).to.be.visible;
-
+                    expect(menuSuggestions).not.to.be.null;
                     var items = menuSuggestions.querySelectorAll('paper-item');
-
                     expect(items.length).to.be.equal(10);
-
                     done();
                 }, 1900);
             });
@@ -137,13 +121,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 inputKeyword.value = "PHYS"; // preset text to Physics subject
 
                 var menuSuggestions = testObj.querySelector('#listSuggestions');
-                expect(menuSuggestions).to.not.be.null;
-                expect(menuSuggestions).not.to.be.visible;
+                expect(menuSuggestions).not.to.be.null;
 
                 setTimeout(function(){
-                    expect(menuSuggestions).to.not.be.null;
-                    expect(menuSuggestions).to.be.visible;
-
+                    expect(menuSuggestions).not.to.be.null;
                     var items = menuSuggestions.querySelectorAll('paper-item');
                     expect(items.length).to.be.above(0);
 
@@ -164,12 +145,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 inputKeyword.value = "journal"; // random keyword to display autocompletes
 
                 var menuSuggestions = testObj.querySelector('#listSuggestions');
-                expect(menuSuggestions).to.not.be.null;
-                expect(menuSuggestions).not.to.be.visible;
+                expect(menuSuggestions).not.to.be.null;
 
                 setTimeout(function(){
-                    expect(menuSuggestions).to.not.be.null;
-                    expect(menuSuggestions).to.be.visible;
+                    expect(menuSuggestions).not.to.be.null;
 
                     var items = menuSuggestions.querySelectorAll('paper-item');
                     expect(items.length).to.be.above(0);
