@@ -41,62 +41,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             testObj = fixture('basic');
         });
 
-        //
-        test('the beta interface should have two tabs', function (done) {
-            // Data bindings will stamp out new DOM asynchronously
-            // so wait to check for updates
-            flush(function () {
-
-                setTimeout(function () {
-                    var els = testObj.querySelectorAll('#betaTestSelector paper-tab');
-                    expect(els.length).to.equal(2);
-
-                    done();
-                }, 1900);
-
-            });
-        });
-
-        test('when beta interface Try Next Version is clicked the display changes correctly', function (done) {
-            // Data bindings will stamp out new DOM asynchronously
-            // so wait to check for updates
-            flush(function () {
-
-
-                setTimeout(function () {
-                    // the tests
-
-                    var els = testObj.querySelectorAll('#betaTestSelector paper-tab');
-                    console.log(els);
-                    els[1].click();
-                    var el = testObj.querySelector('#betaTestSelector paper-tab.iron-selected');
-                    expect(el.textContent).to.match(/Try the new look/);
-
-                    done();
-                }, 1900);
-
-            });
-        });
-
-        test('when beta interface old primo tab is clicked the display changes correctly and data fields update to correct values', function (done) {
-            // Data bindings will stamp out new DOM asynchronously
-            // so wait to check for updates
-            flush(function () {
-
-                setTimeout(function () {
-                    // the tests
-
-                    var els = testObj.querySelectorAll('#betaTestSelector paper-tab');
-                    els[0].click();
-                    var el = testObj.querySelector('paper-tab.iron-selected');
-                    expect(el.textContent).to.match(/UQ Library search/);
-
-                    done();
-                }, 1900);
-
-            });
-        });
-
         test('Display uqlibrary-search elements', function (done) {
             // Data bindings will stamp out new DOM asynchronously
             // so wait to check for updates

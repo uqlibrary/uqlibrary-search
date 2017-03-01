@@ -33,7 +33,7 @@ Example:
         margin-right: 8px;
         padding-left: 8px;
         padding-right: 4px;
-        background-color: var(--secondary-color-light);
+        background-color: var(--input-bg-colour, --secondary-color-light);
         border-radius: 3px;
         min-width: 210px;
       }
@@ -73,76 +73,12 @@ Example:
         }
       }
 
-      paper-tabs {
-        width: 100%;
-        text-transform: uppercase;
-        font-size: 20px;
-        --paper-tabs-selection-bar-color: var(--accent-color);
-        margin-bottom: 20px;
-        border-bottom: 1px solid lightgrey;
-      }
-
-      .betaSearchMarker paper-input-container {
-        background-color: #d7e2ef;
-      }
-
-      paper-tab.iron-selected {
-        color: var(--accent-color);
-      }
-
-      paper-item {
-        --paper-item-focused-before: {
-          background-color: white;
-          opacity: 0;
-        };
-      }
-
-      #newPrimoTagLine {
-        display: none;
-        width: 100%;
-        margin-top: 10px;
-        color: var(--secondary-color);
-      }
-
-      paper-item.card-actions {
-        display: block;
-        width: 100%;
-        position: relative;
-        border-top-width: 0;
-        padding: 0;
-      }
-      .card-actions div {
-        border-top: 1px solid var(--border-color);
-        padding: 5px 0 16px 0;
-        padding: .3125rem 0 1rem 0;
-        margin-top: 16px;
-        margin-top: 1rem;
-        position: relative;
-        text-align: right;
-        font-size: 16px;
-        font-size: 1rem;
-      }
-
-
-      @media screen and (max-width: 480px) {
-        paper-tab {
-          // resize the tab font size in the primo beta test
-          font-size: 14px;
-        }
-      }
-
       @media screen and (max-width: 320px) {
         #inputSources {
           min-width: 100%;
         }
       }
 
-      @media screen and (max-width: 400px) {
-        .card-actions paper-button {
-          @apply(--layout-vertical);
-          margin: 8px 0;
-        }
-      }
     </style>
 
     <uqlibrary-ga id="ga" app-name="{{gaAppName}}"></uqlibrary-ga>
@@ -157,34 +93,18 @@ Example:
                        on-iron-localstorage-load="_localStorageLoaded"
                        on-iron-localstorage-load-empty="_localStorageLoaded"></iron-localstorage>
 
-
-
     <iron-a11y-keys target="[[_inputSourcesTarget]]" keys="enter" on-keys-pressed="_keywordFocused"></iron-a11y-keys>
 
-    <paper-tabs id="betaTestSelector" selected="{{userChoice}}" on-iron-select="onTabSelect">
-      <paper-tab id="oldPrimo" name="oldPrimo" aria-label="UQ Library search">
-        UQ Library search
-      </paper-tab>
-      <paper-tab id="newPrimo" name="newPrimo" aria-label="Try the new look">
-        Try the new look
-      </paper-tab>
-    </paper-tabs>
+    <template is="dom-if" if="[[_showNotification]]">
+      <p>New look search results with better filtering <a href="#">and more</a>. Do a search and tell us what you think.</p>
+    </template>
 
-    <paper-item id="newPrimoTagLine">
-      <div>Updated look, better filtering <a href="#">and more</a>.  Try it and tell us what you think.</div>
-    </paper-item>
-
-    <paper-item>
-      <div>
-        <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value$="{{selectedSource.name}}"
-                     role="combobox" aria-label="select search scope">
-          <paper-icon-button suffix icon="unfold-more" aria-label="select search scope" role="button" alt="select search scope"
-                             title="select search scope" style="margin-top: -15px;">
-          </paper-icon-button>
-        </paper-input>
-      </div>
-    </paper-item>
-
+    <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value$="{{selectedSource.name}}"
+                 role="combobox" aria-label="select search scope">
+      <paper-icon-button suffix icon="unfold-more" aria-label="select search scope" role="button" alt="select search scope"
+                         title="select search scope" style="margin-top: -15px;">
+      </paper-icon-button>
+    </paper-input>
 
     <uqlibrary-iron-dropdown id="menuSources"
                              horizontal-align="left" vertical-align="top" position-absolute="true"
@@ -206,14 +126,6 @@ Example:
                   aria-label="Search [[selectedSource.title]]" title="Search [[selectedSource.title]]">
       <iron-icon icon="icons:search" aria-label="Search [[selectedSource.title]]"></iron-icon>
     </paper-button>
-
-    <paper-item class="card-actions">
-      <div>
-        <template is="dom-repeat" id="selectedSearchSource" items="[[selectedSource.helpLinks]]">
-          <paper-button class="button-secondary" tabindex="-1" disabled$="[[!item.enabled]]"><a href$="[[item.url]]">[[item.title]]</a></paper-button>
-        </template>
-      </div>
-    </paper-item>
 
   </template>
 
