@@ -194,7 +194,7 @@
           }
 
           var primo2Configuration = [
-            { name: 'Library 2',
+            { name: 'Library',
               type: 'all',
               url: primo2links.primo,
               urlPrepend: 'any,contains,',
