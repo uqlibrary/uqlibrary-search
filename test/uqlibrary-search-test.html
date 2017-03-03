@@ -47,6 +47,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             flush(function () {
 
                 var sources = testObj.querySelector('#menuSources');
+
                 expect(sources).to.not.be.null;
 
                 var inputKeyword = testObj.querySelector('#inputKeyword');
@@ -66,6 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             flush(function () {
 
                 var sources = testObj.querySelector('#menuSources');
+
                 expect(sources).to.not.be.null;
 
                 var sourceItems = sources.querySelectorAll('paper-item');
@@ -81,10 +83,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             flush(function () {
 
                 var sources = testObj.querySelector('#inputSources');
-
                 var ariaLabel = sources.attributes['aria-label'];
-
-                expect(ariaLabel).to.not.be.null;
+                expect(ariaLabel).not.to.be.null;
                 expect(ariaLabel).not.to.equal('');
 
                 done();

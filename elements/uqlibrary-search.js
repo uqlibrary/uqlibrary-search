@@ -607,7 +607,6 @@
 
     ready: function() {
       var self = this;
-
       this.async(function () {
         this.$.searchKeywordInput.setFocus();
       }, 100);
