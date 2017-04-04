@@ -79,6 +79,26 @@ Example:
         }
       }
 
+      paper-tabs{
+        background-color: #f2f2f2;
+        border-bottom: 1px solid rgba(0,0,0,0.075);
+        --paper-tabs-selection-bar-color: var(--theme-color);
+
+      }
+      paper-tab[focused]{
+        background-color: transparent;
+        color: var(--theme-color);
+      }
+
+      paper-tab.iron-selected {
+        color: var(--theme-color);
+      }
+
+      #tabsContent{
+        background-color: red !important;
+      }
+
+
     </style>
 
     <uqlibrary-ga id="ga" app-name="{{gaAppName}}"></uqlibrary-ga>
