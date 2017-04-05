@@ -182,7 +182,7 @@
 
             {
               title: 'Advanced search',
-              url: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ_DEV&sortby=rank&mode=advanced'
+              url: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ&sortby=rank&mode=advanced'
             }
           ];
 
@@ -198,7 +198,7 @@
               type: 'all',
               url: primo2links.primo,
               urlPrepend: 'any,contains,',
-              urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&offset=0',
+              urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ&offset=0',
               autoSuggest: true,
               api: this.properties.api.value.primoApiAll,
               icon: 'social:public',
@@ -209,7 +209,7 @@
               type: 'books',
               url: primo2links.primo,
               urlPrepend: 'any,contains,',
-              urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&offset=0&facet=rtype,include,books',
+              urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ&offset=0&facet=rtype,include,books',
               autoSuggest: true,
               api: this.properties.api.value.primoApiLocal,
               icon: 'communication:import-contacts',
@@ -220,7 +220,7 @@
               type: 'journal_articles',
               url: primo2links.primo,
               urlPrepend: 'any,contains,',
-              urlAppend: '&tab=61uq_all&search_scope=61UQ_All&vid=61UQ_DEV&offset=0&fctV=articles&facet=rtype,include,articles',
+              urlAppend: '&tab=61uq_all&search_scope=61UQ_All&vid=61UQ&offset=0&fctV=articles&facet=rtype,include,articles',
               autoSuggest: true,
               api: this.properties.api.value.primoApiAll,
               icon: 'social:school',
@@ -231,7 +231,7 @@
               type: 'multimedia',
               url: primo2links.primo,
               urlPrepend: 'any,contains,',
-              urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&offset=0&facet=rtype,include,media',
+              urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ&offset=0&facet=rtype,include,media',
               autoSuggest: true,
               api: this.properties.api.value.primoApiAll,
               icon: 'icons:theaters',
@@ -242,7 +242,7 @@
               type: 'journals',
               url: primo2links.primo,
               urlPrepend: 'title,contains,',
-              urlAppend: ',AND&pfilter=pfilter,exact,journals,AND&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DEV&mode=advanced&offset=0',
+              urlAppend: ',AND&pfilter=pfilter,exact,journals,AND&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ&mode=advanced&offset=0',
               autoSuggest: true,
               api: this.properties.api.value.primoApiLocal,
               icon: 'editor:insert-drive-file',
@@ -253,7 +253,7 @@
               type: 'physical_items',
               url: primo2links.primo,
               urlPrepend: 'any,contains,',
-              urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=title&vid=61UQ_DEV&offset=0&facet=tlevel,include,physical_items',
+              urlAppend: '&tab=61uq_all&search_scope=61UQ_All&sortby=title&vid=61UQ&offset=0&facet=tlevel,include,physical_items',
               autoSuggest: true,
               api: this.properties.api.value.primoApiLocal,
               icon: 'icons:inbox',
