@@ -12,142 +12,151 @@ Example:
 @demo demo/index.html Demo of uqlibrary-search
 -->
 <dom-module id="uqlibrary-search">
-  <template>
-    <style is="custom-style" include="common-styles">
-      :host {
-        font-family: var(--font-family);
-        font-size: var(--body-font-size);
-        position: relative;
+    <template>
+        <style is="custom-style" include="common-styles">
+            :host {
+                font-family: var(--font-family);
+                font-size: var(--body-font-size);
+                position: relative;
 
-        @apply(--layout-horizontal);
-        @apply(--layout-wrap);
-      }
+                @apply(--layout-horizontal);
+                @apply(--layout-wrap);
+            }
 
-      #inputSources,
-      #buttonSearch {
-        @apply(--layout-flex-1);
-      }
+            #inputSources,
+            #buttonSearch {
+                @apply(--layout-flex-1);
+            }
 
-      #inputSources,
-      #searchKeywordInput {
-        margin-right: 8px;
-        padding-left: 8px;
-        padding-right: 4px;
-        background-color: var(--input-bg-colour, --secondary-color-light);
-        border-radius: 3px;
-        min-width: 210px;
-      }
+            #inputSources,
+            #searchKeywordInput {
+                margin-right: 8px;
+                padding-left: 8px;
+                padding-right: 4px;
+                background-color: var(--input-bg-colour, --secondary-color-light);
+                border-radius: 3px;
+                min-width: 210px;
+            }
 
-      #menuSources {
-        border-radius: 3px;
-        @apply(--shadow-elevation-2dp);
-      }
+            #menuSources {
+                border-radius: 3px;
+                @apply(--shadow-elevation-2dp);
+            }
 
-      #listSources paper-item {
-        cursor: pointer;
-      }
+            #listSources paper-item {
+                cursor: pointer;
+            }
 
-      #searchKeywordInput {
-        @apply(--layout-flex);
-      }
+            #searchKeywordInput {
+                @apply(--layout-flex);
+            }
 
-      #buttonSearch iron-icon {
-        margin-top: 9px;
-      }
+            #buttonSearch iron-icon {
+                margin-top: 9px;
+            }
 
-      @media screen and (max-width: 815px) {
-        :host {
-          @apply(--layout-flex-none);
-        }
+            @media screen and (max-width: 815px) {
+                :host {
+                    @apply(--layout-flex-none);
+                }
 
-        #inputSources{
-          width: 100%;
-          display: block;
-          margin-bottom: 8px;
-          margin-right: 0;
-          min-width: 270px;
-        }
+                #inputSources {
+                    width: 100%;
+                    display: block;
+                    margin-bottom: 8px;
+                    margin-right: 0;
+                    min-width: 270px;
+                }
 
-        #searchKeywordInput {
-          min-width: calc(100% - 105px);
-        }
-      }
+                #searchKeywordInput {
+                    min-width: calc(100% - 105px);
+                }
+            }
 
-      @media screen and (max-width: 320px) {
-        #inputSources {
-          min-width: 100%;
-        }
-      }
+            @media screen and (max-width: 320px) {
+                #inputSources {
+                    min-width: 100%;
+                }
+            }
 
-      paper-tabs{
-        background-color: #f2f2f2;
-        border-bottom: 1px solid rgba(0,0,0,0.075);
-        --paper-tabs-selection-bar-color: var(--theme-color);
+            paper-tabs {
+                background-color: #f2f2f2;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.075);
+                --paper-tabs-selection-bar-color: var(--theme-color);
 
-      }
-      paper-tab[focused]{
-        background-color: transparent;
-        color: var(--theme-color);
-      }
+            }
 
-      paper-tab.iron-selected {
-        color: var(--theme-color);
-      }
+            paper-tab[focused] {
+                background-color: transparent;
+                color: var(--theme-color);
+            }
 
-      #tabsContent{
-        background-color: red !important;
-      }
+            paper-tab.iron-selected {
+                color: var(--theme-color);
+            }
+
+            #tabsContent {
+                background-color: red !important;
+            }
 
 
-    </style>
+        </style>
 
-    <uqlibrary-ga id="ga" app-name="{{gaAppName}}"></uqlibrary-ga>
+        <uqlibrary-ga id="ga" app-name="{{gaAppName}}"></uqlibrary-ga>
 
-    <uqlibrary-api-search-suggestions
-            id="ajax"
-            on-uqlibrary-api-search-suggestions-loaded="_suggestionsLoaded"></uqlibrary-api-search-suggestions>
+        <uqlibrary-api-search-suggestions
+                id="ajax"
+                on-uqlibrary-api-search-suggestions-loaded="_suggestionsLoaded"></uqlibrary-api-search-suggestions>
 
-    <iron-localstorage id="localstorage"
-                       name="uqlibrary-search-storage"
-                       value="{{recent}}"
-                       on-iron-localstorage-load="_localStorageLoaded"
-                       on-iron-localstorage-load-empty="_localStorageLoaded"></iron-localstorage>
+        <iron-localstorage id="localstorage"
+                           name="uqlibrary-search-storage"
+                           value="{{recent}}"
+                           on-iron-localstorage-load="_localStorageLoaded"
+                           on-iron-localstorage-load-empty="_localStorageLoaded"></iron-localstorage>
 
-    <iron-a11y-keys target="[[_inputSourcesTarget]]" keys="enter" on-keys-pressed="_keywordFocused"></iron-a11y-keys>
+        <iron-a11y-keys target="[[_inputSourcesTarget]]" keys="enter"
+                        on-keys-pressed="_keywordFocused"></iron-a11y-keys>
 
-    <template is="dom-if" if="[[_showNotification]]">
-      <p>New look search results with better filtering <a href="#">and more</a>. Do a search and tell us what you think.</p>
+        <template is="dom-if" if="[[_showNotification]]">
+            <p><a href="https://web.library.uq.edu.au/blog/2017/04/new-look-uq-library-search-coming-26-june-try-it-now"
+                  title="New look search results">New look search results</a> with streamlined display and fewer clicks.
+                Do a search and <a href="https://uqcurrent.custhelp.com/app/library/feedback"
+                                   title="Tell us what you think">tell us what you think</a>.</p>
+        </template>
+
+        <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value$="{{selectedSource.name}}"
+                     role="combobox" aria-label="select search scope">
+            <paper-icon-button suffix icon="unfold-more" aria-label="select search scope" role="button"
+                               alt="select search scope"
+                               title="select search scope" style="margin-top: -15px;">
+            </paper-icon-button>
+        </paper-input>
+
+        <uqlibrary-iron-dropdown id="menuSources"
+                                 horizontal-align="left" vertical-align="top" position-absolute="true"
+                                 horizontal-offset="20" vertical-offset="36" tabindex="-1" aria-label="Search scopes">
+
+            <paper-listbox id="listSources" class="dropdown-content" selected="{{selectedSourceIndex}}">
+                <template is="dom-repeat" items="[[sources]]">
+                    <paper-item role="option" aria-label="Search in [[item.name]]" title="Search in [[item.name]]">
+                        <iron-icon icon="[[item.icon]]" aria-hidden></iron-icon>
+                        [[item.name]]
+                    </paper-item>
+                </template>
+            </paper-listbox>
+        </uqlibrary-iron-dropdown>
+
+        <uqlibrary-autosuggest-input id="searchKeywordInput" label="[[selectedSource.inputPlaceholder]]"
+                                     source="{{selectedSource}}" aria-label="enter search keyword"
+                                     on-activated="_searchActivated" on-keyword-changed="_keywordChanged"
+                                     on-focus="_closeSources"></uqlibrary-autosuggest-input>
+
+        <paper-button id="buttonSearch" role="button" on-tap="_searchActivated" class="button-colored-accent"
+                      aria-label="Search [[selectedSource.title]]" title="Search [[selectedSource.title]]">
+            <iron-icon icon="icons:search" aria-label="Search [[selectedSource.title]]"></iron-icon>
+        </paper-button>
+
     </template>
 
-    <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value$="{{selectedSource.name}}"
-                 role="combobox" aria-label="select search scope">
-      <paper-icon-button suffix icon="unfold-more" aria-label="select search scope" role="button" alt="select search scope"
-                         title="select search scope" style="margin-top: -15px;">
-      </paper-icon-button>
-    </paper-input>
-
-    <uqlibrary-iron-dropdown id="menuSources"
-                             horizontal-align="left" vertical-align="top" position-absolute="true"
-                             horizontal-offset="20" vertical-offset="36" tabindex="-1" aria-label="Search scopes">
-
-      <paper-listbox id="listSources" class="dropdown-content" selected="{{selectedSourceIndex}}" >
-        <template is="dom-repeat" items="[[sources]]">
-          <paper-item role="option" aria-label="Search in [[item.name]]" title="Search in [[item.name]]">
-            <iron-icon icon="[[item.icon]]" aria-hidden></iron-icon> [[item.name]]
-          </paper-item>
-        </template>
-      </paper-listbox>
-    </uqlibrary-iron-dropdown>
-
-    <uqlibrary-autosuggest-input id="searchKeywordInput" label="[[selectedSource.inputPlaceholder]]" source="{{selectedSource}}" aria-label="enter search keyword"
-                                 on-activated="_searchActivated" on-keyword-changed="_keywordChanged" on-focus="_closeSources"></uqlibrary-autosuggest-input>
-
-    <paper-button id="buttonSearch" role="button" on-tap="_searchActivated" class="button-colored-accent"
-                  aria-label="Search [[selectedSource.title]]" title="Search [[selectedSource.title]]">
-      <iron-icon icon="icons:search" aria-label="Search [[selectedSource.title]]"></iron-icon>
-    </paper-button>
-
-  </template>
-
-  <script src="uqlibrary-search.js"></script>
+    <script src="uqlibrary-search.js"></script>
 </dom-module>
