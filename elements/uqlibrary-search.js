@@ -175,9 +175,8 @@
               url: 'https://web.library.uq.edu.au/research-tools-techniques/uq-library-search'
             },
             {
-              title: 'Browse search (coming soon)',
-              url: '#',
-              disabled: true
+              title: 'Browse search',
+              url: 'https://search.library.uq.edu.au/primo-explore/browse?vid=61UQ&sortby=rank',
             },
 
             {
