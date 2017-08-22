@@ -14,7 +14,7 @@
     "iron-elements": "PolymerElements/iron-elements#^1.0.0",
     "paper-elements": "PolymerElements/paper-elements#^1.0.0",
     "polymer": "Polymer/polymer#^1.4.0",
-    "uqlibrary-api": "uqlibrary/uqlibrary-api#primodirect",
+    "uqlibrary-api": "uqlibrary/uqlibrary-api#v1.5.0",
     "uqlibrary-autosuggest-input": "uqlibrary/uqlibrary-autosuggest-input#v1.1.3",
     "uqlibrary-ga": "uqlibrary/uqlibrary-ga#v1.0.7",
     "uqlibrary-iron-dropdown": "uqlibrary/uqlibrary-iron-dropdown#v1.2.3",
