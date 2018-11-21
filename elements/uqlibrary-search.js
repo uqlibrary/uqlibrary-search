@@ -420,7 +420,7 @@
         { name: 'Databases',
           type: 'databases',
           url: this.links.database,
-          autoSuggest: true,
+          autoSuggest: false,
           api: this.properties.api.value.databaseApi,
           icon: 'editor:format-align-justify',
           inputPlaceholder: 'Enter a keyword or database name',
