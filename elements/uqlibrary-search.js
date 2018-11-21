@@ -40,12 +40,6 @@
               type : 'exam_paper',
               prefix: ''
             }
-          },
-          databaseApi: {
-            params: {
-              type: 'database',
-              prefix: ''
-            }
           }
         }
       },
@@ -146,7 +140,7 @@
       var searchUrl = '';
       var recent = {name: searchText, origName: searchText, type: this.selectedSource.type, recent: true};
       if (selectedSuggestion &&
-        (this.selectedSource.type === 'databases' || this.selectedSource.type === 'learning_resources')) {
+        (this.selectedSource.type === 'learning_resources')) {
         searchUrl = selectedSuggestion.url;
       }
 
@@ -265,14 +259,6 @@
           s.origName = s.name;
           s.type = type;
           s.name = s.name +' ('+ (s.course_title ? (s.course_title) : '') + ')';
-          processed.push(s);
-        });
-      }
-      else if (api.params.type === this.api.databaseApi.params.type) {
-        suggestions.forEach(function (s) {
-          s.origName = s.name;
-          s.name = s.name + ' (' + (s.type === 'database' ? 'Database' : 'Subject Area') +')';
-          s.type = type;
           processed.push(s);
         });
       }
@@ -420,8 +406,8 @@
         { name: 'Databases',
           type: 'databases',
           url: this.links.database,
-          autoSuggest: true,
-          api: this.properties.api.value.databaseApi,
+          autoSuggest: false,
+          api: null,
           icon: 'editor:format-align-justify',
           inputPlaceholder: 'Enter a keyword or database name',
           helpLinks: [
