@@ -409,7 +409,7 @@
           autoSuggest: false,
           api: null,
           icon: 'editor:format-align-justify',
-          inputPlaceholder: 'Enter a keyword or database name',
+          inputPlaceholder: 'Enter database title',
           helpLinks: [
             { title: 'Database help', url: 'https://web.library.uq.edu.au/research-tools-techniques/search-techniques/searching-databases' },
             { title: 'Browse databases', url: 'https://app.library.uq.edu.au/#/gateways/database' }
