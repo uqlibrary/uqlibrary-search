@@ -53,7 +53,7 @@
           primo: 'https://search.library.uq.edu.au/primo-explore/search?query=',
           exams: 'https://www.library.uq.edu.au/exams/papers.php?stub=',
           lr: 'http://lr.library.uq.edu.au/search?q=',
-          database: 'https://app.library.uq.edu.au/#/gateways/database?&title='
+          database: 'https://search.library.uq.edu.au/primo-explore/dbsearch?query=any,contains,%%&tab=jsearch_slot&vid=61UQ&offset=0&databases=any,%%'
         }
       },
 
@@ -150,12 +150,21 @@
           searchText = s[0];
         }
 
-        searchUrl = encodeURI(this.selectedSource.url) +
-          (this.selectedSource.hasOwnProperty('urlPrepend') ?  this.selectedSource.urlPrepend : '') +
-          encodeURIComponent(searchText);
-
-        if (this.selectedSource.urlAppend) {
-          searchUrl += this.selectedSource.urlAppend;
+        if (this.selectedSource.type === 'databases') {
+          searchUrl = encodeURI(
+            this.selectedSource.url.replace(
+              /%%/g,
+              encodeURIComponent(searchText)
+            )
+          );
+        } else {
+          searchUrl = encodeURI(this.selectedSource.url) +
+            (this.selectedSource.hasOwnProperty('urlPrepend') ?  this.selectedSource.urlPrepend : '') +
+            encodeURIComponent(searchText);
+  
+          if (this.selectedSource.urlAppend) {
+            searchUrl += this.selectedSource.urlAppend;
+          }
         }
       } else {
         recent.url = searchUrl;
@@ -412,7 +421,7 @@
           inputPlaceholder: 'Enter database title',
           helpLinks: [
             { title: 'Database help', url: 'https://web.library.uq.edu.au/research-tools-techniques/search-techniques/searching-databases' },
-            { title: 'Browse databases', url: 'https://app.library.uq.edu.au/#/gateways/database' }
+            { title: 'Browse databases', url: 'https://search.library.uq.edu.au/primo-explore/dbsearch?vid=61UQ' }
           ]
         },
         { name: 'Past exam papers',
