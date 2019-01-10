@@ -10,10 +10,12 @@ Documentation is in [GitHub Pages](http://uqlibrary.github.io/uqlibrary-search/u
 
 ## Getting Started
 
-Install Node.JS and run the following oneliner in the project directory:
+Install Node.JS and run the following in the project directory:
 
 ```sh
-npm install -g bower && bower install
+npm install -g bower web-component-tester
+npm install
+bower install
 ```
 
 ## Developing
