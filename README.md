@@ -36,8 +36,8 @@ npm test
 
 This component is called by:
 
-* uqlibrary-reusable-components
-* uqlibrary-mylibrary
-* uqlibrary-pages
+* uqlibrary-reusable-components (a build of production branch will update a [drupal](https://web.library.uq.edu.au/research-tools-techniques/library-search) page)
+* uqlibrary-mylibrary (includes Library Search on the main mylibrary page)
+* uqlibrary-pages (includes Library Search on the Library Home Page)
 
 These will need to be rebuilt in codeship to push this change live.
