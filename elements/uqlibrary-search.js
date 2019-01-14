@@ -152,10 +152,7 @@
 
         if (this.selectedSource.type === 'databases') {
           searchUrl = encodeURI(
-            this.selectedSource.url.replace(
-              /%%/g,
-              encodeURIComponent(searchText)
-            )
+            this.selectedSource.url.replace(/%%/g, searchText)
           );
         } else {
           searchUrl = encodeURI(this.selectedSource.url) +
