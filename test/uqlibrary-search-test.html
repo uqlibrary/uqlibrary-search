@@ -133,31 +133,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 }, 1900);
             });
         });
-
-        test('Databases display autosuggestions', function (done) {
-            // Data bindings will stamp out new DOM asynchronously
-            // so wait to check for updates
-            flush(function () {
-
-                var sources = testObj.querySelector('#menuSources');
-                sources.value = 'databases';
-
-                var inputKeyword = testObj.querySelector('#inputKeyword');
-                inputKeyword.value = "journal"; // random keyword to display autocompletes
-
-                var menuSuggestions = testObj.querySelector('#listSuggestions');
-                expect(menuSuggestions).to.not.be.null;
-
-                setTimeout(function () {
-                    expect(menuSuggestions).to.not.be.null;
-                    var items = menuSuggestions.querySelectorAll('paper-item');
-                    expect(items.length).to.be.above(0);
-                    done();
-                }, 1900);
-            });
-        });
-
-
     });
 </script>
 
