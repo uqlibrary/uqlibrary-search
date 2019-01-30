@@ -52,7 +52,7 @@
         value: {
           primo: 'https://search.library.uq.edu.au/primo-explore/search?query=',
           primoLoggedIn: function (url) {
-            return 'https://search.library.uq.edu.au/primo_library/libweb/primoExploreLogin?institution=61UQ&target-url=' +　encodeURI(url) + '&authenticationProfile=61UQ_SAML&auth=SAML&isSilent=false';
+            return 'https://search.library.uq.edu.au/primo_library/libweb/primoExploreLogin?institution=61UQ&target-url=' +　encodeURIComponent(url) + '&authenticationProfile=61UQ_SAML&auth=SAML&isSilent=false';
           },
           exams: 'https://www.library.uq.edu.au/exams/papers.php?stub=',
           lr: 'http://lr.library.uq.edu.au/search?q=',
