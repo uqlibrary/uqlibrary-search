@@ -8,7 +8,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "wct"
+    "test": "polymer test",
+    "start": "polymer serve"
   },
   "repository": {
     "type": "git",
@@ -23,13 +24,13 @@
     "url": "https://github.com/uqlibrary/uqlibrary-search/issues"
   },
   "devDependencies": {
-    "bower": "^1.8.4",
+    "bower": "^1.8.8",
     "chai": "^4.2.0",
     "web-component-tester": "*"
   },
   "engines": {
     "npm": "^6.5.0",
-    "node": "^11.6.0"
+    "node": "^11.8.0"
   },
   "engine-strict": true
 }
