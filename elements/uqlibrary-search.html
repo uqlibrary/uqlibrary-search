@@ -82,30 +82,44 @@ Example:
 
         <uqlibrary-ga id="ga" app-name="{{gaAppName}}"></uqlibrary-ga>
 
-        <uqlibrary-api-search-suggestions
-                id="ajax"
-                on-uqlibrary-api-search-suggestions-loaded="_suggestionsLoaded"></uqlibrary-api-search-suggestions>
+        <uqlibrary-api-search-suggestions 
+            id="ajax" 
+            on-uqlibrary-api-search-suggestions-loaded="_suggestionsLoaded"
+        ></uqlibrary-api-search-suggestions>
 
-        <iron-localstorage id="localstorage"
-                           name="uqlibrary-search-storage"
-                           value="{{recent}}"
-                           on-iron-localstorage-load="_localStorageLoaded"
-                           on-iron-localstorage-load-empty="_localStorageLoaded"></iron-localstorage>
+        <iron-localstorage 
+            id="localstorage" 
+            name="uqlibrary-search-storage" 
+            value="{{recent}}"
+            on-iron-localstorage-load="_localStorageLoaded"
+            on-iron-localstorage-load-empty="_localStorageLoaded"
+        ></iron-localstorage>
 
-        <iron-a11y-keys target="[[_inputSourcesTarget]]" keys="enter"
-                        on-keys-pressed="_keywordFocused"></iron-a11y-keys>
+        <iron-a11y-keys target="[[_inputSourcesTarget]]" keys="enter" on-keys-pressed="_keywordFocused"></iron-a11y-keys>
 
-        <paper-input readonly label="Search" id="inputSources" on-tap="_keywordFocused" value$="{{selectedSource.name}}"
-                     role="combobox" aria-label="select search scope">
-            <paper-icon-button suffix icon="unfold-more" aria-label="select search scope" role="button"
-                               alt="select search scope"
-                               title="select search scope" style="margin-top: -15px;">
+        <paper-input 
+            readonly
+            label="Search"
+            id="inputSources"
+            on-tap="_keywordFocused"
+            value$="{{selectedSource.name}}"
+            role="combobox"
+            aria-label="select search scope"
+        >
+            <paper-icon-button 
+                suffix
+                icon="unfold-more"
+                aria-label="select search scope"
+                role="button"
+                alt="select search scope"
+                title="select search scope"
+                style="margin-top: -15px;"
+            >
             </paper-icon-button>
         </paper-input>
 
-        <uqlibrary-iron-dropdown id="menuSources"
-                                 horizontal-align="left" vertical-align="top" position-absolute="true"
-                                 horizontal-offset="20" vertical-offset="36" tabindex="-1" aria-label="Search scopes">
+        <iron-dropdown id="menuSources" horizontal-align="left" vertical-align="top" position-absolute="true"
+            horizontal-offset="20" vertical-offset="36" tabindex="-1" aria-label="Search scopes">
 
             <paper-listbox id="listSources" class="dropdown-content" selected="{{selectedSourceIndex}}">
                 <template is="dom-repeat" items="[[sources]]">
@@ -115,15 +129,26 @@ Example:
                     </paper-item>
                 </template>
             </paper-listbox>
-        </uqlibrary-iron-dropdown>
+        </iron-dropdown>
 
-        <uqlibrary-autosuggest-input id="searchKeywordInput" label="[[selectedSource.inputPlaceholder]]"
-                                     source="{{selectedSource}}" aria-label="enter search keyword"
-                                     on-activated="_searchActivated" on-keyword-changed="_keywordChanged"
-                                     on-focus="_closeSources"></uqlibrary-autosuggest-input>
+        <uqlibrary-autosuggest-input
+            id="searchKeywordInput"
+            label="[[selectedSource.inputPlaceholder]]"
+            source="{{selectedSource}}"
+            aria-label="enter search keyword"
+            on-activated="_searchActivated"
+            on-keyword-changed="_keywordChanged"
+            on-focus="_closeSources"
+        ></uqlibrary-autosuggest-input>
 
-        <paper-button id="buttonSearch" role="button" on-tap="_searchActivated" class="button-colored-accent"
-                      aria-label="Run your search on [[selectedSource.name]]" title="Search [[selectedSource.name]]">
+        <paper-button
+            id="buttonSearch"
+            role="button"
+            on-tap="_searchActivated"
+            class="button-colored-accent"
+            aria-label="Run your search on [[selectedSource.name]]"
+            title="Search [[selectedSource.name]]"
+        >
             <iron-icon icon="icons:search" aria-label="Run your search on [[selectedSource.name]]"></iron-icon>
         </paper-button>
 
