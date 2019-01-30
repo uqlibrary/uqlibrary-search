@@ -51,6 +51,9 @@
         type: Object,
         value: {
           primo: 'https://search.library.uq.edu.au/primo-explore/search?query=',
+          primoLoggedIn: function (url) {
+            return 'https://search.library.uq.edu.au/primo_library/libweb/primoExploreLogin?institution=61UQ&target-url=' +　encodeURI(url) + '&authenticationProfile=61UQ_SAML&auth=SAML&isSilent=false';
+          },
           exams: 'https://www.library.uq.edu.au/exams/papers.php?stub=',
           lr: 'http://lr.library.uq.edu.au/search?q=',
           database: 'https://search.library.uq.edu.au/primo-explore/dbsearch?query=any,contains,%%&tab=jsearch_slot&vid=61UQ&offset=0&databases=any,%%'
@@ -118,6 +121,15 @@
         type: Object
       },
 
+      /**
+       * Login Status
+       */
+      isLoggedIn: {
+          type: Boolean,
+          value: false,
+          notify: true
+      },
+
       _inputSourcesTarget: {
         type: Object,
         value: function () {
@@ -161,6 +173,10 @@
   
           if (this.selectedSource.urlAppend) {
             searchUrl += this.selectedSource.urlAppend;
+          }
+
+          if(this.isLoggedIn) {
+            searchUrl = this.links.primoLoggedIn(searchUrl);
           }
         }
       } else {
@@ -324,8 +340,28 @@
       }
     },
 
+    _getBrowseSearchUrl: function() {
+      var url = 'https://search.library.uq.edu.au/primo-explore/browse?vid=61UQ&sortby=rank';
+      return this.isLoggedIn ? this.links.primoLoggedIn(url) : url;
+    },
+
+    _getAdvancedSearchUrl: function() {
+      var url = 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ&sortby=rank&mode=advanced';
+      return this.isLoggedIn ? this.links.primoLoggedIn(url) : url;
+    },
+
+    _getDatabaseBrowseUrl: function() {
+      var url = 'https://search.library.uq.edu.au/primo-explore/dbsearch?vid=61UQ';
+      return this.isLoggedIn ? this.links.primoLoggedIn(url) : url;
+    },
+
     ready: function() {
       var self = this;
+
+      this.$.accountApi.addEventListener('uqlibrary-api-account-loaded', function(response) {
+        self.isLoggedIn = (response.detail.hasSession !== null) ? response.detail.hasSession : false;
+      });
+
       var defaultHelpLinks = [
         {
           title: 'Search help',
@@ -333,12 +369,11 @@
         },
         {
           title: 'Browse search',
-          url: 'https://search.library.uq.edu.au/primo-explore/browse?vid=61UQ&sortby=rank',
+          url: this._getBrowseSearchUrl(),
         },
-
         {
           title: 'Advanced search',
-          url: 'https://search.library.uq.edu.au/primo-explore/search?vid=61UQ&sortby=rank&mode=advanced'
+          url: this._getAdvancedSearchUrl()
         }
       ];
 
@@ -418,7 +453,7 @@
           inputPlaceholder: 'Enter database title',
           helpLinks: [
             { title: 'Database help', url: 'https://web.library.uq.edu.au/research-tools-techniques/search-techniques/searching-databases' },
-            { title: 'Browse databases', url: 'https://search.library.uq.edu.au/primo-explore/dbsearch?vid=61UQ' }
+            { title: 'Browse databases', url: this._getDatabaseBrowseUrl() }
           ]
         },
         { name: 'Past exam papers',
