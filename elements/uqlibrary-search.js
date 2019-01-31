@@ -51,9 +51,6 @@
         type: Object,
         value: {
           primo: 'https://search.library.uq.edu.au/primo-explore/search?query=',
-          primoLoggedIn: function (url) {
-            return this.isLoggedIn ? 'https://search.library.uq.edu.au/primo_library/libweb/primoExploreLogin?institution=61UQ&target-url=' +　encodeURIComponent(url) + '&authenticationProfile=61UQ_SAML&auth=SAML&isSilent=false' : url;
-          },
           exams: 'https://www.library.uq.edu.au/exams/papers.php?stub=',
           lr: 'http://lr.library.uq.edu.au/search?q=',
           database: 'https://search.library.uq.edu.au/primo-explore/dbsearch?query=any,contains,%%&tab=jsearch_slot&vid=61UQ&offset=0&databases=any,%%'
@@ -175,9 +172,7 @@
             searchUrl += this.selectedSource.urlAppend;
           }
 
-          if(this.isLoggedIn) {
-            searchUrl = this.links.primoLoggedIn(searchUrl);
-          }
+          searchUrl = this.getPrimoLoggedInUrl(searchUrl);
         }
       } else {
         recent.url = searchUrl;
@@ -338,6 +333,10 @@
       else {
         this.$.menuSources.open();
       }
+    },
+
+    getPrimoLoggedInUrl: function(url) {
+      return this.isLoggedIn ? 'https://search.library.uq.edu.au/primo_library/libweb/primoExploreLogin?institution=61UQ&target-url=' +　encodeURIComponent(url) + '&authenticationProfile=61UQ_SAML&auth=SAML&isSilent=false' : url;
     },
 
     ready: function() {
