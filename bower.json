@@ -1,6 +1,6 @@
 {
   "name": "uqlibrary-search",
-  "version": "1.3.12",
+  "version": "1.3.13",
   "keywords": [
     "seed",
     "polymer",
@@ -15,7 +15,7 @@
     "paper-elements": "PolymerElements/paper-elements#^1.0.0",
     "polymer": "Polymer/polymer#^1.11.3",
     "uqlibrary-api": "uqlibrary/uqlibrary-api",
-    "uqlibrary-autosuggest-input": "uqlibrary/uqlibrary-autosuggest-input#feature-revert-iron-dropdown",
+    "uqlibrary-autosuggest-input": "uqlibrary/uqlibrary-autosuggest-input",
     "uqlibrary-ga": "uqlibrary/uqlibrary-ga",
     "uqlibrary-styles": "uqlibrary/uqlibrary-styles",
     "webcomponentsjs": "^0.7.12"
