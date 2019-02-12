@@ -5,11 +5,9 @@
 
 Example:
 
-  <uqlibrary-search></uqlibrary-search>
+    <uqlibrary-search></uqlibrary-search>
 
 @demo
-
-@demo demo/index.html Demo of uqlibrary-search
 -->
 <dom-module id="uqlibrary-search">
     <template>
@@ -19,13 +17,13 @@ Example:
                 font-size: var(--body-font-size);
                 position: relative;
 
-                @apply(--layout-horizontal);
-                @apply(--layout-wrap);
+                @apply --layout-horizontal;
+                @apply --layout-wrap;
             }
 
             #inputSources,
             #buttonSearch {
-                @apply(--layout-flex-1);
+                @apply --layout-flex-1;
             }
 
             #inputSources,
@@ -40,7 +38,7 @@ Example:
 
             #menuSources {
                 border-radius: 3px;
-                @apply(--shadow-elevation-2dp);
+                @apply --shadow-elevation-2dp;
             }
 
             #listSources paper-item {
@@ -48,7 +46,7 @@ Example:
             }
 
             #searchKeywordInput {
-                @apply(--layout-flex);
+                @apply --layout-flex;
             }
 
             #buttonSearch iron-icon {
@@ -57,7 +55,7 @@ Example:
 
             @media screen and (max-width: 815px) {
                 :host {
-                    @apply(--layout-flex-none);
+                    @apply --layout-flex-none;
                 }
 
                 #inputSources {

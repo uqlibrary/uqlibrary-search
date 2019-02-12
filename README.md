@@ -1,6 +1,6 @@
 # uqlibrary-search
 
-[![Codeship Status for uqlibrary/uqlibrary-search](https://app.codeship.com/projects/7dd65470-f6c2-0136-f70c-3ae289da7755/status?branch=polymer1.0)](/projects/321071)
+[![Codeship Status for uqlibrary/uqlibrary-search](https://app.codeship.com/projects/7dd65470-f6c2-0136-f70c-3ae289da7755/status?branch=polymer1.0)](https://app.codeship.com/projects/321071)
 [![Dependency Status](https://david-dm.org/uqlibrary/uqlibrary-search.svg)](https://david-dm.org/uqlibrary/uqlibrary-search)
 [![Dev Dependency Status](https://david-dm.org/uqlibrary/uqlibrary-search/dev-status.svg)](https://david-dm.org/uqlibrary/uqlibrary-search?type=dev)
 
