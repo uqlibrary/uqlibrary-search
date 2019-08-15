@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+    <title>uqlibrary-autosuggest-input</title>
+
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../elements/uqlibrary-autosuggest-input.html">
+    <style>
+      body {
+        padding: 16px;
+      }
+    </style>
+</head>
+<body class="fullbleed">
+    <uqlibrary-autosuggest-input label="search library" enable-autosuggest="true"></uqlibrary-autosuggest-input>
+
+    <div id="selected"></div>
+
+<script>
+    (function () {
+        document.cookie="UQLMockData=enabled";
+        document.cookie="UQLMockData-PType=1";
+
+        var input = document.querySelector('uqlibrary-autosuggest-input');
+
+        input.addEventListener('activated', function (e) {
+            document.querySelector('#selected').innerHTML = e.detail.name; //(e.detail.name ? "Selected suggestion: " + e.detail.name : "Activated text: " + e.detail);
+        });
+
+        input.addEventListener('keyword-changed', function (e) {
+
+            var suggestions = [];
+            for(var i=0; i < e.detail.value.length; i++)
+            suggestions.push({ name: 'abc ' + i, recent: i == 1 });
+
+            input.suggestions = suggestions;
+
+        });
+
+    }());
+</script>
+</body>
+</html>

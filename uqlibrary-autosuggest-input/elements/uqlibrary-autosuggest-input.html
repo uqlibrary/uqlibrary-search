@@ -1,0 +1,93 @@
+<link rel="import" href="elements.html">
+
+<!--
+`<uqlibrary-autosuggest-input>` displays an input field with autosuggest display
+
+Example:
+
+    <uqlibrary-autosuggest-input label="search library..." on-activated="performSearch"></uqlibrary-autosuggest-input>
+
+@demo
+-->
+<dom-module id="uqlibrary-autosuggest-input">
+  <template>
+    <style is="custom-style" include="common-styles">
+      :host {
+        font-family: var(--font-family);
+        position: relative;
+        display: block;
+      }
+
+      #menuSuggestions {
+        border-radius: 3px;
+        @apply --shadow-elevation-2dp;
+        width: 99%;
+      }
+
+      .recent-search {
+        color: var(--theme-color);
+      }
+
+      paper-item {
+        border-bottom: 1px solid var(--secondary-color-light);
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      paper-listbox {
+        max-height: 400px !important;
+        max-width: none !important;
+      }
+
+      #listSuggestions paper-item {
+        font-weight: normal;
+      }
+
+    </style>
+
+    <iron-a11y-keys target="[[_inputKeywordTarget]]" keys="enter" on-keys-pressed="_activated"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_inputKeywordTarget]]" keys="tab" on-keys-pressed="_closeSuggestions"></iron-a11y-keys>
+    <iron-a11y-keys target="[[_inputKeywordTarget]]" keys="down" on-keys-pressed="_selectFirstItem"></iron-a11y-keys>
+
+    <iron-a11y-keys target="[[_suggestionsTarget]]" keys="tab" on-keys-pressed="_closeSuggestions"></iron-a11y-keys>
+
+    <paper-input id="inputKeyword" aria-label="[[label]]" label="[[label]]" aria-label="[[label]]"
+                 value="{{keyword}}" on-focus="_keywordFocused" on-tap="_keywordFocused">
+    </paper-input>
+
+    <uqlibrary-iron-dropdown 
+      id="menuSuggestions"
+      no-auto-focus="true"
+      horizontal-align="left"
+      vertical-align="top"
+      position-absolute="true"
+      title="Select autosuggested item"
+      horizontal-offset="3"
+      vertical-offset="54"
+      tabindex="-1"
+    >
+
+      <paper-listbox 
+        id="listSuggestions"
+        on-iron-activate="_suggestionSelected"
+        class="dropdown-content"
+        selected="{{_selectedIndex}}"
+        no-auto-focus="true"
+        tabindex="-1"
+        aria-label="Select autosuggested item"
+        title="Select autosuggested item"
+      >
+        <template is="dom-repeat" items="[[suggestions]]">
+          <paper-item tabindex="-1" class$="[[_recentSearchClass(item.recent)]] " no-auto-focus="true" role="option">
+            [[_getItemLabel(item)]]
+          </paper-item>
+        </template>
+      </paper-listbox>
+
+    </uqlibrary-iron-dropdown>
+
+  </template>
+
+  <script src="uqlibrary-autosuggest-input.js"></script>
+
+</dom-module>

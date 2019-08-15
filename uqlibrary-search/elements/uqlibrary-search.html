@@ -1,0 +1,156 @@
+<link rel="import" href="elements.html">
+
+<!--
+`<uqlibrary-search>` is a simple element that displays search functionality of UQ Library
+
+Example:
+
+    <uqlibrary-search></uqlibrary-search>
+
+@demo
+-->
+<dom-module id="uqlibrary-search">
+    <template>
+        <style is="custom-style" include="common-styles">
+            :host {
+                font-family: var(--font-family);
+                font-size: var(--body-font-size);
+                position: relative;
+
+                @apply --layout-horizontal;
+                @apply --layout-wrap;
+            }
+
+            #inputSources,
+            #buttonSearch {
+                @apply --layout-flex-1;
+            }
+
+            #inputSources,
+            #searchKeywordInput {
+                margin-right: 8px;
+                padding-left: 8px;
+                padding-right: 4px;
+                background-color: var(--secondary-color-light);
+                border-radius: 3px;
+                min-width: 210px;
+            }
+
+            #menuSources {
+                border-radius: 3px;
+                @apply --shadow-elevation-2dp;
+            }
+
+            #listSources paper-item {
+                cursor: pointer;
+            }
+
+            #searchKeywordInput {
+                @apply --layout-flex;
+            }
+
+            #buttonSearch iron-icon {
+                margin-top: 9px;
+            }
+
+            @media screen and (max-width: 815px) {
+                :host {
+                    @apply --layout-flex-none;
+                }
+
+                #inputSources {
+                    width: 100%;
+                    display: block;
+                    margin-bottom: 8px;
+                    margin-right: 0;
+                    min-width: 270px;
+                }
+
+                #searchKeywordInput {
+                    min-width: calc(100% - 105px);
+                }
+            }
+
+            @media screen and (max-width: 320px) {
+                #inputSources {
+                    min-width: 100%;
+                }
+            }
+        </style>
+
+        <uqlibrary-ga id="ga" app-name="{{gaAppName}}"></uqlibrary-ga>
+
+        <uqlibrary-api-search-suggestions 
+            id="ajax" 
+            on-uqlibrary-api-search-suggestions-loaded="_suggestionsLoaded"
+        ></uqlibrary-api-search-suggestions>
+
+        <iron-localstorage 
+            id="localstorage" 
+            name="uqlibrary-search-storage" 
+            value="{{recent}}"
+            on-iron-localstorage-load="_localStorageLoaded"
+            on-iron-localstorage-load-empty="_localStorageLoaded"
+        ></iron-localstorage>
+
+        <iron-a11y-keys target="[[_inputSourcesTarget]]" keys="enter" on-keys-pressed="_keywordFocused"></iron-a11y-keys>
+
+        <paper-input 
+            readonly
+            label="Search"
+            id="inputSources"
+            on-tap="_keywordFocused"
+            value$="{{selectedSource.name}}"
+            role="combobox"
+            aria-label="select search scope"
+        >
+            <paper-icon-button 
+                suffix
+                icon="unfold-more"
+                aria-label="select search scope"
+                role="button"
+                alt="select search scope"
+                title="select search scope"
+                style="margin-top: -15px;"
+            >
+            </paper-icon-button>
+        </paper-input>
+
+        <iron-dropdown id="menuSources" horizontal-align="left" vertical-align="top" position-absolute="true"
+            horizontal-offset="20" vertical-offset="36" tabindex="-1" aria-label="Search scopes">
+
+            <paper-listbox id="listSources" class="dropdown-content" selected="{{selectedSourceIndex}}">
+                <template is="dom-repeat" items="[[sources]]">
+                    <paper-item role="option" aria-label="Search in [[item.name]]" title="Search in [[item.name]]">
+                        <iron-icon icon="[[item.icon]]" aria-hidden></iron-icon>
+                        [[item.name]]
+                    </paper-item>
+                </template>
+            </paper-listbox>
+        </iron-dropdown>
+
+        <uqlibrary-autosuggest-input
+            id="searchKeywordInput"
+            label="[[selectedSource.inputPlaceholder]]"
+            source="{{selectedSource}}"
+            aria-label="enter search keyword"
+            on-activated="_searchActivated"
+            on-keyword-changed="_keywordChanged"
+            on-focus="_closeSources"
+        ></uqlibrary-autosuggest-input>
+
+        <paper-button
+            id="buttonSearch"
+            role="button"
+            on-tap="_searchActivated"
+            class="button-colored-accent"
+            aria-label="Run your search on [[selectedSource.name]]"
+            title="Search [[selectedSource.name]]"
+        >
+            <iron-icon icon="icons:search" aria-label="Run your search on [[selectedSource.name]]"></iron-icon>
+        </paper-button>
+
+    </template>
+
+    <script src="uqlibrary-search.js"></script>
+</dom-module>
