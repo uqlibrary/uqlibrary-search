@@ -1,11 +1,7 @@
 {
   "name": "uqlibrary-search",
-  "version": "1.3.13",
-  "keywords": [
-    "seed",
-    "polymer",
-    "web-components"
-  ],
+  "version": "1.3.14",
+  "keywords": ["seed", "polymer", "web-components"],
   "private": true,
   "main": "uqlibrary-search.html",
   "dependencies": {
@@ -17,8 +13,7 @@
     "uqlibrary-api": "uqlibrary/uqlibrary-api",
     "uqlibrary-autosuggest-input": "uqlibrary/uqlibrary-autosuggest-input",
     "uqlibrary-ga": "uqlibrary/uqlibrary-ga",
-    "uqlibrary-styles": "uqlibrary/uqlibrary-styles",
-    "webcomponentsjs": "^0.7.12"
+    "uqlibrary-styles": "uqlibrary/uqlibrary-styles"
   },
   "devDependencies": {
     "web-component-tester": "*",

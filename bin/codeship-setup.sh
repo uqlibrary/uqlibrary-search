@@ -14,10 +14,10 @@ if [[ "$version" < "1.8" ]]; then
   return 1
 fi
 
-npm -v
-node -v
+printf "Node "; node -v;
+printf "(Before npm i -g) npm v"; npm -v
 
 echo "Install dependencies"
-npm install -g bower web-component-tester polymer-cli
+npm install -g bower web-component-tester polymer-cli npm@6
 npm install
 bower install
