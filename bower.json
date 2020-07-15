@@ -1,6 +1,6 @@
 {
   "name": "uqlibrary-search",
-  "version": "1.3.16",
+  "version": "1.3.17",
   "keywords": ["seed", "polymer", "web-components"],
   "private": true,
   "main": "uqlibrary-search.html",
