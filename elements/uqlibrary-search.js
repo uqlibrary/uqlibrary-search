@@ -381,7 +381,7 @@
           type: 'multimedia',
           url: this.links.primo,
           urlPrepend: 'any,contains,',
-          urlAppend: primoPrefix + '&mfacet=rtype,include,audios,1&mfacet=rtype,include,videos,1',
+          urlAppend: primoPrefix + '&mfacet=rtype,include,videos,1&mfacet=rtype,include,audios,1',
           autoSuggest: true,
           api: this.properties.api.value.primoApiAll,
           icon: 'icons:theaters',
