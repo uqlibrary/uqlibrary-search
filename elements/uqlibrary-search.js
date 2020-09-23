@@ -391,7 +391,7 @@
           type: 'journals',
           url: this.links.primo,
           urlPrepend: 'title,contains,',
-          urlAppend: ',AND&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ_DAC&mfacet=rtype,include,newspapers,1&mfacet=rtype,include,journals,1&mode=simple&offset=0',
+          urlAppend: ',AND&tab=61uq_all&search_scope=61UQ_All&sortby=rank&vid=61UQ&mfacet=rtype,include,newspapers,1&mfacet=rtype,include,journals,1&mode=simple&offset=0',
           autoSuggest: true,
           api: this.properties.api.value.primoApiLocal,
           icon: 'editor:insert-drive-file',
